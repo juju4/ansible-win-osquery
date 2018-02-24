@@ -64,7 +64,7 @@
 - block:
 # https://github.com/ansible/ansible/issues/35661
     - name: validate osqueryd config
-      win_command: "c:\\ProgramData\\osquery\osqueryi.exe --config_path c:\\ProgramData\\osquery\\osquery.conf --config_check --verbose"
+      win_command: "c:\\ProgramData\\osquery\\osqueryi.exe --config_path c:\\ProgramData\\osquery\\osquery.conf --config_check --verbose"
     - name: Install and start osqueryd service
 #      win_shell: "%ProgramData%\\osquery\\manage-osqueryd.ps1 -install -start"
       win_shell: "{{ item }}"
