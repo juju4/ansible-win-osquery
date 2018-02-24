@@ -57,12 +57,12 @@ install:
 - ps: Get-ChildItem -Path c:\
 - ps: Get-Content -Path c:\inventory
 - cmd: "%CYG_BASH% -lc 'ls /'"
-- cmd: "%CYG_BASH% -lc 'ls /cygdrive/c/'"
+- cmd: "%CYG_BASH% -lc 'ls -l /cygdrive/c/'"
 - cmd: "%CYG_BASH% -lc 'cat /cygdrive/c/inventory'"
 - cmd: "%CYG_BASH% -lc pwd"
-- cmd: "%CYG_BASH% -lc env"
+#- cmd: "%CYG_BASH% -lc env"
 #- cmd: "%CYG_BASH% -lc 'find -ls'"
-- cmd: "%CYG_BASH% -lc 'ansible -i inventory -m win_ping'"
+- cmd: "%CYG_BASH% -lc 'ansible -i /cygdrive/c/inventory -m win_ping'"
 
 build: off
 test_script:
