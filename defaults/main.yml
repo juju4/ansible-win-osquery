@@ -1,0 +1,31 @@
+---
+
+win_osquery: true
+#win_osquery: false
+win_osqueryd_service_enable: true
+win_osquery_template: 'osquery.conf.j2'
+win_osquery_flags_template: 'osquery.flags.j2'
+win_osquery_enable_winevtx_logging: true
+## extra files to upload as packs
+win_osquery_upload_packs:
+  - osquery-windows-pack
+  - osquery-windows-snapshots-pack
+  - osquery-windows-compliance-pack
+win_osquery_packs:
+  - "osquery-monitoring"
+#  - "incident-response"
+  - "it-compliance"
+  - "vuln-management"
+  - "hardware-monitoring"
+  - unwanted-chrome-extensions
+  - windows-attacks
+  - windows-hardening
+  - "osquery-windows-pack"
+  - "osquery-windows-snapshots-pack"
+  - "osquery-windows-compliance-pack"
+## currently only chocolatey release
+win_osquery_url: ''
+## full queries snapshot 1/week (maximum from code)
+win_osquery_snapshot_interval: 604800
+win_osquery_snapshot_interval2: 604800
+

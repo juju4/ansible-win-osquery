@@ -1,0 +1,91 @@
+---
+
+## https://osquery.io/downloads/
+## https://www.facebook.com/notes/protect-the-graph/introducing-osquery-for-windows/1775110322729111/
+
+## FIXME! "ERROR: Exception calling "RemovableAccessRule" with "1" argument(s): "Some or all identity references could not be translated."
+##      https://github.com/facebook/osquery/blob/e8045f1dd33ee4ed3a424ba70e71c1ff07b2a6e9/tools/provision/chocolatey/osquery_utils.ps1#L36
+##      https://msdn.microsoft.com/en-us/library/windows/desktop/aa379649(v=vs.85).aspx
+- name: Install osquery package with chocolatey
+  win_chocolatey:
+    name: osquery
+## ansible 2.1+. better after configuration
+#    install_args: "/InstallService"
+#  ignore_errors: true
+
+- name: update osquery windows packs
+  win_template:
+    src: "{{ item }}.conf.j2"
+    dest: "c:\\ProgramData\\osquery\\{{ item }}.conf"
+    backup: yes
+  with_items: "{{ win_osquery_upload_packs }}"
+  register: conf1
+
+- name: Configure osqueryd
+  win_template:
+    src: "{{ win_osquery_template }}"
+#    dest: "%ProgramData%\\osquery\\osquery.conf"
+    dest: "c:\\ProgramData\\osquery\\osquery.conf"
+  register: conf2
+
+- name: Configure osqueryd flags
+  win_template:
+    src: "{{ win_osquery_flags_template }}"
+    dest: "c:\\ProgramData\\osquery\\osquery.flags"
+  register: conf3
+
+- name: update osqueryd.exe path
+  win_template:
+    src: manage-osqueryd.ps1.j2
+    dest: "c:\\ProgramData\\osquery\\manage-osqueryd.ps1"
+    backup: yes
+
+- name: Remove Write Access for Users on osquery directories
+  win_acl:
+    path: C:\ProgramData\osquery
+    user: 'BUILTIN\Users'
+    rights: write
+    type: allow
+    state: absent
+    inherit: 'None'
+    propagation: 'InheritOnly'
+
+# https://github.com/facebook/osquery/pull/3887
+# https://osquery.readthedocs.io/en/stable/installation/install-windows/#enabling-windows-event-log-support
+- block:
+    - name: Enable Windows Event Log support
+      win_command: wevtutil im C:\ProgramData\osquery\osquery.man
+  when: win_osquery_enable_winevtx_logging
+- block:
+    - name: Disable Windows Event Log support
+      win_command: wevtutil um C:\ProgramData\osquery\osquery.man
+  when: not win_osquery_enable_winevtx_logging
+
+- block:
+# https://github.com/ansible/ansible/issues/35661
+    - name: validate osqueryd config
+      win_command: "c:\\ProgramData\\osquery\osqueryi.exe --config_path c:\\ProgramData\\osquery\\osquery.conf --config_check --verbose"
+    - name: Install and start osqueryd service
+#      win_shell: "%ProgramData%\\osquery\\manage-osqueryd.ps1 -install -start"
+      win_shell: "{{ item }}"
+      with_items:
+#        - "PowerShell.exe -ExecutionPolicy Bypass -File c:\\ProgramData\\osquery\\manage-osqueryd.ps1 -install"
+        - "PowerShell.exe -ExecutionPolicy Bypass -File c:\\ProgramData\\osquery\\manage-osqueryd.ps1 -install -args '--flagfile \\ProgramData\\osquery\\osquery.flags'"
+        - "PowerShell.exe -ExecutionPolicy Bypass -File c:\\ProgramData\\osquery\\manage-osqueryd.ps1 -start"
+      ignore_errors: true
+  when: win_osqueryd_service_enable and (conf1.changed or conf2.changed or conf3.changed)
+- block:
+    - name: Uninstall and stop osqueryd service
+      win_shell: "{{ item }}"
+      with_items:
+        - "PowerShell.exe -ExecutionPolicy Bypass -File c:\\ProgramData\\osquery\\manage-osqueryd.ps1 -uninstall"
+        - "PowerShell.exe -ExecutionPolicy Bypass -File c:\\ProgramData\\osquery\\manage-osqueryd.ps1 -stop"
+      ignore_errors: true
+  when: not win_osqueryd_service_enable
+
+- name: Check osquery winevt log
+  win_shell: Get-WinEvent -LogName 'Facebook-osquery'
+  register: winevtosquery
+  ignore_errors: true
+  changed_when: false
+- debug: var=winevtosquery.stdout_lines
