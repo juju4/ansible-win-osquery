@@ -53,6 +53,7 @@ install:
 - cmd: "%CYG_BASH% -lc 'python3 -m pip install ansible==%ANSIBLE_VERSION%'"
 - cmd: "%CYG_BASH% -lc 'ansible --version'"
 - cmd: "%CYG_BASH% -lc 'echo localhost ansible_user=$winrm_user ansible_pass=$winrm_password ansible_connection=winrm > inventory'"
+- cmd: "%CYG_BASH% -lc 'cat inventory'"
 - ps: echo "localhost ansible_user=$env:winrm_user ansible_pass=$env:winrm_password ansible_connection=winrm" | Out-file c:\inventory
 - ps: Get-ChildItem -Path c:\
 - ps: Get-Content -Path c:\inventory
@@ -65,15 +66,16 @@ install:
 - cmd: "%CYG_BASH% -lc 'ls /'"
 - cmd: "%CYG_BASH% -lc 'ls -l /cygdrive/c/'"
 - cmd: "%CYG_BASH% -lc 'cat /cygdrive/c/inventory'"
+- cmd: "%CYG_BASH% -lc 'ls -l /cygdrive/c/projects/ansible-win-osquery'"
 - cmd: "%CYG_BASH% -lc pwd"
 #- cmd: "%CYG_BASH% -lc env"
 #- cmd: "%CYG_BASH% -lc 'find -ls'"
-- cmd: "%CYG_BASH% -lc 'ansible -i /cygdrive/c/inventory -m win_ping'"
+- cmd: "%CYG_BASH% -lc 'ansible -i inventory -m win_ping'"
 
 build: off
 test_script:
 - cmd: "%CYG_BASH% -lc 'ansible-playbook /cygdrive/c/projects/ansible-win-osquery/test/integration/default/default.yml --syntax-check'"
-- cmd: "%CYG_BASH% -lc 'ansible-playbook -i /cygdrive/c/inventory /cygdrive/c/projects/ansible-win-osquery/test/integration/default/default.yml -vv'"
+- cmd: "%CYG_BASH% -lc 'ansible-playbook -i inventory /cygdrive/c/projects/ansible-win-osquery/test/integration/default/default.yml -vv'"
 
 notifications:
 - provider: Email
