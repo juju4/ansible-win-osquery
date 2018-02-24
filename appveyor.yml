@@ -51,15 +51,17 @@ install:
 - cmd: "%CYG_BASH% -lc 'python3 -m pip install --upgrade pip'"
 - cmd: "%CYG_BASH% -lc 'python3 -m pip install ansible==%ANSIBLE_VERSION%'"
 - cmd: "%CYG_BASH% -lc 'ansible --version'"
-- cmd: "echo localhost ansible_user=%winrm_user% ansible_pass=%winrm_password% ansible_connection=winrm > inventory"
+- cmd: "%CYG_BASH% -lc 'echo localhost ansible_user=$winrm_user ansible_pass=$winrm_password ansible_connection=winrm > inventory'"
+- cmd: "%CYG_BASH% -lc 'cat inventory'"
 - cmd: "%CYG_BASH% -lc pwd"
-- cmd: "%CYG_BASH% -lc 'find -ls'"
+- cmd: "%CYG_BASH% -lc env"
+#- cmd: "%CYG_BASH% -lc 'find -ls'"
 - cmd: "%CYG_BASH% -lc 'ansible -i inventory -m win_ping'"
 
 build: off
 test_script:
-- cmd: "%CYG_BASH% -lc 'ansible-playbook $APPVEYOR_BUILD_FOLDER/test/integration/default/default.yml --syntax-check'"
-- cmd: "%CYG_BASH% -lc 'ansible-playbook -i inventory $APPVEYOR_BUILD_FOLDER/test/integration/default/default.yml -vv'"
+- cmd: "%CYG_BASH% -lc 'ansible-playbook /mnt/c/projects/ansible-win-osquery/test/integration/default/default.yml --syntax-check'"
+- cmd: "%CYG_BASH% -lc 'ansible-playbook -i inventory /mnt/c/projects/ansible-win-osquery/test/integration/default/default.yml -vv'"
 
 notifications:
 - provider: Email
