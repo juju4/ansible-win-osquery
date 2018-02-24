@@ -59,7 +59,7 @@ install:
 - ps: |
     $filepath = "C:\inventory"
     $Acl = Get-ACL $filepath
-    $AccessRule= New-Object System.Security.AccessControl.FileSystemAccessRule("everyone","full","ContainerInherit,Objectinherit","none","Allow")
+    $AccessRule= New-Object System.Security.AccessControl.FileSystemAccessRule("everyone","full","none","none","Allow")
     $Acl.AddAccessRule($AccessRule)
     Set-Acl $filepath $Acl
 - cmd: "%CYG_BASH% -lc 'ls /'"
