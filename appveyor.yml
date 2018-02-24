@@ -44,7 +44,7 @@ install:
 - ps: $env:PATH="C:\Ruby$env:ruby_version\bin;$env:PATH"
 - ps: Write-Host $env:PATH
 # setup ansible
-- cmd: "%CYG_SETUP% -qgnNdO -l %CYG_CACHE% -R %CYG_ROOT% -s http://cygwin.mirror.constant.com -P openssl-devel -P python2-devel -P python3-devel -P curl -P python-jinja -P python-crypto -P python-openssl -P python-setuptools -P git"
+- cmd: "%CYG_SETUP% -qgnNdO -l %CYG_CACHE% -R %CYG_ROOT% -s http://cygwin.mirror.constant.com -P openssl-devel -P python2-devel -P python3-devel -P curl -P python-jinja -P python-crypto -P python-openssl -P python-setuptools -P git -P libffi-devel"
 - cmd: "%CYG_BASH% -lc 'uname -a'"
 - cmd: "%CYG_BASH% -lc 'python -m ensurepip'"
 - cmd: "%CYG_BASH% -lc 'python3 -m ensurepip'"
