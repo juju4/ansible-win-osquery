@@ -43,22 +43,22 @@ install:
 - ps: $env:PATH="C:\Ruby$env:ruby_version\bin;$env:PATH"
 - ps: Write-Host $env:PATH
 # setup ansible
-- "%CYG_SETUP" -qgnNdO -l "%CYG_CACHE%" -R "%CYG_ROOT%" -s http://cygwin.mirror.constant.com -P openssl-devel -P python2-devel -P python3-devel -P curl -P python-jinja -P python-crypto -P python-openssl -P python-setuptools -P git )
-- "%CYG_BASH%" -lc "uname -a"
-- "%CYG_BASH%" -lc "python -m ensurepip"
-- "%CYG_BASH%" -lc "python3 -m ensurepip"
-- "%CYG_BASH%" -lc "python3 -m pip install --upgrade pip"
-- "%CYG_BASH%" -lc "python3 -m pip install ansible==%ANSIBLE_VERSION%"
-- "%CYG_BASH%" -lc "ansible --version"
-- "echo localhost ansible_user=%winrm_user% ansible_pass=%winrm_password% ansible_connection=winrm > inventory"
-- "%CYG_BASH%" -lc "pwd"
-- "%CYG_BASH%" -lc "find -ls"
-- "%CYG_BASH%" -lc "ansible -i inventory -m win_ping"
+- cmd: "%CYG_SETUP% -qgnNdO -l %CYG_CACHE% -R %CYG_ROOT% -s http://cygwin.mirror.constant.com -P openssl-devel -P python2-devel -P python3-devel -P curl -P python-jinja -P python-crypto -P python-openssl -P python-setuptools -P git"
+- cmd: "%CYG_BASH% -lc 'uname -a'"
+- cmd: "%CYG_BASH% -lc 'python -m ensurepip'"
+- cmd: "%CYG_BASH% -lc 'python3 -m ensurepip'"
+- cmd: "%CYG_BASH% -lc 'python3 -m pip install --upgrade pip'"
+- cmd: "%CYG_BASH% -lc 'python3 -m pip install ansible==%ANSIBLE_VERSION%'"
+- cmd: "%CYG_BASH% -lc 'ansible --version'"
+- cmd: "echo localhost ansible_user=%winrm_user% ansible_pass=%winrm_password% ansible_connection=winrm > inventory"
+- cmd: "%CYG_BASH% -lc pwd"
+- cmd: "%CYG_BASH% -lc 'find -ls'"
+- cmd: "%CYG_BASH% -lc 'ansible -i inventory -m win_ping'"
 
 build: off
 test_script:
-- "%CYG_BASH%" -lc "ansible-playbook %APPVEYOR_BUILD_FOLDER%\test\integration\default\default.yml --syntax-check"
-- "%CYG_BASH%" -lc "ansible-playbook -i inventory %APPVEYOR_BUILD_FOLDER%\test\integration\default\default.yml -vv"
+- cmd: "%CYG_BASH% -lc 'ansible-playbook $APPVEYOR_BUILD_FOLDER/test/integration/default/default.yml --syntax-check'"
+- cmd: "%CYG_BASH% -lc 'ansible-playbook -i inventory $APPVEYOR_BUILD_FOLDER/test/integration/default/default.yml -vv'"
 
 notifications:
 - provider: Email
