@@ -56,6 +56,12 @@ install:
 - ps: echo "localhost ansible_user=$env:winrm_user ansible_pass=$env:winrm_password ansible_connection=winrm" | Out-file c:\inventory
 - ps: Get-ChildItem -Path c:\
 - ps: Get-Content -Path c:\inventory
+- ps: |
+    $filepath = "C:\inventory"
+    $Acl = Get-ACL $filepath
+    $AccessRule= New-Object System.Security.AccessControl.FileSystemAccessRule("everyone","full","ContainerInherit,Objectinherit","none","Allow")
+    $Acl.AddAccessRule($AccessRule)
+    Set-Acl $filepath $Acl
 - cmd: "%CYG_BASH% -lc 'ls /'"
 - cmd: "%CYG_BASH% -lc 'ls -l /cygdrive/c/'"
 - cmd: "%CYG_BASH% -lc 'cat /cygdrive/c/inventory'"
