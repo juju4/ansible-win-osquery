@@ -78,6 +78,7 @@ install:
 - cmd: "%CYG_BASH% -lc 'ansible -i /cygdrive/c/projects/ansible-win-osquery/test/appveyor/inventory -m win_ping -vvv localhost'"
 # NOK
 #- cmd: "%CYG_BASH% -lc 'ln -s /cygdrive/c/projects/ansible-win-osquery /etc/ansible/roles/juju4.win-osquery'"
+- cmd: "%CYG_BASH% -lc 'mkdir -p /etc/ansible/roles'"
 - cmd: "%CYG_BASH% -lc 'cp -R /cygdrive/c/projects/ansible-win-osquery /etc/ansible/roles/juju4.win-osquery'"
 
 build: off
