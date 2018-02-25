@@ -2,5 +2,8 @@
 
 - hosts: all
   become_method: runas
+  vars:
+    - osquery_testing: true
+    - osquery_profiling: true
   roles:
     - juju4.win-osquery

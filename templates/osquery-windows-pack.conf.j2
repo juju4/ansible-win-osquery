@@ -12,7 +12,11 @@
     },
     "win_autoexec": {
       "query" : "select * from autoexec;",
+{% if osquery_testing %}
+      "interval": "20",
+{% else %}
       "interval": "3600",
+{% endif %}
       "platform": "windows",
       "description" : "Aggregate of executables that will automatically execute on the target machine"
     },
@@ -36,7 +40,11 @@
     },
     "win_etc_hosts": {
       "query": "select * from etc_hosts;",
-      "interval": 3600,
+{% if osquery_testing %}
+      "interval": "20",
+{% else %}
+      "interval": "3600",
+{% endif %}
       "platform": "windows",
       "description" : "Line-parsed hosts file."
     },
@@ -110,7 +118,11 @@
     },
     "win_services": {
       "query" : "select * from services;",
+{% if osquery_testing %}
+      "interval": "20",
+{% else %}
       "interval": "3600",
+{% endif %}
       "platform": "windows",
       "description" : "Lists all installed Windows Services"
     },
@@ -149,6 +161,7 @@
       "interval": "3600",
       "platform": "windows",
       "description" : "WMI ActiveScriptEventConsumer, which can be used for persistance on Windows"
+{% if win_osquery_fetch_evtlogs %}
     },
 // depends if you use Windows Event Forwarder or similar mechanisms. Arbitrary choice among many (also 7045,4663,5156,7040...)
     "windows_events_sec_4688": {
@@ -210,6 +223,7 @@
       "interval": "3600",
       "platform": "windows",
       "description" : "Matching Windows Event logs - Application Error"
+{% endif %}
     }
   }
 }

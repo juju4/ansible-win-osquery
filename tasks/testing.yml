@@ -1,0 +1,26 @@
+---
+
+- meta: flush_handlers
+
+- name: pause a bit to have few queries results
+  pause:
+#    minutes: 5
+    seconds: 60
+
+- block:
+    - name: Check log for blocked apps
+      win_shell: Get-Content -Path "c:\ProgramData\osquery\log\osqueryd.results.log"
+      register: results
+      ignore_errors: true
+      changed_when: false
+    - debug: var=results.stdout_lines
+  when: not win_osquery_enable_winevtx_logging
+
+- block:
+    - name: Check log for blocked apps
+      win_shell: Get-WinEvent -LogName 'Facebook-osquery'
+      register: winevt
+      ignore_errors: true
+      changed_when: false
+    - debug: var=winevt.stdout_lines
+  when: win_osquery_enable_winevtx_logging

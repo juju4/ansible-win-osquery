@@ -1,0 +1,26 @@
+---
+
+- name: get source repository for profiling tools
+  git:
+    repo: https://github.com/facebook/osquery.git
+    dest: c:\ProgramData\osquery\gitrepo
+
+- name: ensure profiling dependencies are present - chocolatey
+  win_chocolatey:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - python
+- name: ensure profiling dependencies are present - pip
+  pip:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - psutil
+- name: profiling
+  command: ".\\tools\\analysis\\profile.py --config {{ osquery_profiling_conf }} --shell c:\\ProgramData\\osquery\\osqueryi --count 1 --rounds 4"
+  args:
+    chdir: c:\ProgramData\osquery\gitrepo
+  changed_when: false
+  register: perf
+- debug: var=perf.stdout_lines
