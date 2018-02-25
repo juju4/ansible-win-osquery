@@ -1,24 +1,29 @@
 ---
 
-- name: get source repository for profiling tools
-  git:
-    repo: https://github.com/facebook/osquery.git
-    dest: c:\ProgramData\osquery\gitrepo
-
 - name: ensure profiling dependencies are present - chocolatey
   win_chocolatey:
     name: "{{ item }}"
     state: present
   with_items:
     - python
+    - git
+
 - name: ensure profiling dependencies are present - pip
   pip:
     name: "{{ item }}"
     state: present
   with_items:
     - psutil
+
+# https://github.com/tivrobo/ansible-win_git ?
+- name: get source repository for profiling tools
+#  git:
+#    repo: https://github.com/facebook/osquery.git
+#    dest: c:\ProgramData\osquery\gitrepo
+  win_command: git.exe clone https://github.com/facebook/osquery.git c:\ProgramData\osquery\gitrepo
+
 - name: profiling
-  command: ".\\tools\\analysis\\profile.py --config {{ osquery_profiling_conf }} --shell c:\\ProgramData\\osquery\\osqueryi --count 1 --rounds 4"
+  win_command: ".\\tools\\analysis\\profile.py --config {{ osquery_profiling_conf }} --shell c:\\ProgramData\\osquery\\osqueryi --count 1 --rounds 4"
   args:
     chdir: c:\ProgramData\osquery\gitrepo
   changed_when: false
