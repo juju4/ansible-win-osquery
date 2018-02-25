@@ -114,7 +114,7 @@ after_test:
 - ps: Get-ChildItem -Path C:\ProgramData\osquery
 - ps: Get-ChildItem -Path C:\ProgramData\osquery\packs
 - ps: Get-ChildItem -Path C:\ProgramData\osquery\log
-- reg query "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\WINEVT\Channels"
+- ps: Get-ChildItem -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WINEVT\Channels" -Include *osquery*
 
 notifications:
 - provider: Email
