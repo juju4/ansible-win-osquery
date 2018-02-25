@@ -90,7 +90,7 @@
   //
   "packs": {
 {% for item in win_osquery_packs %}
-    "{{ item }}": "/ProgramData/osquery/{{ item }}.conf"{% if not loop.last %},{% endif %}
+    "{{ item }}": "/ProgramData/osquery/packs/{{ item }}.conf"{% if not loop.last %},{% endif %}
 
 {% endfor %}
   }

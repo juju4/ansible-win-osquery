@@ -16,7 +16,7 @@
 - name: update osquery windows packs
   win_template:
     src: "{{ item }}.conf.j2"
-    dest: "c:\\ProgramData\\osquery\\{{ item }}.conf"
+    dest: "c:\\ProgramData\\osquery\\packs\\{{ item }}.conf"
     backup: yes
   with_items: "{{ win_osquery_upload_packs }}"
   register: conf1
