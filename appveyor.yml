@@ -53,12 +53,12 @@ install:
 - cmd: "%CYG_BASH% -lc 'python3 -m pip install pywinrm'"
 - cmd: "%CYG_BASH% -lc 'python3 -m pip install ansible==%ANSIBLE_VERSION%'"
 - cmd: "%CYG_BASH% -lc 'ansible --version'"
-- cmd: "%CYG_BASH% -lc 'echo localhost ansible_user=$winrm_user ansible_pass=$winrm_password ansible_connection=winrm'"
-#- cmd: "%CYG_BASH% -lc 'echo localhost ansible_user=$winrm_user ansible_pass=$winrm_password ansible_connection=winrm > inventory'"
+- cmd: "%CYG_BASH% -lc 'echo localhost ansible_user=$winrm_user ansible_password=$winrm_password ansible_connection=winrm'"
+#- cmd: "%CYG_BASH% -lc 'echo localhost ansible_user=$winrm_user ansible_password=$winrm_password ansible_connection=winrm > inventory'"
 #- cmd: "%CYG_BASH% -lc 'cat inventory'"
-#- cmd: "%CYG_BASH% -lc 'echo localhost ansible_user=$winrm_user ansible_pass=$winrm_password ansible_connection=winrm | tee inventory'"
+#- cmd: "%CYG_BASH% -lc 'echo localhost ansible_user=$winrm_user ansible_password=$winrm_password ansible_connection=winrm | tee inventory'"
 #- cmd: "%CYG_BASH% -lc 'cat inventory'"
-#- ps: echo "localhost ansible_user=$env:winrm_user ansible_pass=$env:winrm_password ansible_connection=winrm" | Out-file c:\inventory
+#- ps: echo "localhost ansible_user=$env:winrm_user ansible_password=$env:winrm_password ansible_connection=winrm" | Out-file c:\inventory
 #- ps: Get-ChildItem -Path c:\
 #- ps: Get-Content -Path c:\inventory
 #- ps: |
