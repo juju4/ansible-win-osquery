@@ -29,7 +29,7 @@ install:
 - ps: net user /Y /add $env:winrm_user $env:winrm_password
 - ps: net localgroup administrators $env:winrm_user /add
 - ps: $env:PATH="C:\OpenSSL-Win64\bin;$env:PATH"
-- ps: Import-Module $env:APPVEYOR_BUILD_FOLDER\WinrmAppveyor.psm1
+- ps: Import-Module $env:APPVEYOR_BUILD_FOLDER\test\appveyor\WinrmAppveyor.psm1
 - ps: New-ClientCertificate $env:winrm_user $env:APPVEYOR_BUILD_FOLDER
 - ps: $env:user_cert_thumb = (Import-pfxCertificate -FilePath $env:user_pfx -CertStoreLocation Cert:\LocalMachine\root).Thumbprint
 - ps: Import-pfxCertificate -FilePath $env:user_pfx -CertStoreLocation Cert:\LocalMachine\TrustedPeople
@@ -53,19 +53,19 @@ install:
 - cmd: "%CYG_BASH% -lc 'python3 -m pip install ansible==%ANSIBLE_VERSION%'"
 - cmd: "%CYG_BASH% -lc 'ansible --version'"
 - cmd: "%CYG_BASH% -lc 'echo localhost ansible_user=$winrm_user ansible_pass=$winrm_password ansible_connection=winrm'"
-- cmd: "%CYG_BASH% -lc 'echo localhost ansible_user=$winrm_user ansible_pass=$winrm_password ansible_connection=winrm > inventory'"
+#- cmd: "%CYG_BASH% -lc 'echo localhost ansible_user=$winrm_user ansible_pass=$winrm_password ansible_connection=winrm > inventory'"
 #- cmd: "%CYG_BASH% -lc 'cat inventory'"
-- cmd: "%CYG_BASH% -lc 'echo localhost ansible_user=$winrm_user ansible_pass=$winrm_password ansible_connection=winrm | tee inventory'"
+#- cmd: "%CYG_BASH% -lc 'echo localhost ansible_user=$winrm_user ansible_pass=$winrm_password ansible_connection=winrm | tee inventory'"
 #- cmd: "%CYG_BASH% -lc 'cat inventory'"
-- ps: echo "localhost ansible_user=$env:winrm_user ansible_pass=$env:winrm_password ansible_connection=winrm" | Out-file c:\inventory
-- ps: Get-ChildItem -Path c:\
-- ps: Get-Content -Path c:\inventory
-- ps: |
-    $filepath = "C:\inventory"
-    $Acl = Get-ACL $filepath
-    $AccessRule= New-Object System.Security.AccessControl.FileSystemAccessRule("everyone","full","none","none","Allow")
-    $Acl.AddAccessRule($AccessRule)
-    Set-Acl $filepath $Acl
+#- ps: echo "localhost ansible_user=$env:winrm_user ansible_pass=$env:winrm_password ansible_connection=winrm" | Out-file c:\inventory
+#- ps: Get-ChildItem -Path c:\
+#- ps: Get-Content -Path c:\inventory
+#- ps: |
+#    $filepath = "C:\inventory"
+#    $Acl = Get-ACL $filepath
+#    $AccessRule= New-Object System.Security.AccessControl.FileSystemAccessRule("everyone","full","none","none","Allow")
+#    $Acl.AddAccessRule($AccessRule)
+#    Set-Acl $filepath $Acl
 - cmd: "%CYG_BASH% -lc 'ls /'"
 - cmd: "%CYG_BASH% -lc 'ls -l /cygdrive/c/'"
 #- cmd: "%CYG_BASH% -lc 'cat /cygdrive/c/inventory'"
@@ -73,12 +73,12 @@ install:
 - cmd: "%CYG_BASH% -lc pwd"
 #- cmd: "%CYG_BASH% -lc env"
 #- cmd: "%CYG_BASH% -lc 'find -ls'"
-- cmd: "%CYG_BASH% -lc 'ansible -i inventory -m win_ping'"
+- cmd: "%CYG_BASH% -lc 'ansible -i /cygdrive/c/projects/ansible-win-osquery/test/appveyor/inventory -m win_ping'"
 
 build: off
 test_script:
 - cmd: "%CYG_BASH% -lc 'ansible-playbook /cygdrive/c/projects/ansible-win-osquery/test/integration/default/default.yml --syntax-check'"
-- cmd: "%CYG_BASH% -lc 'ansible-playbook -i inventory /cygdrive/c/projects/ansible-win-osquery/test/integration/default/default.yml -vv'"
+- cmd: "%CYG_BASH% -lc 'ansible-playbook -i /cygdrive/c/projects/ansible-win-osquery/test/appveyor/inventory /cygdrive/c/projects/ansible-win-osquery/test/integration/default/default.yml -vv'"
 
 notifications:
 - provider: Email

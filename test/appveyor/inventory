@@ -1,0 +1,1 @@
+localhost ansible_user=winrm_test_user ansible_pass=WinRM_test_Pass@w0rd1 ansible_connection=winrm
