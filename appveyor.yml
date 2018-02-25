@@ -22,6 +22,21 @@ environment:
     CYG_CACHE: C:\cygwin64\var\cache\setup
     CYG_BASH: C:\cygwin64\bin\sh
     ANSIBLE_VERSION: 2.4.3.0
+    ANSIBLE_EXTRA_VARS:
+  - TARGET: cygwin64
+    CYG_ROOT: C:\cygwin64
+    CYG_SETUP: C:\cygwin64\setup-x86_64.exe
+    CYG_CACHE: C:\cygwin64\var\cache\setup
+    CYG_BASH: C:\cygwin64\bin\sh
+    ANSIBLE_VERSION: 2.4.3.0
+    ANSIBLE_EXTRA_VARS: "-e win_osquery_enable_winevtx_logging=false"
+  - TARGET: cygwin64
+    CYG_ROOT: C:\cygwin64
+    CYG_SETUP: C:\cygwin64\setup-x86_64.exe
+    CYG_CACHE: C:\cygwin64\var\cache\setup
+    CYG_BASH: C:\cygwin64\bin\sh
+    ANSIBLE_VERSION: 2.5.0b2
+    ANSIBLE_EXTRA_VARS:
 matrix:
   fast_finish: true
 
@@ -84,7 +99,16 @@ install:
 build: off
 test_script:
 - cmd: "%CYG_BASH% -lc 'ansible-playbook /cygdrive/c/projects/ansible-win-osquery/test/integration/default/default.yml --syntax-check'"
-- cmd: "%CYG_BASH% -lc 'ansible-playbook -i /cygdrive/c/projects/ansible-win-osquery/test/appveyor/inventory /cygdrive/c/projects/ansible-win-osquery/test/integration/default/default.yml -vv'"
+- cmd: "%CYG_BASH% -lc 'ansible-playbook -i /cygdrive/c/projects/ansible-win-osquery/test/appveyor/inventory /cygdrive/c/projects/ansible-win-osquery/test/integration/default/default.yml -vvv $ANSIBLE_EXTRA_VARS'"
+
+test:
+# Test idempotence
+- cmd: |
+    %CYG_BASH% -lc 'ansible-playbook -i /cygdrive/c/projects/ansible-win-osquery/test/appveyor/inventory /cygdrive/c/projects/ansible-win-osquery/test/integration/default/default.yml $ANSIBLE_EXTRA_VARS | tee /tmp/idempotency.log | grep -q \'changed=0.*failed=0\' && (echo \'Idempotence test: pass\' && exit 0) || (echo \'Idempotence test: fail\' && cat /tmp/idempotency.log && exit 0)'"
+- ps: Get-ChildItem -Path C:\ProgramData\osquery
+- ps: Get-ChildItem -Path C:\ProgramData\osquery\packs
+- ps: Get-ChildItem -Path C:\ProgramData\osquery\logs
+- reg query "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\WINEVT\Channels"
 
 notifications:
 - provider: Email
