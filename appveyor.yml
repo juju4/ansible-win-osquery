@@ -75,6 +75,7 @@ install:
 #- cmd: "%CYG_BASH% -lc env"
 #- cmd: "%CYG_BASH% -lc 'find -ls'"
 - cmd: "%CYG_BASH% -lc 'ansible -i /cygdrive/c/projects/ansible-win-osquery/test/appveyor/inventory -m win_ping -vvv localhost'"
+- cmd: "%CYG_BASH% -lc 'ln -s /cygdrive/c/projects/ansible-win-osquery /etc/ansible/roles/juju4.win-osquery'"
 
 build: off
 test_script:
