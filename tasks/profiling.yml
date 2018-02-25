@@ -9,9 +9,10 @@
     - git
 
 - name: ensure profiling dependencies are present - pip
-  pip:
-    name: "{{ item }}"
-    state: present
+#  pip:
+#    name: "{{ item }}"
+#    state: present
+  win_command: "pip install {{ item }}"
   with_items:
     - psutil
 
