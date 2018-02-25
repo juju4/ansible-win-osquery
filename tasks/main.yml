@@ -2,8 +2,8 @@
 
 - include_tasks: windows-osquery.yml
 
-- include: testing.yml
+- include_tasks: testing.yml
   when: osquery_testing
 
-- include: profiling.yml
+- include_tasks: profiling.yml
   when: osquery_profiling
