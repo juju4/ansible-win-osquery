@@ -50,6 +50,7 @@ install:
 - cmd: "%CYG_BASH% -lc 'python -m ensurepip'"
 - cmd: "%CYG_BASH% -lc 'python3 -m ensurepip'"
 - cmd: "%CYG_BASH% -lc 'python3 -m pip install --upgrade pip'"
+- cmd: "%CYG_BASH% -lc 'python3 -m pip install pywinrm'"
 - cmd: "%CYG_BASH% -lc 'python3 -m pip install ansible==%ANSIBLE_VERSION%'"
 - cmd: "%CYG_BASH% -lc 'ansible --version'"
 - cmd: "%CYG_BASH% -lc 'echo localhost ansible_user=$winrm_user ansible_pass=$winrm_password ansible_connection=winrm'"
