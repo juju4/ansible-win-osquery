@@ -52,14 +52,30 @@
 
 # https://github.com/facebook/osquery/pull/3887
 # https://osquery.readthedocs.io/en/stable/installation/install-windows/#enabling-windows-event-log-support
+- name: Check if osquery windows event log installed
+  win_stat:
+    path: c:\ProgramData\osquery\osquery_man_installed
+  register: osquerymaninstalled
 - block:
     - name: Enable Windows Event Log support
       win_command: wevtutil im C:\ProgramData\osquery\osquery.man
-  when: win_osquery_enable_winevtx_logging
+    - name: Add task marker
+      win_file:
+        path: c:\ProgramData\osquery\osquery_man_installed
+        state: touch
+  when: win_osquery_enable_winevtx_logging and not osquerymaninstalled.stat.exists
+- name: Check if osquery windows event log status disabled
+  win_stat:
+    path: c:\ProgramData\osquery\osquery_man_uninstalled
+  register: osquerymanimported
 - block:
     - name: Disable Windows Event Log support
       win_command: wevtutil um C:\ProgramData\osquery\osquery.man
-  when: not win_osquery_enable_winevtx_logging
+    - name: Add task marker
+      win_file:
+        path: c:\ProgramData\osquery\osquery_man_uninstalled
+        state: touch
+  when: not win_osquery_enable_winevtx_logging and not osquerymanimported.stat.exists
 
 - block:
 # https://github.com/ansible/ansible/issues/35661
