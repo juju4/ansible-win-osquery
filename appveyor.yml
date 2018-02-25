@@ -108,7 +108,7 @@ after_test:
     %CYG_BASH% -lc 'ansible-playbook -i /cygdrive/c/projects/ansible-win-osquery/test/appveyor/inventory /cygdrive/c/projects/ansible-win-osquery/test/integration/default/default.yml $ANSIBLE_EXTRA_VARS'
 - ps: Get-ChildItem -Path C:\ProgramData\osquery
 - ps: Get-ChildItem -Path C:\ProgramData\osquery\packs
-- ps: Get-ChildItem -Path C:\ProgramData\osquery\logs
+- ps: Get-ChildItem -Path C:\ProgramData\osquery\log
 - reg query "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\WINEVT\Channels"
 
 notifications:
