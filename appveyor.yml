@@ -73,7 +73,7 @@ install:
 - cmd: "%CYG_BASH% -lc pwd"
 #- cmd: "%CYG_BASH% -lc env"
 #- cmd: "%CYG_BASH% -lc 'find -ls'"
-- cmd: "%CYG_BASH% -lc 'ansible -i /cygdrive/c/projects/ansible-win-osquery/test/appveyor/inventory -m win_ping localhost'"
+- cmd: "%CYG_BASH% -lc 'ansible -i /cygdrive/c/projects/ansible-win-osquery/test/appveyor/inventory -m win_ping -vvv localhost'"
 
 build: off
 test_script:
