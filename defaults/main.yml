@@ -18,7 +18,7 @@ win_osquery_packs:
   - "vuln-management"
   - "hardware-monitoring"
   - unwanted-chrome-extensions
-  - windows-attacks
+#  - windows-attacks
   - windows-hardening
   - "osquery-windows-pack"
   - "osquery-windows-snapshots-pack"
