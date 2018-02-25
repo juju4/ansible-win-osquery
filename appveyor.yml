@@ -104,7 +104,7 @@ test_script:
 after_test:
 # Test idempotence
 - cmd: |
-    %CYG_BASH% -lc 'ansible-playbook -i /cygdrive/c/projects/ansible-win-osquery/test/appveyor/inventory /cygdrive/c/projects/ansible-win-osquery/test/integration/default/default.yml $ANSIBLE_EXTRA_VARS | tee /tmp/idempotency.log | grep -q "changed=0.*failed=0" && (echo "Idempotence test: pass" && exit 0) || (echo "Idempotence test: fail" && cat /tmp/idempotency.log && exit 0)'"
+    %CYG_BASH% -lc 'ansible-playbook -i /cygdrive/c/projects/ansible-win-osquery/test/appveyor/inventory /cygdrive/c/projects/ansible-win-osquery/test/integration/default/default.yml $ANSIBLE_EXTRA_VARS | tee /tmp/idempotency.log | grep -q "changed=0.*failed=0" && (echo "Idempotence test: pass" && exit 0) || (echo "Idempotence test: fail" && cat /tmp/idempotency.log && exit 0)'
 - ps: Get-ChildItem -Path C:\ProgramData\osquery
 - ps: Get-ChildItem -Path C:\ProgramData\osquery\packs
 - ps: Get-ChildItem -Path C:\ProgramData\osquery\logs
