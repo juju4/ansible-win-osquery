@@ -11,6 +11,7 @@ win_osquery_upload_packs:
   - osquery-windows-pack
   - osquery-windows-snapshots-pack
   - osquery-windows-compliance-pack
+  - windows-hardening
 win_osquery_packs:
   - "osquery-monitoring"
 #  - "incident-response"
