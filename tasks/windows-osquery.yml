@@ -42,11 +42,11 @@
 
 - name: Restrict permissions for Users on osquery directories
   win_acl:
-    path: C:\ProgramData\osquery
-    user: 'BUILTIN\Users'
-    rights: write
-    type: allow
-    state: absent
+    path: "{{ item.p }}"
+    user: "{{ item.u }}"
+    rights: "{{ item.r }}"
+    type: "{{ item.t }}"
+    state: "{{ item.s }}"
     inherit: 'None'
     propagation: 'InheritOnly'
   with_items:
