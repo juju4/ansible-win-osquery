@@ -64,6 +64,21 @@
 - block:
     - name: Enable Windows Event Log support
       win_command: wevtutil im C:\ProgramData\osquery\osquery.man
+
+    - name: WINEVT osquery Channel Event Log size review
+      win_regedit:
+        key: "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\WINEVT\\Channels\\Facebook\\osquery"
+        value: MaxSize
+        datatype: dword
+        data: "{{ win_eventlog_maxsize }}"
+
+    - name: WINEVT Channels Event Log retention review
+      win_regedit:
+        key: "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\WINEVT\\Channels\\Facebook\\osquery"
+        value: Retention
+        datatype: dword
+        data: "{{ win_eventlog_retention }}"
+
     - name: Add task marker
       win_file:
         path: c:\ProgramData\osquery\osquery_man_installed
