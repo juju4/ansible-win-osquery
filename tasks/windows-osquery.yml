@@ -40,7 +40,7 @@
     dest: "c:\\ProgramData\\osquery\\manage-osqueryd.ps1"
     backup: yes
 
-- name: Remove Write Access for Users on osquery directories
+- name: Restrict permissions for Users on osquery directories
   win_acl:
     path: C:\ProgramData\osquery
     user: 'BUILTIN\Users'
@@ -49,6 +49,11 @@
     state: absent
     inherit: 'None'
     propagation: 'InheritOnly'
+  with_items:
+    - { p: 'C:\ProgramData\osquery', u: 'BUILTIN\Users', r: write, t: allow, s: absent }
+    - { p: 'C:\ProgramData\osquery\certs', u: 'BUILTIN\Users', r: write, t: allow, s: absent }
+    - { p: 'C:\ProgramData\osquery\log', u: 'BUILTIN\Users', r: 'read,write', t: allow, s: absent }
+    - { p: 'C:\ProgramData\osquery\packs', u: 'BUILTIN\Users', r: write, t: allow, s: absent }
 
 # https://github.com/facebook/osquery/pull/3887
 # https://osquery.readthedocs.io/en/stable/installation/install-windows/#enabling-windows-event-log-support
