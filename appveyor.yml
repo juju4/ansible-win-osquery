@@ -110,14 +110,14 @@ after_test:
 on_finish:
 - ps: Get-Service -Displayname "*osquery*"
 - ps: Get-Process "*osquery*"
-- ps: Get-Acl -Path C:\ProgramData\osquery
-- ps: Get-Acl -Path C:\ProgramData\osquery\log
-- ps: Get-Acl -Path C:\ProgramData\osquery\osquery.db
+- ps: Get-Acl -Path C:\ProgramData\osquery | Format-Table -Wrap
+- ps: Get-Acl -Path C:\ProgramData\osquery\log | Format-Table -Wrap
+- ps: Get-Acl -Path C:\ProgramData\osquery\osquery.db | Format-Table -Wrap
 - ps: Get-ChildItem -Path C:\ProgramData\osquery
 - ps: Get-ChildItem -Path C:\ProgramData\osquery\packs
 - ps: Get-ChildItem -Path C:\ProgramData\osquery\log
-- ps: Get-ChildItem -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WINEVT\Channels"
 - ps: Get-ChildItem -Path "HKLM:Software\Microsoft\Windows\CurrentVersion\Uninstall"
+- ps: Get-ChildItem -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WINEVT\Channels" -Include *Facebook*'
 
 notifications:
 - provider: Email
