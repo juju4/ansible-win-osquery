@@ -12,6 +12,14 @@
 ## ansible 2.1+. better after configuration
 #    install_args: "/InstallService"
 #  ignore_errors: true
+  when: win_osquery_url == ''
+
+- name: Install osquery from url
+  win_package:
+    path: "{{ win_osquery_url }}"
+    product_id: '{A00B7823-A9A3-4577-A804-A07C43765AFD}'
+    state: present
+  when: win_osquery_url != ''
 
 - name: update osquery windows packs
   win_template:
