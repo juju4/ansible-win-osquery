@@ -1,0 +1,10 @@
+---
+
+- hosts: all
+  become_method: runas
+  vars:
+    - win_osquery_url: https://pkg.osquery.io/windows/osquery-3.2.6.msi
+    - osquery_testing: true
+    - osquery_profiling: false
+  roles:
+    - juju4.win-osquery
