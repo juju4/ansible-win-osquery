@@ -106,6 +106,8 @@ after_test:
 #    %CYG_BASH% -lc 'ansible-playbook -i /cygdrive/c/projects/ansible-win-osquery/test/appveyor/inventory /cygdrive/c/projects/ansible-win-osquery/test/integration/default/default.yml $ANSIBLE_EXTRA_VARS | tee /tmp/idempotency.log | grep -q "changed=0.*failed=0" && (echo "Idempotence test: pass" && exit 0) || (echo "Idempotence test: fail" && cat /tmp/idempotency.log && exit 0)'
 - cmd: |
     %CYG_BASH% -lc 'ansible-playbook -i /cygdrive/c/projects/ansible-win-osquery/test/appveyor/inventory /cygdrive/c/projects/ansible-win-osquery/test/integration/default/default.yml $ANSIBLE_EXTRA_VARS'
+
+on_finish:
 - ps: Get-Service -Displayname "*osquery*"
 - ps: Get-Process "*osquery*"
 - ps: Get-Acl -Path C:\ProgramData\osquery
@@ -114,8 +116,8 @@ after_test:
 - ps: Get-ChildItem -Path C:\ProgramData\osquery
 - ps: Get-ChildItem -Path C:\ProgramData\osquery\packs
 - ps: Get-ChildItem -Path C:\ProgramData\osquery\log
-- ps: Get-ChildItem -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WINEVT\Channels" -Include *osquery*
-- ps: Get-ChildItem -Path "HKLM:Software\Microsoft\Windows\CurrentVersion\Uninstall" -Include *osquery*
+- ps: Get-ChildItem -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WINEVT\Channels"
+- ps: Get-ChildItem -Path "HKLM:Software\Microsoft\Windows\CurrentVersion\Uninstall"
 
 notifications:
 - provider: Email
