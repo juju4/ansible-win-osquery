@@ -17,7 +17,6 @@ win_osquery_interval2: 3600
 win_osquery_upload_packs:
   - osquery-windows-pack
   - osquery-windows-snapshots-pack
-  - osquery-windows-compliance-pack
   - windows-hardening
 win_osquery_packs:
   - "osquery-monitoring"
@@ -30,7 +29,6 @@ win_osquery_packs:
   - windows-hardening
   - "osquery-windows-pack"
   - "osquery-windows-snapshots-pack"
-  - "osquery-windows-compliance-pack"
 win_osquery_fetch_evtlogs: true
 ## currently only chocolatey release
 win_osquery_url: ''
