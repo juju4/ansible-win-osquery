@@ -79,10 +79,10 @@
     - name: Enable Windows Event Log support
       win_command: wevtutil im C:\ProgramData\osquery\osquery.man
 
-    - name: Check WINEVT osquery channel configuration
-      win_command: "wevtutil gl \"osquery\""
-      changed_when: false
-      register: evtosquery
+#    - name: Check WINEVT osquery channel configuration
+#      win_command: "wevtutil gl \"osquery\""
+#      changed_when: false
+#      register: evtosquery
 
 # FIXME! not working
     - name: WINEVT osquery Channel Event Log size review
@@ -91,7 +91,7 @@
         value: MaxSize
         datatype: dword
         data: "{{ win_eventlog_maxsize }}"
-      when: "'maxsize: {{ win_eventlog_maxsize }}' not in evtosquery.stdout"
+#      when: "'maxsize: {{ win_eventlog_maxsize }}' not in evtosquery.stdout"
 
     - name: WINEVT Channels Event Log retention review
       win_regedit:
@@ -99,19 +99,19 @@
         value: Retention
         datatype: dword
         data: "{{ win_eventlog_retention }}"
-      when: "'retention: false' not in evtosquery.stdout"
+#      when: "'retention: false' not in evtosquery.stdout"
 
-    - name: Check WINEVT osquery channel configuration
-      win_command: "wevtutil gl \"osquery\""
-      changed_when: false
+#    - name: Check WINEVT osquery channel configuration
+#      win_command: "wevtutil gl \"osquery\""
+#      changed_when: false
 
-    - name: WINEVT osquery channel configuration - wevtutil
-      win_command: "wevtutil sl \"osquery\" /ms:{{ win_eventlog_maxsize }} /rt:false /ab:false"
-      when: "'maxsize: {{ win_eventlog_maxsize }}' not in evtosquery.stdout"
+#    - name: WINEVT osquery channel configuration - wevtutil
+#      win_command: "wevtutil sl \"osquery\" /ms:{{ win_eventlog_maxsize }} /rt:false /ab:false"
+#      when: "'maxsize: {{ win_eventlog_maxsize }}' not in evtosquery.stdout"
 
-    - name: Check WINEVT osquery channel configuration
-      win_command: "wevtutil gl \"osquery\""
-      changed_when: false
+#    - name: Check WINEVT osquery channel configuration
+#      win_command: "wevtutil gl \"osquery\""
+#      changed_when: false
 
     - name: Add task marker
       win_file:
