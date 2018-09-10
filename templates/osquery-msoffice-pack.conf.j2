@@ -60,7 +60,7 @@
       "description" : "Check MsOffice DDE state - DisableEmbeddedFiles"
     },
     "EquationEditor1": {
-      "query" : "select * from registry where (key like 'HKEY_USERS\\%\\SOFTWARE\\Microsoft\\Office\\%\\Common\\COM Compatibility\\{0002CE02-0000-0000-C000-000000000046}' or key like 'HKEY_USERS\\%\\SOFTWARE\\Wow6432Node\\Microsoft\\Office\\{{ win_msoffice_version_reg }}\\Common\\COM Compatibility\\{0002CE02-0000-0000-C000-000000000046}')",
+      "query" : "select * from registry where (key like 'HKEY_USERS\\%\\SOFTWARE\\Microsoft\\Office\\%\\Common\\COM Compatibility\\{0002CE02-0000-0000-C000-000000000046}' or key like 'HKEY_USERS\\%\\SOFTWARE\\Wow6432Node\\Microsoft\\Office\\%\\Common\\COM Compatibility\\{0002CE02-0000-0000-C000-000000000046}')",
       "interval": "{{ win_osquery_interval }}",
       "description" : "Check MsOffice EquationEditor state"
     },
@@ -138,7 +138,7 @@
       "description" : "Check MsOffice DDE state - DisableEmbeddedFiles"
     },
     "EquationEditor1": {
-      "query" : "select * from registry where (key like 'HKEY_USERS\\%\\SOFTWARE\\Microsoft\\Office\\%\\Common\\COM Compatibility\\{0002CE02-0000-0000-C000-000000000046}' or key like 'HKEY_USERS\\%\\SOFTWARE\\Wow6432Node\\Microsoft\\Office\\{{ win_msoffice_version_reg }}\\Common\\COM Compatibility\\{0002CE02-0000-0000-C000-000000000046}')",
+      "query" : "select * from registry where (key like 'HKEY_USERS\\%\\SOFTWARE\\Microsoft\\Office\\%\\Common\\COM Compatibility\\{0002CE02-0000-0000-C000-000000000046}' or key like 'HKEY_USERS\\%\\SOFTWARE\\Wow6432Node\\Microsoft\\Office\\%\\Common\\COM Compatibility\\{0002CE02-0000-0000-C000-000000000046}')",
       "interval": "{{ win_osquery_snapshot_interval }}",
       "snapshot": true,
       "description" : "Check MsOffice EquationEditor state"
