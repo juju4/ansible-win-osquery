@@ -17,7 +17,7 @@ win_osquery_interval2: 3600
 win_osquery_upload_packs:
   - osquery-windows-pack
   - osquery-windows-snapshots-pack
-  - windows-hardening
+  - osquery-msoffice-pack
 win_osquery_packs:
   - "osquery-monitoring"
 #  - "incident-response"
@@ -29,11 +29,12 @@ win_osquery_packs:
   - windows-hardening
   - "osquery-windows-pack"
   - "osquery-windows-snapshots-pack"
+  - osquery-msoffice-pack
 win_osquery_fetch_evtlogs: true
 ## currently only chocolatey release
 win_osquery_url: ''
-## full queries snapshot 1/week (maximum from code)
-win_osquery_snapshot_interval: 604800
+## 1d, else full queries snapshot 1/week (maximum from code)
+win_osquery_snapshot_interval: 86400
 win_osquery_snapshot_interval2: 604800
 
 ## making schedule query faster to have logs faster...
