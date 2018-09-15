@@ -27,7 +27,11 @@
     },
     "DownloadRestrictions": {
       "query" : "select * from registry where key like 'HKEY_USERS\\%\\SOFTWARE\\Policies\\Google\\Chrome' and name = 'DownloadRestrictions';",
+{% if osquery_testing %}
+      "interval": "20",
+{% else %}
       "interval": "{{ win_osquery_interval }}",
+{% endif %}
       "description" : "Check DownloadRestrictions"
     },
     "ExtensionInstallBlacklist": {

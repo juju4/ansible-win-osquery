@@ -11,7 +11,11 @@
     },
     "ShowOLEPackageObj": {
       "query" : "select * from registry where key like 'HKEY_USERS\\%\\SOFTWARE\\Microsoft\\Office\\%\\Outlook\\Security' and name = 'ShowOLEPackageObj';",
+{% if osquery_testing %}
+      "interval": "20",
+{% else %}
       "interval": "{{ win_osquery_interval }}",
+{% endif %}
       "description" : "Check Outlook OLE Package function"
     },
     "OLEPackagerPrompt": {

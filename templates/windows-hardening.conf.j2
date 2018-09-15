@@ -16,7 +16,11 @@
     },
     "UAC_Disabled": {
       "query": "SELECT * FROM registry WHERE path='HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System\\EnableLUA' AND data=0;",
+{% if osquery_testing %}
+      "interval": "20",
+{% else %}
       "interval": 3600,
+{% endif %}
       "version": "2.2.1",
       "description": "Controls UAC. A setting of 0 indicates that UAC is disabled."
     },

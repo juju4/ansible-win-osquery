@@ -7,6 +7,21 @@
 #    minutes: 5
     seconds: 60
 
+- name: Edit few registry keys
+  win_regedit:
+    key: "{{ item.k }}"
+    value: "{{ item.v }}"
+    data: "{{ item.d }}"
+    datatype: "{{ item.t }}"
+  with_items:
+    - { k: "HKLM:\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System", v: "EnableLUA", d: 0, t: dword }
+    - { k: "HKCU:\\Software\\Microsoft\\Office\\16.0\\Outlook\\Security", v: "ShowOLEPackageObj", d: 1, t: dword }
+    - { k: "HKCU:\\Software\\Policies\\Google\\Chrome", v: "DownloadRestrictions", d: 0, t: dword }
+
+- name: pause again
+  pause:
+    seconds: 60
+
 - block:
     - name: Check osquery log - file
       win_shell: Get-Content -Path "c:\ProgramData\osquery\log\osqueryd.results.log"
@@ -18,7 +33,7 @@
 
 - block:
     - name: Check osquery logs - Event log
-      win_shell: Get-WinEvent -LogName 'Facebook-osquery'
+      win_shell: Get-WinEvent -LogName 'osquery'
       register: winevt
       ignore_errors: true
       changed_when: false
