@@ -10,6 +10,17 @@ win_osquery_enable_winevtx_logging: true
 win_eventlog_maxsize: 315801600
 win_eventlog_retention: 0
 
+win_osquery_watch_process: true
+win_osquery_watch_network: true
+win_osquery_watch_registry: true
+win_osquery_watch_wmi: true
+win_osquery_watch_autoexec: true
+# the following are included in autoexec, choose what you prefer
+win_osquery_watch_drivers: false
+win_osquery_watch_services: false
+win_osquery_watch_startups: false
+win_osquery_watch_schtasks: false
+
 # interval for templates pack, either 5min, 1h. adapt depending on your context
 win_osquery_interval: 300
 win_osquery_interval2: 3600
@@ -18,6 +29,7 @@ win_osquery_upload_packs:
   - osquery-windows-pack
   - osquery-windows-snapshots-pack
   - osquery-msoffice-pack
+  - performance-metrics
 win_osquery_packs:
   - "osquery-monitoring"
 #  - "incident-response"
@@ -30,7 +42,10 @@ win_osquery_packs:
   - "osquery-windows-pack"
   - "osquery-windows-snapshots-pack"
   - osquery-msoffice-pack
+  - performance-metrics
 win_osquery_fetch_evtlogs: true
+# list exact process name of tools you want to watch (security tools, AV, EDR, backup...)
+win_osquery_tool_perfwatch: []
 ## currently only chocolatey release
 win_osquery_url: ''
 ## 1d, else full queries snapshot 1/week (maximum from code)
