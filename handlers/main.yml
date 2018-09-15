@@ -1,6 +1,11 @@
 ---
 
 - name: Restart osqueryd
-  win_service:
-    name: osqueryd
-    state: restarted
+## FIXME! Service 'osqueryd' is not installed, need to set 'path' to create a new service
+#  win_service:
+#    name: osqueryd
+#    state: restarted
+  win_shell: "{{ item }}"
+  with_items:
+    - "c:\\ProgramData\\osquery\\manage-osqueryd.ps1 -stop"
+    - "c:\\ProgramData\\osquery\\manage-osqueryd.ps1 -start"
