@@ -1,2 +1,6 @@
 ---
 
+- name: Restart osqueryd
+  win_service:
+    name: osqueryd
+    state: restarted

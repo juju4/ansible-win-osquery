@@ -28,6 +28,8 @@
     backup: yes
   with_items: "{{ win_osquery_upload_packs }}"
   register: conf1
+  notify:
+    - Restart osqueryd
 
 - name: Configure osqueryd
   win_template:
@@ -35,12 +37,16 @@
 #    dest: "%ProgramData%\\osquery\\osquery.conf"
     dest: "c:\\ProgramData\\osquery\\osquery.conf"
   register: conf2
+  notify:
+    - Restart osqueryd
 
 - name: Configure osqueryd flags
   win_template:
     src: "{{ win_osquery_flags_template }}"
     dest: "c:\\ProgramData\\osquery\\osquery.flags"
   register: conf3
+  notify:
+    - Restart osqueryd
 
 - name: update osqueryd.exe path
   win_template:
@@ -78,6 +84,8 @@
 
     - name: Enable Windows Event Log support
       win_command: wevtutil im C:\ProgramData\osquery\osquery.man
+      notify:
+        - Restart osqueryd
 
 #    - name: Check WINEVT osquery channel configuration
 #      win_command: "wevtutil gl \"osquery\""
@@ -125,6 +133,8 @@
 - block:
     - name: Disable Windows Event Log support
       win_command: wevtutil um C:\ProgramData\osquery\osquery.man
+      notify:
+        - Restart osqueryd
     - name: Add task marker
       win_file:
         path: c:\ProgramData\osquery\osquery_man_uninstalled
@@ -154,7 +164,7 @@
   when: not win_osqueryd_service_enable
 
 - name: Check osquery winevt log
-  win_shell: Get-WinEvent -LogName 'Facebook-osquery'
+  win_shell: Get-WinEvent -LogName 'osquery'
   register: winevtosquery
   ignore_errors: true
   changed_when: false
