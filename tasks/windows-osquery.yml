@@ -61,8 +61,8 @@
     rights: "{{ item.r }}"
     type: "{{ item.t }}"
     state: "{{ item.s }}"
-    inherit: 'None'
-    propagation: 'InheritOnly'
+    inherit: 'ContainerInherit, ObjectInherit'
+    propagation: 'None'
   with_items:
     - { p: 'C:\ProgramData\osquery', u: 'Users', r: write, t: allow, s: absent }
     - { p: 'C:\ProgramData\osquery\certs', u: 'Users', r: write, t: allow, s: absent }
