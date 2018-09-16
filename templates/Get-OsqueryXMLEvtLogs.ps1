@@ -15,12 +15,18 @@ ForEach ($Event in $Events) {
     }
 }
 
+Write-Verbose "==> Querying 1 osquery event for structure"
 $Event1 = Get-WinEvent -FilterHashtable @{Logname='osquery';Id=2} -MaxEvents 1
+Write-Verbose "==> format-list"
 $Event1 | Format-List *
+Write-Verbose "==> properties"
 $Event1.Properties
 $Event1XML = [xml]$Event1.ToXml()
+Write-Verbose "==> XML Data"
 $Event1XML.Event.EventData.Data
+Write-Verbose "==> XML Value"
+$Event1XML.Event.EventData.Data.Value
 
 # View the results with your favorite output method
 $Events | Export-Csv c:\osquery-events.csv
-$Events
+$Events | Ft -autosize -wrap
