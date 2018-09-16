@@ -57,6 +57,12 @@
     dest: "c:\\ProgramData\\osquery\\manage-osqueryd.ps1"
     backup: yes
 
+- name: Remove permissions inheritance on osquery directories
+  win_acl_inheritance:
+    path: 'C:\ProgramData\osquery'
+    reorganize: yes
+    state: absent
+
 - name: Restrict permissions for Users on osquery directories
   win_acl:
     path: "{{ item.p }}"
