@@ -137,6 +137,8 @@ on_finish:
     Get-WinEvent -FilterHashtable @{Logname='osquery'} | select-string -Pattern "EnableLUA" -AllMatches | Ft -Property Message -autosize -wrap
     Get-WinEvent -FilterHashtable @{Logname='osquery'} | select-string -Pattern "ShowOLEPackageObj" -AllMatches | Ft -Property Message -autosize -wrap
     Get-WinEvent -FilterHashtable @{Logname='osquery'} | select-string -Pattern "DownloadRestrictions" -AllMatches | Ft -Property Message -autosize -wrap
+    True
+- ps: |
     Get-WinEvent -FilterHashtable @{Logname='osquery'} | Select-Object -Property Message | ConvertFrom-Json | Select name | Group-Object name | Ft -autosize -wrap
     True
 
