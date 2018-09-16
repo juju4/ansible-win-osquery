@@ -68,6 +68,7 @@
     - { p: 'C:\ProgramData\osquery\certs', u: 'BUILTIN\Users', r: write, t: allow, s: absent }
     - { p: 'C:\ProgramData\osquery\log', u: 'BUILTIN\Users', r: 'read,write', t: allow, s: absent }
     - { p: 'C:\ProgramData\osquery\packs', u: 'BUILTIN\Users', r: write, t: allow, s: absent }
+    - { p: 'C:\ProgramData\osquery\osquery.db', u: 'BUILTIN\Users', r: write, t: allow, s: absent }
 
 # https://github.com/facebook/osquery/pull/3887
 # https://osquery.readthedocs.io/en/stable/installation/install-windows/#enabling-windows-event-log-support
