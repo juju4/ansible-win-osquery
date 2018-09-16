@@ -30,6 +30,7 @@
   register: conf1
   notify:
     - Restart osqueryd
+    - Restart osqueryd - script
 
 - name: Configure osqueryd
   win_template:
@@ -39,6 +40,7 @@
   register: conf2
   notify:
     - Restart osqueryd
+    - Restart osqueryd - script
 
 - name: Configure osqueryd flags
   win_template:
@@ -47,6 +49,7 @@
   register: conf3
   notify:
     - Restart osqueryd
+    - Restart osqueryd - script
 
 - name: update osqueryd.exe path
   win_template:
@@ -86,6 +89,7 @@
       win_command: wevtutil im C:\ProgramData\osquery\osquery.man
       notify:
         - Restart osqueryd
+        - Restart osqueryd - script
 
 #    - name: Check WINEVT osquery channel configuration
 #      win_command: "wevtutil gl \"osquery\""
@@ -135,6 +139,7 @@
       win_command: wevtutil um C:\ProgramData\osquery\osquery.man
       notify:
         - Restart osqueryd
+        - Restart osqueryd - script
     - name: Add task marker
       win_file:
         path: c:\ProgramData\osquery\osquery_man_uninstalled
