@@ -32,8 +32,13 @@
   when: not win_osquery_enable_winevtx_logging
 
 - block:
+    - name: upload Get-OsqueryXMLEvtLogs.ps1
+      win_template:
+        src: Get-OsqueryXMLEvtLogs.ps1
+        dest: c:\ProgramData\osquery\Get-OsqueryXMLEvtLogs.ps1
     - name: Check osquery logs - Event log
-      win_shell: Get-WinEvent -LogName 'osquery'
+      #win_shell: Get-WinEvent -LogName 'osquery'
+      win_shell: c:\ProgramData\osquery\Get-OsqueryXMLEvtLogs.ps1
       register: winevt
       ignore_errors: true
       changed_when: false
