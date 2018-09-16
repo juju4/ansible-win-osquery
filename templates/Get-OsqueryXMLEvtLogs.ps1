@@ -29,4 +29,4 @@ $Event1XML.Event.EventData.Data.Value
 
 # View the results with your favorite output method
 $Events | Export-Csv c:\osquery-events.csv
-$Events | Ft -autosize -wrap
+$Events | Ft -Property Message -autosize -wrap
