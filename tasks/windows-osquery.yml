@@ -163,13 +163,6 @@
       ignore_errors: true
   when: not win_osqueryd_service_enable
 
-- name: Check osquery winevt log
-  win_shell: Get-WinEvent -LogName 'osquery'
-  register: winevtosquery
-  ignore_errors: true
-  changed_when: false
-- debug: var=winevtosquery.stdout_lines
-
 - name: Restrict permissions for Users on osquery directories - post first start
   win_acl:
     path: "{{ item.p }}"
