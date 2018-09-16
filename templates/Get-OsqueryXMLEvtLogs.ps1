@@ -15,6 +15,12 @@ ForEach ($Event in $Events) {
     }
 }
 
+$Event1 = Get-WinEvent -FilterHashtable @{Logname='osquery';Id=2} -MaxEvents 1
+$Event1 | Format-List *
+$Event1.Properties
+$Event1XML = [xml]$Event1.ToXml()
+$Event1XML.Event.EventData.Data
+
 # View the results with your favorite output method
 $Events | Export-Csv c:\osquery-events.csv
 $Events
