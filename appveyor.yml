@@ -132,6 +132,12 @@ on_finish:
 #- ps: Get-ChildItem -Path "HKLM:Software\Microsoft\Windows\CurrentVersion\Uninstall"
 - ps: Get-ChildItem -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WINEVT\Channels" -Include *osquery*
 - cmd: wevtutil gl osquery
+- ps:
+    Get-WinEvent -FilterHashtable @{Logname='osquery'} | select-string -Pattern "failed" -AllMatches | Ft -Property Message -autosize -wrap
+    Get-WinEvent -FilterHashtable @{Logname='osquery'} | select-string -Pattern "EnableLUA" -AllMatches | Ft -Property Message -autosize -wrap
+    Get-WinEvent -FilterHashtable @{Logname='osquery'} | select-string -Pattern "ShowOLEPackageObj" -AllMatches | Ft -Property Message -autosize -wrap
+    Get-WinEvent -FilterHashtable @{Logname='osquery'} | select-string -Pattern "DownloadRestrictions" -AllMatches | Ft -Property Message -autosize -wrap
+    Get-WinEvent -FilterHashtable @{Logname='osquery'} | Select-Object -Property Message | ConvertFrom-Json | Select name | Group-Object name | Ft -autosize -wrap
 
 notifications:
 - provider: Email
