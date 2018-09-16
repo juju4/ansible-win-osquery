@@ -29,6 +29,7 @@ win_osquery_upload_packs:
   - osquery-windows-pack
   - osquery-windows-snapshots-pack
   - osquery-msoffice-pack
+  - osquery-chrome-pack
   - performance-metrics
 win_osquery_packs:
   - "osquery-monitoring"
@@ -42,6 +43,7 @@ win_osquery_packs:
   - "osquery-windows-pack"
   - "osquery-windows-snapshots-pack"
   - osquery-msoffice-pack
+  - osquery-chrome-pack
   - performance-metrics
 win_osquery_fetch_evtlogs: true
 # list exact process name of tools you want to watch (security tools, AV, EDR, backup...)
