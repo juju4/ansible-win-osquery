@@ -64,14 +64,13 @@
     rights: "{{ item.r }}"
     type: "{{ item.t }}"
     state: "{{ item.s }}"
-    inherit: 'None'
-    propagation: 'InheritOnly'
+    inherit: 'ContainerInherit, ObjectInherit'
+    propagation: 'None'
   with_items:
-    - { p: 'C:\ProgramData\osquery', u: 'NT AUTHORITY\System', r: FullControl, t: allow, s: present }
-    - { p: 'C:\ProgramData\osquery', u: 'Administrators', r: FullControl, t: allow, s: present }
-    - { p: 'C:\ProgramData\osquery', u: 'Users', r: read, t: allow, s: present }
-    - { p: 'C:\ProgramData\osquery\certs', u: 'Users', r: 'read,write', t: deny, s: present }
-    - { p: 'C:\ProgramData\osquery\log', u: 'Users', r: 'read,write', t: deny, s: present }
+    - { p: 'C:\ProgramData\osquery', u: 'Users', r: write, t: allow, s: absent }
+    - { p: 'C:\ProgramData\osquery\certs', u: 'Users', r: write, t: allow, s: absent }
+    - { p: 'C:\ProgramData\osquery\log', u: 'Users', r: 'read,write', t: allow, s: absent }
+    - { p: 'C:\ProgramData\osquery\packs', u: 'Users', r: write, t: allow, s: absent }
 
 # https://github.com/facebook/osquery/pull/3887
 # https://osquery.readthedocs.io/en/stable/installation/install-windows/#enabling-windows-event-log-support
