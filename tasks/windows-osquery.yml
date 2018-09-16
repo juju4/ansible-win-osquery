@@ -68,7 +68,6 @@
     - { p: 'C:\ProgramData\osquery\certs', u: 'Users', r: write, t: allow, s: absent }
     - { p: 'C:\ProgramData\osquery\log', u: 'Users', r: 'read,write', t: allow, s: absent }
     - { p: 'C:\ProgramData\osquery\packs', u: 'Users', r: write, t: allow, s: absent }
-    - { p: 'C:\ProgramData\osquery\osquery.db', u: 'Users', r: write, t: allow, s: absent }
 
 # https://github.com/facebook/osquery/pull/3887
 # https://osquery.readthedocs.io/en/stable/installation/install-windows/#enabling-windows-event-log-support
@@ -170,3 +169,15 @@
   ignore_errors: true
   changed_when: false
 - debug: var=winevtosquery.stdout_lines
+
+- name: Restrict permissions for Users on osquery directories - post first start
+  win_acl:
+    path: "{{ item.p }}"
+    user: "{{ item.u }}"
+    rights: "{{ item.r }}"
+    type: "{{ item.t }}"
+    state: "{{ item.s }}"
+    inherit: 'None'
+    propagation: 'InheritOnly'
+  with_items:
+    - { p: 'C:\ProgramData\osquery\osquery.db', u: 'Users', r: write, t: allow, s: absent }
