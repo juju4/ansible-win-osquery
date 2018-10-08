@@ -145,7 +145,8 @@ on_finish:
     Get-Content c:\osquery-events.csv -ReadCount 1000 | foreach { $_ -match "failed" }
     True
 - ps: |
-    Get-Content c:\osquery-events.csv -ReadCount 1000 | foreach { $_ -match "\"pack_windows-hardening_UAC_Disabled\"" }
+    #Get-Content c:\osquery-events.csv -ReadCount 1000 | foreach { $_ -match "\"pack_windows-hardening_UAC_Disabled\"" }
+    Get-Content c:\osquery-events.csv -ReadCount 1000 | foreach { $_ -match "pack_windows-hardening_UAC_Disabled" }
     True
 - ps: |
     Get-Content c:\osquery-events.csv -ReadCount 1000 | foreach { $_ -match "\"pack_osquery-msoffice-pack_ShowOLEPackageObj\"" }
