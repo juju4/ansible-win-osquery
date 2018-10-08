@@ -145,13 +145,13 @@ on_finish:
     Get-Content c:\osquery-events.csv -ReadCount 1000 | foreach { $_ -match "failed" }
     True
 - ps: |
-    Get-Content c:\osquery-events.csv -ReadCount 1000 | foreach { $_ -match "EnableLUA" }
+    Get-Content c:\osquery-events.csv -ReadCount 1000 | foreach { $_ -match "\"pack_windows-hardening_UAC_Disabled\"" }
     True
 - ps: |
-    Get-Content c:\osquery-events.csv -ReadCount 1000 | foreach { $_ -match "pack_ShowOLEPackageObj" }
+    Get-Content c:\osquery-events.csv -ReadCount 1000 | foreach { $_ -match "\"pack_osquery-msoffice-pack_ShowOLEPackageObj\"" }
     True
 - ps: |
-    Get-Content c:\osquery-events.csv -ReadCount 1000 | foreach { $_ -match "DownloadRestrictions" }
+    Get-Content c:\osquery-events.csv -ReadCount 1000 | foreach { $_ -match "\"pack_osquery-chrome-pack_DownloadRestrictions\"" }
     True
 
 notifications:
