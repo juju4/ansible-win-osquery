@@ -141,6 +141,18 @@ on_finish:
 - ps: |
     Get-WinEvent -FilterHashtable @{Logname='osquery'} | Select-Object -Property Message | ConvertFrom-Json | Select name | Group-Object name | Ft -autosize -wrap
     True
+- ps: |
+    Get-Content c:\osquery-events.csv -ReadCount 1000 | foreach { $_ -match "failed" }
+    True
+- ps: |
+    Get-Content c:\osquery-events.csv -ReadCount 1000 | foreach { $_ -match "EnableLUA" }
+    True
+- ps: |
+    Get-Content c:\osquery-events.csv -ReadCount 1000 | foreach { $_ -match "pack_ShowOLEPackageObj" }
+    True
+- ps: |
+    Get-Content c:\osquery-events.csv -ReadCount 1000 | foreach { $_ -match "DownloadRestrictions" }
+    True
 
 notifications:
 - provider: Email
