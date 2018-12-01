@@ -228,67 +228,16 @@
 {% endif %}
 {% if win_osquery_fetch_evtlogs %}
     },
-// depends if you use Windows Event Forwarder or similar mechanisms. Arbitrary choice among many (also 7045,4663,5156,7040...)
-    "windows_events_sec_4688": {
-      "query" : "select * from windows_events where eventid=4688 and channel='Security';",
+{% for evt in win_osquery_fetch_evtlogs_list %}
+    "windows_events_{{ evt.n }}": {
+      "query" : "select * from windows_events where channel='{{ evt.ch }}' and (eventid={{ evt.id }});",
       "interval": "{{ win_osquery_interval2 }}",
       "platform": "windows",
-      "description" : "Matching Windows Event logs - A new process has been created"
-    },
-    "windows_events_sec_4624": {
-      "query" : "select * from windows_events where eventid=4624 and channel='Security';",
-      "interval": "{{ win_osquery_interval2 }}",
-      "platform": "windows",
-      "description" : "Matching Windows Event logs - An account was successfully logged on"
-    },
-    "windows_events_sec_4625": {
-      "query" : "select * from windows_events where eventid=4625 and channel='Security';",
-      "interval": "{{ win_osquery_interval2 }}",
-      "platform": "windows",
-      "description" : "Matching Windows Event logs - An account failed to log on"
-    },
-    "windows_events_sec_4698": {
-      "query" : "select * from windows_events where eventid=4698 and channel='Security';",
-      "interval": "{{ win_osquery_interval2 }}",
-      "platform": "windows",
-      "description" : "Matching Windows Event logs - A scheduled task was created"
-    },
-    "windows_events_sec_4697": {
-      "query" : "select * from windows_events where eventid=4697 and channel='Security';",
-      "interval": "{{ win_osquery_interval2 }}",
-      "platform": "windows",
-      "description" : "Matching Windows Event logs - A service was installed in the system"
-    },
-    "windows_events_sec_5140": {
-      "query" : "select * from windows_events where eventid=5140 and channel='Security';",
-      "interval": "{{ win_osquery_interval2 }}",
-      "platform": "windows",
-      "description" : "Matching Windows Event logs - A network share object was accessed"
-    },
-    "windows_events_sec_5145": {
-      "query" : "select * from windows_events where eventid=5145 and channel='Security';",
-      "interval": "{{ win_osquery_interval2 }}",
-      "platform": "windows",
-      "description" : "Matching Windows Event logs - A network share object was checked to see whether client can be granted desired access"
-    },
-    "windows_events_sec_4672": {
-      "query" : "select * from windows_events where eventid=4672 and channel='Security';",
-      "interval": "{{ win_osquery_interval2 }}",
-      "platform": "windows",
-      "description" : "Matching Windows Event logs - Special privileges assigned to new logon"
-    },
-    "windows_events_sec_4104": {
-      "query" : "select * from windows_events where eventid=4104 and channel='Security';",
-      "interval": "{{ win_osquery_interval2 }}",
-      "platform": "windows",
-      "description" : "Matching Windows Event logs - Microsoft Distributed Transaction Coordinator Service Installation and Setup"
-    },
-    "windows_events_sec_1000": {
-      "query" : "select * from windows_events where eventid=1000 and channel='Application';",
-      "interval": "{{ win_osquery_interval2 }}",
-      "platform": "windows",
-      "description" : "Matching Windows Event logs - Application Error"
-{% endif %}
+      "description" : "Matching Windows Event logs - {{ evt.d }}"
+    }{% if not loop.last %},{% endif %}
+{% endfor %}
+{% else %}
     }
+{% endif %}
   }
 }

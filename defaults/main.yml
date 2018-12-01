@@ -54,6 +54,55 @@ win_osquery_url: ''
 win_osquery_snapshot_interval: 86400
 win_osquery_snapshot_interval2: 604800
 
+# depends if you use Windows Event Forwarder or similar mechanisms. Arbitrary choice among many (also 7045,4663,5156,7040...)
+# https://www.malwarearchaeology.com/cheat-sheets/
+# https://static1.squarespace.com/static/552092d5e4b0661088167e5c/t/5b8f091c0ebbe8644d3a886c/1536100639356/Windows+ATT&CK_Logging+Cheat+Sheet_ver_Sept_2018.pdf
+win_osquery_fetch_evtlogs_list:
+  - { n: sec_4688, id: 4688, ch: Security, d: 'A new process has been created' }
+  - { n: sec_4624, id: 4624, ch: Security, d: 'An account was successfully logged on' }
+  - { n: sec_4625, id: 4625, ch: Security, d: 'An account failed to log on' }
+  - { n: sec_4698, id: 4698, ch: Security, d: 'A scheduled task was created' }
+# https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4697
+  - { n: sec_4697, id: 4697, ch: Security, d: 'A service was installed in the system' }
+  - { n: sec_5140, id: 5140, ch: Security, d: 'A network share object was accessed' }
+  - { n: sec_5145, id: 5145, ch: Security, d: 'A network share object was checked to see whether client can be granted desired access' }
+  - { n: sec_4672, id: 4672, ch: Security, d: 'Special privileges assigned to new logon' }
+  - { n: sec_4104, id: 4104, ch: Security, d: 'Microsoft Distributed Transaction Coordinator Service Installation and Setup' }
+  - { n: app_1000, id: 1000, ch: Application, d: 'Application Error' }
+# https://isc.sans.edu/forums/diary/Windows+Events+log+for+IRForensics+Part+2/21501/
+  - { n: sys_7030p, id: '7030 or eventid=7045', ch: System, d: 'A service was installed in the system' }
+# https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4720
+  - { n: sec_4720p, id: '4720 or eventid=4722 or eventid=4724 or eventid=4738', ch: Security, d: 'A user account was created' }
+# https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4732
+  - { n: sec_4732, id: 4732, ch: Security, d: 'A member was added to a security-enabled local group.' }
+
+  - { n: sec_1102, id: 1102, ch: Security, d: 'The audit log was cleared.' }
+  - { n: tsrcm_1056, id: 1056, ch: Microsoft-Windows-TerminalServices-RemoteConnectionManager, d: 'A new self signed certificate to be used for Terminal Server authentication on SSL connections was generated. = Enabling RDP?' }
+# https://www.techrepublic.com/article/how-to-track-down-usb-flash-drive-usage-in-windows-10s-event-viewer/ (non-default. 2003, 2004, 2006, 2010, 2100, 2101, 2105, 2106)
+# Windows Forensic Analysis Toolkit: Advanced Analysis Techniques for Windows 8 By Harlan Carvey: 10000, 10002; Windows-DriverFrameworks-UserMode 1003, 2003...A
+# https://df-stream.com/2014/01/the-windows-7-event-log-and-usb-device/
+  - { n: sys_7045p, id: '7045 or eventid=10000 or eventid=10001 or eventid=10100 or eventid=20002 or eventid=20003 or eventid=24576 or eventid=24577 or eventid=24579', ch: System, d: 'USB Device activity' }
+  - { n: fw_2003, id: 2003, ch: Firewall, d: 'A Windows Firewall setting in x profile has changed' }
+  - { n: applocker_8003, id: '8003 or eventid=8003 or eventid=8004 or eventid=8006 or eventid=8007', ch: Microsoft-Windows-AppLocker, d: '' }
+  - { n: emet_2, id: 2, ch: Application, d: 'EMET Detection and Block' }
+# https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-R2-and-2008/cc756308(v=ws.10)
+# https://social.technet.microsoft.com/Forums/lync/en-US/7e6d6f95-74cc-48f2-9d17-fae367efd976/service-control-manager-auditing-startstop-events-event-id-7035-or-similar-missing
+  - { n: sys_7036, id: 7036, ch: System, d: 'The %1 service entered the %2 state - Win2k8 only = service stopped?' }
+# stop service?
+  - { n: sec_, id: , ch: Security, d: '' }
+# https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4663
+  - { n: sec_4663, id: 4663, ch: Security, d: 'An attempt was made to access an object' }
+  - { n: sec_4703, id: 4703, ch: Security, d: 'A user right was adjusted. = possible Mimikatz?' }
+# https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-R2-and-2008/cc756386(v%3dws.10)
+  - { n: sys_7040, id: , ch: System, d: 'The start type of the %1 service was changed from %2 to %3.' }
+# Sysmon, https://docs.microsoft.com/en-us/sysinternals/downloads/sysmon
+  - { n: sysmon_1, id: 1, ch: Microsoft-Windows-Sysmon, d: 'Process creation' }
+  - { n: sysmon_3, id: 3, ch: Microsoft-Windows-Sysmon, d: 'Network connection' }
+  - { n: sysmon_8, id: 8, ch: Microsoft-Windows-Sysmon, d: 'CreateRemoteThread' }
+  - { n: sysmon_11, id: 11, ch: Microsoft-Windows-Sysmon, d: 'FileCreate' }
+  - { n: sysmon_13, id: 13, ch: Microsoft-Windows-Sysmon, d: 'RegistryEvent (Value Set)' }
+
+
 ## making schedule query faster to have logs faster...
 osquery_testing: false
 ## profiling?
