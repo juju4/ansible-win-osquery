@@ -212,6 +212,13 @@
       "snapshot": true,
       "description" : "Local system user group relationships."
     },
+    "win_user_groups2": {
+      "query": "select u.uid, u.gid, u.username, u.uuid, g.groupname, g.group_sid from users u, user_groups ug, groups g where u.uid = ug.uid and ug.gid = g = g.gid;",
+      "interval": "{{ win_osquery_snapshot_interval }}",
+      "platform": "windows",
+      "snapshot": true,
+      "description" : "Local system user group relationships."
+    },
     "win_users": {
       "query": "select * from users;",
       "interval": "{{ win_osquery_snapshot_interval }}",
