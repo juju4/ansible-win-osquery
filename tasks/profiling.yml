@@ -25,7 +25,7 @@
 
 - name: profiling
   win_command: >
-    python.exe .\\tools\\analysis\\profile.py --config {{ osquery_profiling_conf }}
+    python.exe .\\tools\\analysis\\profile.py --config {{ osquery_profiling_conf }} \
         --shell c:\\ProgramData\\osquery\\osqueryi.exe --count 1 --rounds 4
   args:
     chdir: c:\ProgramData\osquery\gitrepo
