@@ -1,0 +1,11 @@
+---
+
+- hosts: all
+  become_method: runas
+  vars:
+    - osquery_testing: true
+    - osquery_profiling: false
+    - win_osquery_extra_flags:
+        - '--disable_events'
+  roles:
+    - juju4.win-osquery
