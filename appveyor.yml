@@ -106,6 +106,7 @@ install:
 #- cmd: "%CYG_BASH% -lc 'ln -s /cygdrive/c/projects/ansible-win-osquery /etc/ansible/roles/juju4.win-osquery'"
 - cmd: "%CYG_BASH% -lc 'mkdir -p /etc/ansible/roles'"
 - cmd: "%CYG_BASH% -lc 'cp -R /cygdrive/c/projects/ansible-win-osquery /etc/ansible/roles/juju4.win-osquery'"
+- cmd: cinst -y inspec
 
 build: off
 test_script:
@@ -157,6 +158,7 @@ on_finish:
     #Get-Content c:\osquery-events.csv -ReadCount 1000 | foreach { $_ -match "\"pack_osquery-chrome-pack_DownloadRestrictions\"" }
     Get-Content c:\osquery-events.csv -ReadCount 1000 | foreach { $_ -match "pack_osquery-chrome-pack_DownloadRestrictions" }
     True
+- cmd: c:\opscode\inspec\bin\inspec.bat exec https://github.com/juju4/inspec-osquery/ || exit 0
 
 notifications:
 - provider: Email
