@@ -3,23 +3,24 @@
 ## https://osquery.io/downloads/
 ## https://www.facebook.com/notes/protect-the-graph/introducing-osquery-for-windows/1775110322729111/
 
-## FIXME! "ERROR: Exception calling "RemovableAccessRule" with "1" argument(s): "Some or all identity references could not be translated."
-##      https://github.com/facebook/osquery/blob/e8045f1dd33ee4ed3a424ba70e71c1ff07b2a6e9/tools/provision/chocolatey/osquery_utils.ps1#L36
-##      https://msdn.microsoft.com/en-us/library/windows/desktop/aa379649(v=vs.85).aspx
+## FIXME! "ERROR: Exception calling "RemovableAccessRule" with "1" argument(s):
+##      "Some or all identity references could not be translated."
+## https://github.com/facebook/osquery/blob/e8045f1dd33ee4ed3a424ba70e71c1ff07b2a6e9/tools/provision/chocolatey/osquery_utils.ps1#L36
+## https://msdn.microsoft.com/en-us/library/windows/desktop/aa379649(v=vs.85).aspx
 - name: Install osquery package with chocolatey
   win_chocolatey:
     name: osquery
 ## ansible 2.1+. better after configuration
 #    install_args: "/InstallService"
 #  ignore_errors: true
-  when: win_osquery_url == ''
+  when: not win_osquery_url
 
 - name: Install osquery from url
   win_package:
     path: "{{ win_osquery_url }}"
     product_id: '{A00B7823-A9A3-4577-A804-A07C43765AFD}'
     state: present
-  when: win_osquery_url != ''
+  when: win_osquery_url
 
 - name: update osquery windows packs
   win_template:
@@ -89,7 +90,7 @@
       win_copy:
         src: osquery.man
         dest: C:\ProgramData\osquery\osquery.man
-      when: win_osquery_url != ''
+      when: win_osquery_url
 
     - name: Enable Windows Event Log support
       win_command: wevtutil im C:\ProgramData\osquery\osquery.man
@@ -155,7 +156,9 @@
 - block:
 # https://github.com/ansible/ansible/issues/35661
     - name: validate osqueryd config
-      win_command: "c:\\ProgramData\\osquery\\osqueryi.exe --config_path c:\\ProgramData\\osquery\\osquery.conf --config_check --verbose"
+      win_command: >
+        c:\\ProgramData\\osquery\\osqueryi.exe --config_path c:\\ProgramData\\osquery\\osquery.conf
+            --config_check --verbose
     - name: Install and start osqueryd service
 #      win_shell: "%ProgramData%\\osquery\\manage-osqueryd.ps1 -install -start"
       win_shell: "{{ item }}"

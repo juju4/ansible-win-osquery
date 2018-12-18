@@ -24,7 +24,9 @@
   win_command: git.exe clone https://github.com/facebook/osquery.git c:\ProgramData\osquery\gitrepo
 
 - name: profiling
-  win_command: "python.exe .\\tools\\analysis\\profile.py --config {{ osquery_profiling_conf }} --shell c:\\ProgramData\\osquery\\osqueryi.exe --count 1 --rounds 4"
+  win_command: >
+    python.exe .\\tools\\analysis\\profile.py --config {{ osquery_profiling_conf }}
+        --shell c:\\ProgramData\\osquery\\osqueryi.exe --count 1 --rounds 4
   args:
     chdir: c:\ProgramData\osquery\gitrepo
   changed_when: false
