@@ -158,6 +158,21 @@ on_finish:
     #Get-Content c:\osquery-events.csv -ReadCount 1000 | foreach { $_ -match "\"pack_osquery-chrome-pack_DownloadRestrictions\"" }
     Get-Content c:\osquery-events.csv -ReadCount 1000 | foreach { $_ -match "pack_osquery-chrome-pack_DownloadRestrictions" }
     True
+- ps: |
+    Get-Content c:\osquery-events.csv -ReadCount 1000 | foreach { $_ -match "pack_win_autoexec" }
+    True
+- ps: |
+    Get-Content c:\osquery-events.csv -ReadCount 1000 | foreach { $_ -match "pack_win_etc_hosts" }
+    True
+- ps: |
+    Get-Content c:\osquery-events.csv -ReadCount 1000 | foreach { $_ -match "pack_win_services" }
+    True
+- ps: |
+    Get-Content c:\osquery-events.csv -ReadCount 1000 | foreach { $_ -match "pack_os_version" }
+    True
+- ps: |
+    Get-Content c:\osquery-events.csv -ReadCount 1000 | foreach { $_ -match "system_info" }
+    True
 - cmd: c:\opscode\inspec\bin\inspec.bat exec https://github.com/juju4/inspec-osquery/ || exit 0
 
 notifications:

@@ -5,7 +5,11 @@
   "queries": {
     "os_version": {
       "query" : "select * from os_version;",
+{% if osquery_testing %}
+      "interval": "20",
+{% else %}
       "interval": "{{ win_osquery_snapshot_interval }}",
+{% endif %}
       "snapshot": true,
       "description" : "A single row containing the operating system name and version."
     },
