@@ -1,3 +1,8 @@
 # {{ ansible_managed }}
 --config_path=\ProgramData\osquery\osquery.conf
 --pidfile=\ProgramData\osquery\osqueryd.pid
+{% if win_osquery_extra_flags %}
+{% for f in win_osquery_extra_flags %}
+{{ f }}
+{% endfor %}
+{% endif %}
