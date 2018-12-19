@@ -90,7 +90,7 @@
       win_copy:
         src: osquery.man
         dest: C:\ProgramData\osquery\osquery.man
-      when: win_osquery_url
+      when: win_osquery_url != ''
 
     - name: Enable Windows Event Log support
       win_command: wevtutil im C:\ProgramData\osquery\osquery.man
