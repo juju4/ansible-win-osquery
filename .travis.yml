@@ -3,7 +3,7 @@ dist: trusty
 language: python
 python: "2.7"
 before_install:
- - ln -s ansible-win-osquery ../juju4.win-osquery
+ - ln -s ansible-win-osquery ../juju4.win_osquery
 install:
   - sudo apt-get install libxml2-utils
   - pip install ansible ansible-lint

@@ -7,4 +7,4 @@
     - osquery_testing: true
     - osquery_profiling: false
   roles:
-    - juju4.win-osquery
+    - juju4.win_osquery

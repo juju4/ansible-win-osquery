@@ -8,4 +8,4 @@
     - win_osquery_extra_flags:
         - '--disable_events'
   roles:
-    - juju4.win-osquery
+    - juju4.win_osquery
