@@ -4,11 +4,11 @@
   win_service:
     name: osquery daemon service
     state: restarted
-  when: win_osquery_url is not defined or win_osquery_url == ''
+  when: win_osquery_url is not defined or not win_osquery_url
 
 - name: Restart osqueryd - script
   win_shell: "{{ item }}"
   with_items:
     - "c:\\ProgramData\\osquery\\manage-osqueryd.ps1 -stop"
     - "c:\\ProgramData\\osquery\\manage-osqueryd.ps1 -start"
-  when: win_osquery_url is defined and win_osquery_url != ''
+  when: win_osquery_url is defined and win_osquery_url

@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  role_name: win-osquery
+  role_name: win_osquery
   author: juju4
   description: Windows osquery setup
   license: BSD

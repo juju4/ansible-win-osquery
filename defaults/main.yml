@@ -90,12 +90,12 @@ win_osquery_fetch_evtlogs_list:
 # https://social.technet.microsoft.com/Forums/lync/en-US/7e6d6f95-74cc-48f2-9d17-fae367efd976/service-control-manager-auditing-startstop-events-event-id-7035-or-similar-missing
   - { n: sys_7036, id: 7036, ch: System, d: 'The %1 service entered the %2 state - Win2k8 only = service stopped?' }
 # stop service?
-  - { n: sec_, id: , ch: Security, d: '' }
+  - { n: sec_, id: '', ch: Security, d: '' }
 # https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4663
   - { n: sec_4663, id: 4663, ch: Security, d: 'An attempt was made to access an object' }
   - { n: sec_4703, id: 4703, ch: Security, d: 'A user right was adjusted. = possible Mimikatz?' }
 # https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-R2-and-2008/cc756386(v%3dws.10)
-  - { n: sys_7040, id: , ch: System, d: 'The start type of the %1 service was changed from %2 to %3.' }
+  - { n: sys_7040, id: '', ch: System, d: 'The start type of the %1 service was changed from %2 to %3.' }
 # Sysmon, https://docs.microsoft.com/en-us/sysinternals/downloads/sysmon
   - { n: sysmon_1, id: 1, ch: Microsoft-Windows-Sysmon, d: 'Process creation' }
   - { n: sysmon_3, id: 3, ch: Microsoft-Windows-Sysmon, d: 'Network connection' }

@@ -20,7 +20,7 @@
     path: "{{ win_osquery_url }}"
     product_id: '{A00B7823-A9A3-4577-A804-A07C43765AFD}'
     state: present
-  when: win_osquery_url != ''
+  when: win_osquery_url
 
 - name: update osquery windows packs
   win_template:
@@ -90,7 +90,7 @@
       win_copy:
         src: osquery.man
         dest: C:\ProgramData\osquery\osquery.man
-      when: win_osquery_url != ''
+      when: win_osquery_url
 
     - name: Enable Windows Event Log support
       win_command: wevtutil im C:\ProgramData\osquery\osquery.man
@@ -164,7 +164,8 @@
       win_shell: "{{ item }}"
       with_items:
 #        - "PowerShell.exe -ExecutionPolicy Bypass -File c:\\ProgramData\\osquery\\manage-osqueryd.ps1 -install"
-        - "PowerShell.exe -ExecutionPolicy Bypass -File c:\\ProgramData\\osquery\\manage-osqueryd.ps1 -install -args '--flagfile \\ProgramData\\osquery\\osquery.flags'"
+        - "PowerShell.exe -ExecutionPolicy Bypass -File c:\\ProgramData\\osquery\\manage-osqueryd.ps1 -install
+            -args '--flagfile \\ProgramData\\osquery\\osquery.flags'"
         - "PowerShell.exe -ExecutionPolicy Bypass -File c:\\ProgramData\\osquery\\manage-osqueryd.ps1 -start"
       ignore_errors: true
   when: win_osqueryd_service_enable and (conf1.changed or conf2.changed or conf3.changed)
