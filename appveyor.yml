@@ -21,7 +21,7 @@ environment:
     CYG_SETUP: C:\cygwin64\setup-x86_64.exe
     CYG_CACHE: C:\cygwin64\var\cache\setup
     CYG_BASH: C:\cygwin64\bin\sh
-    ANSIBLE_VERSION: 2.7.0
+    ANSIBLE_VERSION: 2.7.5
     ANSIBLE_EXTRA_VARS:
     SUITE: default
   - TARGET: cygwin64
@@ -29,7 +29,7 @@ environment:
     CYG_SETUP: C:\cygwin64\setup-x86_64.exe
     CYG_CACHE: C:\cygwin64\var\cache\setup
     CYG_BASH: C:\cygwin64\bin\sh
-    ANSIBLE_VERSION: 2.7.0
+    ANSIBLE_VERSION: 2.7.5
     ANSIBLE_EXTRA_VARS:
     SUITE: default-msi
   - TARGET: cygwin64
@@ -37,7 +37,7 @@ environment:
     CYG_SETUP: C:\cygwin64\setup-x86_64.exe
     CYG_CACHE: C:\cygwin64\var\cache\setup
     CYG_BASH: C:\cygwin64\bin\sh
-    ANSIBLE_VERSION: 2.7.0
+    ANSIBLE_VERSION: 2.7.5
     ANSIBLE_EXTRA_VARS:
     SUITE: default-noevents
   - TARGET: cygwin64
@@ -45,7 +45,7 @@ environment:
     CYG_SETUP: C:\cygwin64\setup-x86_64.exe
     CYG_CACHE: C:\cygwin64\var\cache\setup
     CYG_BASH: C:\cygwin64\bin\sh
-    ANSIBLE_VERSION: 2.7.0
+    ANSIBLE_VERSION: 2.7.5
     ANSIBLE_EXTRA_VARS: "-e win_osquery_enable_winevtx_logging=false"
     SUITE: default
   - TARGET: cygwin64
@@ -53,7 +53,7 @@ environment:
     CYG_SETUP: C:\cygwin64\setup-x86_64.exe
     CYG_CACHE: C:\cygwin64\var\cache\setup
     CYG_BASH: C:\cygwin64\bin\sh
-    ANSIBLE_VERSION: 2.6.5
+    ANSIBLE_VERSION: 2.6.11
     ANSIBLE_EXTRA_VARS:
     SUITE: default
 matrix:
