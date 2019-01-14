@@ -1,4 +1,4 @@
-# {{ ansible_managed }}
+{{ ansible_managed | comment }}
 --config_path=\ProgramData\osquery\osquery.conf
 --pidfile=\ProgramData\osquery\osqueryd.pid
 {% if win_osquery_extra_flags %}

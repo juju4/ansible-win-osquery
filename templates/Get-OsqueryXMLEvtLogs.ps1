@@ -1,3 +1,4 @@
+{{ ansible_managed | comment }}
 # https://blogs.technet.microsoft.com/ashleymcglone/2013/08/28/powershell-get-winevent-xml-madness-getting-details-from-event-logs/
 # Grab the events from a DC
 $Events = Get-WinEvent -FilterHashtable @{Logname='osquery';Id=2}
