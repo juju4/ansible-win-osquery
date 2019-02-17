@@ -161,7 +161,7 @@
       "snapshot": true,
       "description" : "list products as they are installed by Windows Installer."
     },
-{% if win_osquery_watch_registry %}
+{% if win_osquery_watch_registry_snapshot %}
     "win_registry": {
       "query" : "select * from registry;",
       "interval": "{{ win_osquery_snapshot_interval2 }}",

@@ -13,6 +13,7 @@ win_eventlog_retention: 0
 win_osquery_watch_process: true
 win_osquery_watch_network: true
 win_osquery_watch_registry: true
+win_osquery_watch_registry_snapshot: false
 win_osquery_watch_wmi: true
 win_osquery_watch_autoexec: true
 # the following are included in autoexec, choose what you prefer
