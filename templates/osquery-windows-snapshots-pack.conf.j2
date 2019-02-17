@@ -1,11 +1,15 @@
-// {{ ansible_managed }}
+{{ ansible_managed | comment('c') }}
 // https://osquery.io/docs/tables/#windows
 {
   "platform": "windows",
   "queries": {
     "os_version": {
       "query" : "select * from os_version;",
+{% if osquery_testing %}
+      "interval": "20",
+{% else %}
       "interval": "{{ win_osquery_snapshot_interval }}",
+{% endif %}
       "snapshot": true,
       "description" : "A single row containing the operating system name and version."
     },

@@ -1,6 +1,6 @@
 version: 0.1.x.{build}
 skip_commits:
-  message: /^\(?doc\)?.*/
+  message: /^\(?doc|travis\)?.*/
 clone_depth: 10
 init:
 - SET
@@ -16,38 +16,46 @@ environment:
   CYGWIN: winsymlinks:nativestrict
 
   matrix:
-  - TARGET: cygwin64
-    CYG_ROOT: C:\cygwin64
-    CYG_SETUP: C:\cygwin64\setup-x86_64.exe
-    CYG_CACHE: C:\cygwin64\var\cache\setup
-    CYG_BASH: C:\cygwin64\bin\sh
-    ANSIBLE_VERSION: 2.7.0
+  - SUITE: default
+    ANSIBLE_VERSION: 2.7.5
     ANSIBLE_EXTRA_VARS:
-    SUITE: default
-  - TARGET: cygwin64
+    TARGET: cygwin64
     CYG_ROOT: C:\cygwin64
     CYG_SETUP: C:\cygwin64\setup-x86_64.exe
     CYG_CACHE: C:\cygwin64\var\cache\setup
     CYG_BASH: C:\cygwin64\bin\sh
-    ANSIBLE_VERSION: 2.7.0
+  - SUITE: default-msi
+    ANSIBLE_VERSION: 2.7.5
     ANSIBLE_EXTRA_VARS:
-    SUITE: default-msi
-  - TARGET: cygwin64
+    TARGET: cygwin64
     CYG_ROOT: C:\cygwin64
     CYG_SETUP: C:\cygwin64\setup-x86_64.exe
     CYG_CACHE: C:\cygwin64\var\cache\setup
     CYG_BASH: C:\cygwin64\bin\sh
-    ANSIBLE_VERSION: 2.7.0
+  - SUITE: default-noevents
+    ANSIBLE_VERSION: 2.7.5
+    ANSIBLE_EXTRA_VARS:
+    TARGET: cygwin64
+    CYG_ROOT: C:\cygwin64
+    CYG_SETUP: C:\cygwin64\setup-x86_64.exe
+    CYG_CACHE: C:\cygwin64\var\cache\setup
+    CYG_BASH: C:\cygwin64\bin\sh
+  - SUITE: default
+    ANSIBLE_VERSION: 2.7.5
     ANSIBLE_EXTRA_VARS: "-e win_osquery_enable_winevtx_logging=false"
-    SUITE: default
-  - TARGET: cygwin64
+    TARGET: cygwin64
     CYG_ROOT: C:\cygwin64
     CYG_SETUP: C:\cygwin64\setup-x86_64.exe
     CYG_CACHE: C:\cygwin64\var\cache\setup
     CYG_BASH: C:\cygwin64\bin\sh
-    ANSIBLE_VERSION: 2.6.5
+  - SUITE: default
+    ANSIBLE_VERSION: 2.6.11
     ANSIBLE_EXTRA_VARS:
-    SUITE: default
+    TARGET: cygwin64
+    CYG_ROOT: C:\cygwin64
+    CYG_SETUP: C:\cygwin64\setup-x86_64.exe
+    CYG_CACHE: C:\cygwin64\var\cache\setup
+    CYG_BASH: C:\cygwin64\bin\sh
 matrix:
   fast_finish: true
 
@@ -102,10 +110,9 @@ install:
 #- cmd: "%CYG_BASH% -lc env"
 #- cmd: "%CYG_BASH% -lc 'find -ls'"
 - cmd: "%CYG_BASH% -lc 'ansible -i /cygdrive/c/projects/ansible-win-osquery/test/appveyor/inventory -m win_ping -vvv localhost'"
-# NOK
-#- cmd: "%CYG_BASH% -lc 'ln -s /cygdrive/c/projects/ansible-win-osquery /etc/ansible/roles/juju4.win-osquery'"
 - cmd: "%CYG_BASH% -lc 'mkdir -p /etc/ansible/roles'"
-- cmd: "%CYG_BASH% -lc 'cp -R /cygdrive/c/projects/ansible-win-osquery /etc/ansible/roles/juju4.win-osquery'"
+- cmd: "%CYG_BASH% -lc 'cp -R /cygdrive/c/projects/ansible-win-osquery /etc/ansible/roles/juju4.win_osquery'"
+- cmd: cinst -y inspec
 
 build: off
 test_script:
@@ -157,6 +164,22 @@ on_finish:
     #Get-Content c:\osquery-events.csv -ReadCount 1000 | foreach { $_ -match "\"pack_osquery-chrome-pack_DownloadRestrictions\"" }
     Get-Content c:\osquery-events.csv -ReadCount 1000 | foreach { $_ -match "pack_osquery-chrome-pack_DownloadRestrictions" }
     True
+- ps: |
+    Get-Content c:\osquery-events.csv -ReadCount 1000 | foreach { $_ -match "pack_win_autoexec" }
+    True
+- ps: |
+    Get-Content c:\osquery-events.csv -ReadCount 1000 | foreach { $_ -match "pack_win_etc_hosts" }
+    True
+- ps: |
+    Get-Content c:\osquery-events.csv -ReadCount 1000 | foreach { $_ -match "pack_win_services" }
+    True
+- ps: |
+    Get-Content c:\osquery-events.csv -ReadCount 1000 | foreach { $_ -match "pack_os_version" }
+    True
+- ps: |
+    Get-Content c:\osquery-events.csv -ReadCount 1000 | foreach { $_ -match "system_info" }
+    True
+- cmd: c:\opscode\inspec\bin\inspec.bat exec https://github.com/juju4/inspec-osquery/archive/master.tar.gz || exit 0
 
 notifications:
 - provider: Email
