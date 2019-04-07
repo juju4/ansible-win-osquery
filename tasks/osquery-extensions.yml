@@ -1,0 +1,18 @@
+---
+
+- debug: var=win_osquery_extensions
+
+- name: retrieve osquery extensions from url
+  win_get_url:
+    url: "{{ item }}"
+    dest: "c:\\ProgramData\\osquery\\{{ item | basename | regex_replace('?.*$', '') }}"
+  with_items: "{{ win_osquery_extensions }}"
+
+- name: add extensions to extensions.load
+  lineinfile:
+    dest: "c:\\ProgramData\\osquery\\extensions.load"
+    line: "{{ item | basename | regex_replace('?.*$', '') }}"
+  with_items: "{{ win_osquery_extensions }}"
+  notify:
+    - Restart osqueryd
+    - Restart osqueryd - script

@@ -1,0 +1,765 @@
+{
+
+ "schedule" : {
+
+    "win_process_events": {
+      "query": "select * from win_process_events where action='PROC_CREATE';",
+      "interval": 30,
+      "platform": "windows",
+      "version": "2.9.0",
+      "description": "Windows Process Events",
+      "value": "Process Events"
+    },
+
+    "win_removable_media_events": {
+      "query": "select * from win_removable_media_events;",
+      "interval": 240,
+      "platform": "windows",
+      "version": "2.9.0",
+      "description": "Removable Media Events",
+      "value": "Removable media Events"
+    },
+	
+    "win_epp_table": {
+      "query": "select * from win_epp_table;",
+      "interval": 360,
+      "platform": "windows",
+      "version": "2.9.0",
+      "description": "Endpoint Products Status",
+      "value": "Endpoint Products Status"
+    },
+	
+    "win_http_events": {
+      "query": "select * from win_http_events;",
+      "interval": 600,
+      "platform": "windows",
+      "version": "2.9.0",
+      "description": "Windows HTTP Events",
+      "value": "Windows HTTP Events"
+    },
+    
+   "win_socket_events": {
+      "query": "select * from win_socket_events;",
+      "interval": 240,
+      "platform": "windows",
+      "version": "2.9.0",
+      "description": "Windows Socket Events",
+      "value": "Windows Socket Events"
+    },
+      
+    "win_dns_events": {
+      "query": "select * from win_dns_events;",
+      "interval": 120,
+      "platform": "windows",
+      "version": "2.9.0",
+      "description": "Windows DNS Events",
+      "value": "Dns events"
+    },
+    
+    "win_dns_response_events": {
+      "query": "select * from win_dns_response_events;",
+      "interval": 160,
+      "platform": "windows",
+      "version": "2.9.0",
+      "description": "Windows DNS Response Events",
+      "value": "Dns Response events"
+    }
+  },
+
+	"win_include_paths" : {
+		"all_files": [
+		  "*"
+		]
+	},
+
+	"win_logger_plugin": {
+		"plugins": 
+		[
+				{
+					"logger_name": "tail",
+					"logger_watch_files": 
+					[
+						{
+							"watch_file_path": "C:\\temp\\tail.txt"
+						},
+
+						{
+							"watch_file_path": "C:\\temp\\tail2.txt",
+							"file_regex_pattern" : ["(.*) (\\d+): \\[([^\\]]+)\\] (.*)", "((.|\\r\\n)*)(secret2)(.*)"]
+						}			
+				     ]
+				}	
+		]
+	},
+
+
+	"plgx_event_filters": {
+		"win_process_events": {	
+			"cmdline": {
+				"exclude" : {
+					"values": 
+					[
+					"C:\\Windows\\system32\\DllHost.exe /Processid*",
+					"C:\\Windows\\system32\\SearchIndexer.exe /Embedding",
+					"C:\\windows\\system32\\wermgr.exe -queuereporting",
+					"\"C:\\Windows\\system32\\wermgr.exe\" \"-queuereporting_svc\"*",
+					"C:\\WINDOWS\\system32\\wermgr.exe -upload",
+					"\\SystemRoot\\System32\\smss.exe",
+					"\\??\\C:\\WINDOWS\\system32\\autochk.exe *",
+					"C:\\Windows\\system32\\wbem\\wmiprvse.exe -Embedding*",
+					"C:\\Windows\\system32\\wbem\\wmiprvse.exe -secured -Embedding*",
+					"C:\\Windows\\system32\\svchost.exe -k appmodel -s StateRepository",
+					"C:\\Windows\\system32\\svchost.exe -k appmodel",
+					"C:\\WINDOWS\\system32\\svchost.exe -k appmodel -p -s tiledatamodelsvc",
+					"C:\\Windows\\system32\\svchost.exe -k camera -s FrameServer",
+					"C:\\Windows\\system32\\svchost.exe -k dcomlaunch -s LSM",
+					"C:\\Windows\\system32\\svchost.exe -k dcomlaunch -s PlugPlay",
+					"C:\\Windows\\system32\\svchost.exe -k defragsvc",
+					"C:\\Windows\\system32\\svchost.exe -k devicesflow -s DevicesFlowUserSvc",
+					"C:\\Windows\\system32\\svchost.exe -k imgsvc",
+					"C:\\Windows\\system32\\svchost.exe -k localService -s EventSystem",
+					"C:\\Windows\\system32\\svchost.exe -k localService -s bthserv",
+					"C:\\Windows\\system32\\svchost.exe -k localService -s nsi",
+					"C:\\Windows\\system32\\svchost.exe -k localService -s w32Time",
+					"C:\\Windows\\system32\\svchost.exe -k localServiceAndNoImpersonation",
+					"C:\\Windows\\system32\\svchost.exe -k localServiceNetworkRestricted -s Dhcp",
+					"C:\\Windows\\system32\\svchost.exe -k localServiceNetworkRestricted -s EventLog",
+					"C:\\Windows\\system32\\svchost.exe -k localServiceNetworkRestricted -s TimeBrokerSvc",
+					"C:\\Windows\\system32\\svchost.exe -k localServiceNetworkRestricted -s WFDSConMgrSvc",
+					"C:\\Windows\\system32\\svchost.exe -k localServiceNetworkRestricted",
+					"C:\\Windows\\system32\\svchost.exe -k localServiceAndNoImpersonation -s SensrSvc",
+					"C:\\Windows\\system32\\svchost.exe -k localServiceNoNetwork",
+					"C:\\Windows\\system32\\svchost.exe -k localSystemNetworkRestricted -p -s WPDBusEnum",
+					"C:\\Windows\\system32\\svchost.exe -k localSystemNetworkRestricted -p -s fhsvc",
+					"C:\\Windows\\system32\\svchost.exe -k localSystemNetworkRestricted -s DeviceAssociationService",
+					"C:\\Windows\\system32\\svchost.exe -k localSystemNetworkRestricted -s NcbService",
+					"C:\\Windows\\system32\\svchost.exe -k localSystemNetworkRestricted -s SensorService",
+					"C:\\Windows\\system32\\svchost.exe -k localSystemNetworkRestricted -s TabletInputService",
+					"C:\\Windows\\system32\\svchost.exe -k localSystemNetworkRestricted -s UmRdpService",
+					"C:\\Windows\\system32\\svchost.exe -k localSystemNetworkRestricted -s WPDBusEnum",
+					"C:\\Windows\\system32\\svchost.exe -k localSystemNetworkRestricted -s WdiSystemHost",
+					"C:\\WINDOWS\\System32\\svchost.exe -k LocalSystemNetworkRestricted -p -s WdiSystemHost",
+					"C:\\Windows\\system32\\svchost.exe -k localSystemNetworkRestricted",
+					"C:\\WINDOWS\\system32\\svchost.exe -k netsvcs -p -s wlidsvc",
+					"C:\\Windows\\system32\\svchost.exe -k netsvcs -p -s ncaSvc",
+					"C:\\Windows\\system32\\svchost.exe -k netsvcs -s BDESVC",
+					"C:\\Windows\\system32\\svchost.exe -k netsvcs -s BITS",
+					"C:\\Windows\\system32\\svchost.exe -k netsvcs -s CertPropSvc",
+					"C:\\Windows\\system32\\svchost.exe -k netsvcs -s DsmSvc",
+					"C:\\Windows\\system32\\svchost.exe -k netsvcs -s Gpsvc",
+					"C:\\Windows\\system32\\svchost.exe -k netsvcs -s ProfSvc",
+					"C:\\Windows\\system32\\svchost.exe -k netsvcs -s SENS",
+					"C:\\Windows\\system32\\svchost.exe -k netsvcs -s SessionEnv",
+					"C:\\Windows\\system32\\svchost.exe -k netsvcs -s Themes",
+					"C:\\Windows\\system32\\svchost.exe -k netsvcs -s Winmgmt",
+					"C:\\Windows\\system32\\svchost.exe -k netsvcs",
+					"C:\\Windows\\system32\\svchost.exe -k networkService -p -s DoSvc",
+					"C:\\Windows\\system32\\svchost.exe -k networkService -s Dnscache",
+					"C:\\Windows\\system32\\svchost.exe -k networkService -s LanmanWorkstation",
+					"C:\\Windows\\system32\\svchost.exe -k networkService -s NlaSvc",
+					"C:\\Windows\\system32\\svchost.exe -k networkService -s TermService",
+					"C:\\Windows\\system32\\svchost.exe -k networkService",
+					"C:\\Windows\\system32\\svchost.exe -k networkServiceNetworkRestricted",
+					"C:\\Windows\\system32\\svchost.exe -k rPCSS",
+					"C:\\Windows\\system32\\svchost.exe -k secsvcs",
+					"C:\\Windows\\system32\\svchost.exe -k swprv",
+					"C:\\Windows\\system32\\svchost.exe -k unistackSvcGroup",
+					"C:\\Windows\\system32\\svchost.exe -k utcsvc",
+					"C:\\Windows\\system32\\svchost.exe -k wbioSvcGroup",
+					"C:\\Windows\\system32\\svchost.exe -k werSvcGroup",
+					"C:\\WINDOWS\\System32\\svchost.exe -k wsappx -p -s ClipSVC",
+					"C:\\WINDOWS\\system32\\svchost.exe -k wsappx -p -s AppXSvc",
+					"C:\\Windows\\system32\\svchost.exe -k wsappx -s ClipSVC",
+					"C:\\Windows\\system32\\svchost.exe -k wsappx",
+					"C:\\Windows\\Microsoft.NET\\Framework\\v4.0.30319\\ngen.exe",
+					"\"C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe\" --type=*",
+					"\"C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe\" --type=*",
+					"\"C:\\Program Files\\Mozilla Firefox\\plugin-container.exe\" --channel*",
+					"\"C:\\Program Files (x86)\\Mozilla Firefox\\plugin-container.exe\" --channel*",
+					"*AcroRd32.exe\" /CR*",
+					"*AcroRd32.exe\" --channel=*",
+					"\"C:\\Program Files\\DellTPad\\ApMsgFwd.exe\" -s{*",
+					"C:\\Windows\\system32\\igfxsrvc.exe -Embedding"
+					]
+				}		
+			},
+
+			"path": {
+				"exclude": { 
+					"values": 
+					[
+					"C:\\Windows\\system32\\CompatTelRunner.exe",
+					"C:\\Windows\\system32\\audiodg.exe",
+					"C:\\Windows\\system32\\conhost.exe",
+					"C:\\Windows\\system32\\musNotification.exe",
+					"C:\\Windows\\system32\\musNotificationUx.exe",
+					"C:\\Windows\\system32\\powercfg.exe",
+					"C:\\Windows\\system32\\sndVol.exe",
+					"C:\\Windows\\system32\\sppsvc.exe",
+					"C:\\Windows\\system32\\wbem\\WmiApSrv.exe",
+					"C:\\Windows\\System32\\plasrv.exe",
+					"C:\\Windows\\System32\\wifitask.exe",
+					"C:\\Program Files (x86)\\Common Files\\microsoft shared\\ink\\TabTip32.exe",
+					"C:\\Windows\\System32\\TokenBrokerCookies.exe",
+					"C:\\Windows\\system32\\mobsync.exe",
+					"C:\\Windows\\system32\\SppExtComObj.Exe",
+					"C:\\Windows\\system32\\PrintIsolationHost.exe",
+					"C:\\Program Files\\Windows Defender*",
+					"C:\\Windows\\system32\\MpSigStub.exe",
+					"C:\\Windows\\SoftwareDistribution\\Download\\Install\\AM_*",
+					"C:\\Windows\\Microsoft.NET\\Framework64\\v4.0.30319\\mscorsvw.exe",
+					"C:\\Windows\\Microsoft.NET\\Framework\\v4.0.30319\\mscorsvw.exe",
+					"C:\\Windows\\Microsoft.Net\\Framework64\\v3.0\\WPF\\PresentationFontCache.exe",
+					"C:\\Program Files\\Microsoft Office\\Office16\\MSOSYNC.EXE",
+					"C:\\Program Files (x86)\\Microsoft Office\\Office16\\MSOSYNC.EXE",
+					"C:\\Program Files\\Microsoft Office\\Office15\\MSOSYNC.EXE",
+					"C:\\Program Files\\Common Files\\Microsoft Shared\\OfficeSoftwareProtectionPlatform\\OSPPSVC.EXE",
+					"C:\\Program Files\\Microsoft Office\\Office16\\msoia.exe",
+					"C:\\Program Files (x86)\\Microsoft Office\\root\\Office16\\officebackgroundtaskhandler.exe",
+					"C:\\Program Files\\Common Files\\Microsoft Shared\\ClickToRun\\OfficeC2RClient.exe",
+					"C:\\Program Files\\Windows Media Player\\wmpnscfg.exe",
+					"C:\\Program Files (x86)\\Google\\Update\\*",
+					"C:\\Program Files (x86)\\Adobe\\Acrobat DC\\Acrobat\\AcroCEF\\AcroCEF.exe",
+					"C:\\Program Files (x86)\\Adobe\\Acrobat DC\\Acrobat\\LogTransport2.exe",
+					"C:\\Program Files (x86)\\Adobe\\Acrobat 2015\\Acrobat\\AcroCEF\\AcroCEF.exe",
+					"C:\\Program Files (x86)\\Adobe\\Acrobat 2015\\Acrobat\\LogTransport2.exe",
+					"C:\\Program Files (x86)\\Adobe\\Acrobat Reader DC\\Reader\\AcroCEF\\RdrCEF.exe",
+					"C:\\Program Files (x86)\\Adobe\\Acrobat Reader DC\\Reader\\LogTransport2.exe",
+					"C:\\Windows\\SysWOW64\\Macromed\\Flash\\FlashPlayerUpdateService.exe",
+					"C:\\Program Files (x86)\\Common Files\\Adobe\\ARM\\1.0\\AdobeARM.exe",
+					"C:\\Program Files (x86)\\Common Files\\Adobe\\ARM\\1.0\\armsvc.exe",
+					"C:\\Program Files (x86)\\Adobe\\Acrobat DC\\Acrobat\\AdobeCollabSync.exe",
+					"C:\\Program Files (x86)\\Common Files\\Adobe\\Adobe Desktop Common\\HEX\\Adobe CEF Helper.exe",
+					"C:\\Program Files (x86)\\Common Files\\Adobe\\AdobeGCClient\\AdobeGCClient.exe",
+					"C:\\Program Files (x86)\\Common Files\\Adobe\\OOBE\\PDApp\\P6\\adobe_licutil.exe",
+					"C:\\Program Files (x86)\\Common Files\\Adobe\\OOBE\\PDApp\\P7\\adobe_licutil.exe",
+					"C:\\Program Files (x86)\\Common Files\\Adobe\\OOBE\\PDApp\\UWA\\updaterstartuputility.exe",
+					"C:\\Program Files (x86)\\Adobe\\Adobe Creative Cloud\\ACC\\Creative Cloud.exe",
+					"C:\\Program Files (x86)\\Dropbox\\Update\\DropboxUpdate.exe",
+					"C:\\Program Files\\Dell\\SupportAssist\\pcdrcui.exe",
+					"C:\\Program Files\\Dell\\SupportAssist\\koala.exe"
+					]
+				}
+			},
+			
+			"parent_path": {
+				"exclude": { 
+					"values": 
+					[
+					"C:\\Windows\\system32\\SearchIndexer.exe",
+					"C:\\Windows\\Microsoft.NET\\Framework64\\v4.0.30319\\mscorsvw.exe",
+					"C:\\Windows\\Microsoft.NET\\Framework64\\v4.0.30319\\ngentask.exe",
+					"C:\\Windows\\Microsoft.NET\\Framework\\v4.0.30319\\mscorsvw.exe",
+					"C:\\Windows\\Microsoft.NET\\Framework\\v4.0.30319\\ngentask.exe",
+					"C:\\Program Files\\Common Files\\Microsoft Shared\\ClickToRun\\OfficeClickToRun.exe",
+					"C:\\Program Files\\Common Files\\Microsoft Shared\\ClickToRun\\OfficeC2RClient.exe",
+					"C:\\Program Files (x86)\\Google\\Update\\*",
+					"C:\\Program Files (x86)\\Common Files\\Adobe\\AdobeGCClient\\AGSService.exe",
+					"C:\\Program Files (x86)\\Common Files\\Adobe\\ARM\\1.0\\AdobeARM.exe",
+					"C:\\Program Files (x86)\\Common Files\\Adobe\\OOBE\\PDApp\\P7\\adobe_licutil.exe",
+					"C:\\Program Files (x86)\\Common Files\\Adobe\\OOBE\\PDApp\\UWA\\updaterstartuputility.exe",
+					"C:\\Program Files (x86)\\Adobe\\Adobe Creative Cloud\\ACC\\Creative Cloud.exe",
+					"C:\\Program Files (x86)\\Adobe\\Adobe Creative Cloud\\CCXProcess\\CCXProcess.exe",
+					"C:\\Program Files (x86)\\Adobe\\Adobe Creative Cloud\\CoreSync\\CoreSync.exe",
+					"C:\\Program Files (x86)\\Cisco\\Cisco AnyConnect Secure Mobility Client\\vpnagent.exe",
+					"C:\\Program Files\\DellTPad\\HidMonitorSvc.exe",
+					"C:\\Program Files\\Realtek\\Audio\\HDA\\RtkAudioService64.exe",
+					"C:\\Program Files (x86)\\Dropbox\\Update\\DropboxUpdate.exe",
+					"C:\\Program Files (x86)\\Dell\\CommandUpdate\\InvColPC.exe"
+					]
+				}
+			}	
+		},
+		"win_registry_events": {
+			"target_name": {
+				"include": {
+					"values": 
+					[
+					"*CurrentVersion\\Run*",
+					"*Policies\\Explorer\\Run*",
+					"*Group Policy\\Scripts*",
+					"*Windows\\System\\Scripts*",
+					"*CurrentVersion\\Windows\\Load*",
+					"*CurrentVersion\\Windows\\Run*",
+					"*CurrentVersion\\Winlogon\\Shell*",
+					"*CurrentVersion\\Winlogon\\System*",
+					"\\REGISTRY\\MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon\\Notify*",
+					"\\REGISTRY\\MACHINE\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon\\Shell*",
+					"\\REGISTRY\\MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon\\Userinit*",
+					"\\REGISTRY\\MACHINE\\SOFTWARE\\WOW6432Node\\Microsoft\\Windows NT\\CurrentVersion\\Drivers32*",
+					"\\REGISTRY\\MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\BootExecute*",
+					"*\\REGISTRY\\MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\AeDebug*",
+					"*UserInitMprLogonScript*",
+					"*\\ServiceDll",
+					"*\\ServiceManifest",
+					"*\\ImagePath",
+					"*\\Start",
+					"*shell\\open\\command\\*",
+					"*shell\\open\\ddeexec\\*",
+					"*shell\\install\\command\\*",
+					"*Explorer\\FileExts\\*",
+					"*{86C86720-42A0-1069-A2E8-08002B30309D}*",
+					"*exefile*",
+					"*\\InprocServer32\\(Default)",
+					"*\\Hidden",
+					"*\\ShowSuperHidden",
+					"*\\HideFileExt",
+					"*Classes\\*\\*",
+					"*Classes\\AllFilesystemObjects\\*",
+					"*Classes\\Directory\\*",
+					"*Classes\\Drive\\*",
+					"*Classes\\Folder\\*",
+					"*ContextMenuHandlers\\*",
+					"*CurrentVersion\\Shell*",
+					"\\REGISTRY\\MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\explorer\\ShellExecuteHooks*",
+					"\\REGISTRY\\MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\explorer\\ShellServiceObjectDelayLoad*",
+					"\\REGISTRY\\MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\explorer\\ShellIconOverlayIdentifiers*",
+					"\\REGISTRY\\MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\*",
+					"\\REGISTRY\\MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Terminal Server\\WinStations\\RDP-Tcp\\InitialProgram*",
+					"\\REGISTRY\\MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon\\GPExtensions\\*",
+					"\\REGISTRY\\MACHINE\\SYSTEM\\CurrentControlSet\\Services\\WinSock\\*",
+					"*\\ProxyServer",
+					"\\REGISTRY\\MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Authentication\\Credential Provider*",
+					"\\REGISTRY\\MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Lsa\\*",
+					"\\REGISTRY\\MACHINE\\SYSTEM\\CurrentControlSet\\Control\\SecurityProviders\\SecurityProviders*",
+					"\\REGISTRY\\MACHINE\\SOFTWARE\\Microsoft\\Netsh*",
+					"\\REGISTRY\\MACHINE\\SYSTEM\\CurrentControlSet\\Control\\NetworkProvider\\Order\\*",
+					"\\REGISTRY\\MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\NetworkList\\Profiles*",
+					"*\\EnableFirewall",
+					"*\\DoNotAllowExceptions",
+					"\\REGISTRY\\MACHINE\\SYSTEM\\CurrentControlSet\\Services\\SharedAccess\\Parameters\\FirewallPolicy\\StandardProfile\\AuthorizedApplications\\List*",
+					"\\REGISTRY\\MACHINE\\SYSTEM\\CurrentControlSet\\Services\\SharedAccess\\Parameters\\FirewallPolicy\\DomainProfile\\AuthorizedApplications\\List*",
+					"\\REGISTRY\\MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Windows\\Appinit_Dlls\\*",
+					"\\REGISTRY\\MACHINE\\SOFTWARE\\Wow6432Node\\Microsoft\\Windows NT\\CurrentVersion\\Windows\\Appinit_Dlls\\*",
+					"\\REGISTRY\\MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\AppCertDlls\\*",
+					"*Microsoft\\Office\\Outlook\\Addins\\*",
+					"*Office Test\\*",
+					"*Security\\Trusted Documents\\TrustRecords*",
+					"*Internet Explorer\\Toolbar\\*",
+					"*Internet Explorer\\Extensions\\*",
+					"*Browser Helper Objects\\*",
+					"*\\DisableSecuritySettingsCheck",
+					"*\\3\\1206",
+					"*\\3\\2500",
+					"*\\3\\1809",
+					"*{AB8902B4-09CA-4bb6-B78D-A8F59079A8D5}\\*",
+					"*\\UrlUpdateInfo",
+					"*\\InstallSource",
+					"*\\REGISTRY\\MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System\\EnableLUA",
+					"*\\REGISTRY\\MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System\\LocalAccountTokenFilterPolicy",
+					"*\\REGISTRY\\MACHINE\\SOFTWARE\\Microsoft\\Security Center\\AllAlertsDisabled",
+					"*\\REGISTRY\\MACHINE\\SOFTWARE\\Microsoft\\Security Center\\AntiVirusOverride",
+					"*\\REGISTRY\\MACHINE\\SOFTWARE\\Microsoft\\Security Center\\AntiVirusDisableNotify",
+					"*\\REGISTRY\\MACHINE\\SOFTWARE\\Microsoft\\Security Center\\DisableMonitoring",
+					"*\\REGISTRY\\MACHINE\\SOFTWARE\\Microsoft\\Security Center\\FirewallDisableNotify",
+					"*\\REGISTRY\\MACHINE\\SOFTWARE\\Microsoft\\Security Center\\FirewallOverride",
+					"*\\REGISTRY\\MACHINE\\SOFTWARE\\Microsoft\\Security Center\\UacDisableNotify",
+					"*\\REGISTRY\\MACHINE\\SOFTWARE\\Microsoft\\Security Center\\UpdatesDisableNotify",
+					"*SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer\\HideSCAHealth",
+					"\\REGISTRY\\MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\AppCompatFlags\\Custom*",
+					"\\REGISTRY\\MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\AppCompatFlags\\InstalledSDB*",
+					"*VirtualStore*",
+					"\\REGISTRY\\MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Image File Execution Options\\*",
+					"\\REGISTRY\\MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\WINEVT\\*",
+					"\\REGISTRY\\MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Safeboot\\*",
+					"\\REGISTRY\\MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Winlogon\\*",
+					"*\\FriendlyName",
+					"\\REGISTRY\\MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Installer\\InProgress\\(Default)",
+					"\\REGISTRY\\MACHINE\\SOFTWARE\\Microsoft\\Tracing\\RASAPI32*"
+					]
+				},
+				"exclude": {
+					"values":
+					[
+					"*Toolbar\\WebBrowser",
+					"*Toolbar\\WebBrowser\\ITBar7Height",
+					"*Toolbar\\WebBrowser\\ITBar7Layout",
+					"*Toolbar\\ShellBrowser\\ITBar7Layout",
+					"*Internet Explorer\\Toolbar\\Locked",
+					"*Toolbar\\WebBrowser\\{47833539-D0C5-4125-9FA8-0819E2EAAC93}",
+					"*ShellBrowser",
+					"*\\CurrentVersion\\Run",
+					"*\\CurrentVersion\\RunOnce",
+					"*\\CurrentVersion\\App Paths",
+					"*\\CurrentVersion\\Image File Execution Options",
+					"*\\CurrentVersion\\Shell Extensions\\Cached",
+					"*\\CurrentVersion\\Shell Extensions\\Approved",
+					"*}\\PreviousPolicyAreas",
+					"*\\Control\\WMI\\Autologger\\",
+					"\\REGISTRY\\MACHINE\\SYSTEM\\CurrentControlSet\\Services\\UsoSvc\\Start",
+					"*\\Lsa\\OfflineJoin\\CurrentValue",
+					"*\\Components\\TrustedInstaller\\Events",
+					"*\\Components\\TrustedInstaller",
+					"*\\Components\\Wlansvc",
+					"*\\Components\\Wlansvc\\Events",
+					"\\REGISTRY\\MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Installer\\UserData\\S-1-5-18\\*",
+					"*\\Directory\\shellex",
+					"*\\Directory\\shellex\\DragDropHandlers",
+					"*\\Drive\\shellex",
+					"*\\Drive\\shellex\\DragDropHandlers",
+					"*_Classes\\AppX*",
+					"\\REGISTRY\\MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\WINEVT\\Publishers\\*",
+					"\\REGISTRY\\MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Lsa\\Audit",
+					"\\REGISTRY\\MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Lsa\\Audit\\AuditPolicy",
+					"\\REGISTRY\\MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Lsa\\Audit\\PerUserAuditing\\System",
+					"\\REGISTRY\\MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Lsa\\LsaPid",
+					"\\REGISTRY\\MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Lsa\\SspiCache",
+					"\\REGISTRY\\MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Lsa\\Kerberos\\Domains",
+					"\\REGISTRY\\MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System\\Audit",
+					"*\\services\\bits\\Start",
+					"*\\services\\clr_optimization_v2.0.50727_32\\Start",
+					"*\\services\\clr_optimization_v2.0.50727_64\\Start",
+					"*\\services\\clr_optimization_v4.0.30319_32\\Start",
+					"*\\services\\clr_optimization_v4.0.30319_64\\Start",
+					"*\\services\\deviceAssociationService\\Start",
+					"*\\services\\fhsvc\\Start",
+					"*\\services\\nal\\Start",
+					"*\\services\\trustedInstaller\\Start",
+					"*\\services\\tunnel\\Start",
+					"*\\services\\usoSvc\\Start",
+					"*\\OpenWithProgids",
+					"*\\OpenWithList",
+					"*\\UserChoice",
+					"*\\UserChoice\\ProgId",
+					"*\\UserChoice\\Hash",
+					"*\\OpenWithList\\MRUList",
+					"*} 0xFFFF",
+					"\\REGISTRY\\MACHINE\\System\\CurrentControlSet\\Control\\Lsa\\Audit\\SpecialGroups",
+					"*SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Group Policy\\Scripts",
+					"*SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Group Policy\\Scripts\\Startup",
+					"*SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Group Policy\\Scripts\\Startup\\0",
+					"*SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Group Policy\\Scripts\\Startup\\0\\PSScriptOrder",
+					"*SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Group Policy\\Scripts\\Startup\\0\\SOM-ID",
+					"*SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Group Policy\\Scripts\\Startup\\0\\GPO-ID",
+					"*SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Group Policy\\Scripts\\Startup\\0\\0\\IsPowershell",
+					"*SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Group Policy\\Scripts\\Startup\\0\\0\\ExecTime",
+					"*SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Group Policy\\Scripts\\Shutdown",
+					"*SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Group Policy\\Scripts\\Shutdown\\0",
+					"*SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Group Policy\\Scripts\\Shutdown\\0\\PSScriptOrder",
+					"*SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Group Policy\\Scripts\\Shutdown\\0\\SOM-ID",
+					"*SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Group Policy\\Scripts\\Shutdown\\0\\GPO-ID",
+					"*SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Group Policy\\Scripts\\Shutdown\\0\\0\\IsPowershell",
+					"*SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Group Policy\\Scripts\\Shutdown\\0\\0\\ExecTime",
+					"*\\safer\\codeidentifiers\\0\\HASHES\\{*",
+					"*\\VLC.*",
+					"*\\iTunes."
+					]
+				}
+			},
+
+			"action": {
+				"exclude": {
+					"values":
+					[
+					"REG_CREATE"
+					]
+				}
+			}
+		},
+
+
+		"win_socket_events": {
+			"remote_port": {
+				"include": {
+					"values": 
+						[
+						"80",
+						"443",
+						"3389",
+						"3540",
+						"22",
+						"23",
+						"25",
+						"139",
+						"5800",
+						"5900",
+						"1194",
+						"1701",
+						"1723",
+						"1293",
+						"4500",
+						"1080",
+						"8080",
+						"3128",
+						"9001",
+						"9030",
+						"4443",
+						"2448",
+						"8143",
+						"1777",
+						"1443",
+						"243",
+						"65535",
+						"13506",
+						"3360",
+						"200",
+						"198",
+						"49180",
+						"13507",
+						"3360",
+						"6625",
+						"4444",
+						"4438",
+						"1904",
+						"13505",
+						"13504",
+						"12102",
+						"9631",
+						"5445",
+						"2443",
+						"777",
+						"13394",
+						"13145",
+						"12103",
+						"5552",
+						"3939",
+						"3675",
+						"666",
+						"473",
+						"5649",
+						"4455",
+						"4433",
+						"1817",
+						"100",
+						"65520",
+						"1960",
+						"1515",
+						"743",
+						"700",
+						"14154",
+						"14103",
+						"14102",
+						"12322",
+						"10101",
+						"7210",
+						"4040",
+						"9943",
+						"7777",
+						"9943",
+						"666"					
+						]
+				
+					}
+			},
+			"process_name": {
+				"include": {
+					"values":
+					[
+					"C:\\Users*",
+					"C:\\ProgramData*",
+					"C:\\Windows\\Temp*",
+					"*\\at.exe",
+					"*\\certutil.exe",
+					"*\\cmd.exe",
+					"*\\cmstp.exe",
+					"*\\cscript.exe",
+					"*\\driverquery.exe",
+					"*\\dnsquery.exe",
+					"*\\hh.exe",
+					"*\\infDefaultInstall.exe",
+					"*\\java.exe",
+					"*\\javaw.exe",
+					"*\\javaws.exe",
+					"*\\mmc.exe",
+					"*\\msbuild.exe",
+					"*\\mshta.exe",
+					"*\\msiexec.exe",
+					"*\\nbtstat.exe",
+					"*\\net.exe",
+					"*\\net1.exe",
+					"*\\notepad.exe",
+					"*\\nslookup.exe",
+					"*\\powershell.exe",
+					"*\\qprocess.exe",
+					"*\\qwinsta.exe",
+					"*\\reg.exe",
+					"*\\regsvcs.exe",
+					"*\\regsvr32.exe",
+					"*\\rundll32.exe",
+					"*\\rwinsta.exe",
+					"*\\sc.exe",
+					"*\\schtasks.exe",
+					"*\\taskkill.exe",
+					"*\\tasklist.exe",
+					"*\\wmic.exe",
+					"*\\wscript.exe",
+					"*\\nc.exe",
+					"*\\ncat.exe",
+					"*\\psexec.exe",
+					"*\\psexesvc.exe",
+					"*\\tor.exe",
+					"*\\vnc.exe",
+					"*\\vncservice.exe",
+					"*\\vncviewer.exe",
+					"*\\winexesvc.exe",
+					"*\\nmap.exe",
+					"*\\psinfo.exe"
+					]
+				},
+				"exclude": {
+					"values":
+					[
+					"*\\osqueryd.exe",
+					"*\\Users\\*\\Spotify.exe",
+					"*AppData\\Roaming\\Dropbox\\bin\\Dropbox.exe",
+					"*\\Users\\*\\g2ax_comm_expert.exe",
+					"*\\Users\\*\\g2mcomm.exe",
+					"*\\Users\\*\\OneDrive.exe",
+					"*\\Users\\*\\OneDriveStandaloneUpdater.exe",
+					"*\\AppData\\Local\\Microsoft\\Teams\\current\\Teams.exe",
+					"\\osqueryd\\plgx_win_extension.ext.exe"
+					]
+				}
+			}
+		},
+		
+		"win_file_events": {	
+			"target_path": {
+				"include" : {
+					"values": 
+					[
+					"*\\Start Menu*",
+					"*\\Startup\\*",
+					"*\\Content.Outlook\\*",
+					"*\\Downloads\\*",
+					"*.application",
+					"*.appref-ms",
+					"*.bat",
+					"*.chm",
+					"*.cmd",
+					"*.cmdline",
+					"*.docm",
+					"*.exe",
+					"*.jar",
+					"*.jnlp",
+					"*.jse",
+					"*.hta",
+					"*.pptm",
+					"*.ps1",
+					"*.sys",
+					"*.scr",
+					"*.vbe",
+					"*.vbs",
+					"*.xlsm",
+					"*.proj",
+					"*.sln",
+					"C:\\Users\\Default*",
+					"C:\\Windows\\system32\\Drivers*",
+					"C:\\Windows\\SysWOW64\\Drivers*",
+					"C:\\Windows\\system32\\GroupPolicy\\Machine\\Scripts*",
+					"C:\\Windows\\system32\\GroupPolicy\\User\\Scripts*",
+					"C:\\Windows\\system32\\Wbem*",
+					"C:\\Windows\\SysWOW64\\Wbem*",
+					"C:\\Windows\\system32\\WindowsPowerShell*",
+					"C:\\Windows\\SysWOW64\\WindowsPowerShell*",
+					"C:\\Windows\\Tasks\\*",
+					"C:\\Windows\\system32\\Tasks*",
+					"C:\\Windows\\AppPatch\\Custom*",
+					"*VirtualStore*",
+					"*.xls",
+					"*.ppt",
+					"*.rtf"
+					]
+				},
+				"exclude" : {
+					"values" : 
+					[
+					"C:\\Windows\\system32\\DriverStore\\Temp\\*",
+					"C:\\Windows\\system32\\wbem\\Performance*",
+					"C:\\$WINDOWS.~BT\\Sources\\*",
+					"C:\\Windows\\Installer\\*",	
+					"*WRITABLE.TST",
+					"C:\\Windows\\System32\\Tasks\\Adobe Acrobat Update Task*",
+					"C:\\Windows\\System32\\Tasks\\Adobe Flash Player Updater*",
+					"C:\\Windows\\System32\\Tasks\\OfficeSoftwareProtectionPlatform\\SvcRestartTask*"
+					]
+				}
+			},
+
+			"process_name": {
+				"exclude": { 
+					"values": 
+					[
+					"C:\\Program Files (x86)\\EMET 5.5\\EMET_Service.exe",
+					"C:\\Program Files\\Common Files\\Microsoft Shared\\ClickToRun\\OfficeC2RClient.exe",
+					"C:\\Windows\\system32\\smss.exe",
+					"C:\\Windows\\system32\\CompatTelRunner.exe",
+					"\\\\?\\C:\\Windows\\system32\\wbem\\WMIADAP.EXE",
+					"C:\\Windows\\system32\\wbem\\WMIADAP.EXE",
+					"C:\\Windows\\system32\\mobsync.exe",
+					"C:\\Program Files (x86)\\Dell\\CommandUpdate\\InvColPC.exe",
+					"C:\\Windows\\system32\\igfxCUIService.exe"
+					]
+				}
+			}	
+		},
+		
+		"win_process_open_events": {	
+			"target_path": {
+				"include": { 
+					"values": 
+					[
+					"*lsass.exe"
+					]
+				}
+			},
+			"src_path": {
+				"exclude": { 
+					"values": 
+					[
+					"C:\\Windows\\system32\\wbem\\WmiPrvSE.exe"
+					]
+				}
+			}	
+		},
+
+		"win_image_load_events": {	
+			"image_path": {
+				"exclude": { 
+					"values": 
+					[
+					"C:\\Windows\\system32\\*"
+					]
+				}
+			}	
+		},
+		
+		"win_image_load_process_map": {	
+			"image_path": {
+				"exclude": { 
+					"values": 
+					[
+					"*"
+					]
+				}
+			}	
+		},
+	
+		"win_remote_thread_events": {	
+			"src_path": {
+				"exclude" : {
+					"values" : 
+					[
+					"C:\\Windows\\system32\\wbem\\WmiPrvSE.exe",
+					"C:\\Windows\\system32\\svchost.exe",
+					"C:\\Windows\\system32\\wininit.exe",
+					"C:\\Windows\\system32\\csrss.exe",
+					"C:\\Windows\\system32\\services.exe",
+					"C:\\Windows\\system32\\winlogon.exe",
+					"C:\\Windows\\system32\\audiodg.exe",
+					"C:\\Program Files (x86)\\Webroot\\WRSA.exe"
+					]
+				}
+			},
+
+			"target_path": {
+				"exclude": { 
+					"values": 
+					[
+					"*Google\\Chrome\\Application\\chrome.exe"
+					]
+				}
+			}	
+		}
+	}	
+}

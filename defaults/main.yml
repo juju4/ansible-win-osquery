@@ -5,7 +5,17 @@ win_osquery: true
 win_osqueryd_service_enable: true
 win_osquery_template: 'osquery.conf.j2'
 win_osquery_flags_template: 'osquery.flags.j2'
-win_osquery_extra_flags: ''
+win_osquery_extra_flags:
+# polylogyx
+  - '--windows_event_channels=Microsoft-Windows-Windows Defender/Operational'
+  - '--allow_unsafe'
+  - '--extensions_autoload=C:\programdata\osquery\extensions.load'
+  - '--extensions_interval=10'
+  - '--extensions_timeout=90'
+  - '--database_dump=false'
+  - '--schedule_default_interval=30'
+  - '--pack_refresh_interval=30'
+  - '--extensions_require=plgx_win_extension'
 # log are only as EventData>Message in Details. No human-readable description for now
 win_osquery_enable_winevtx_logging: true
 win_eventlog_maxsize: 315801600
@@ -33,6 +43,7 @@ win_osquery_upload_packs:
   - osquery-msoffice-pack
   - osquery-chrome-pack
   - performance-metrics
+  - osquery-polylogix-pack
 win_osquery_packs:
   - "osquery-monitoring"
 #  - "incident-response"
@@ -47,6 +58,7 @@ win_osquery_packs:
   - osquery-msoffice-pack
   - osquery-chrome-pack
   - performance-metrics
+  - osquery-polylogix-pack
 win_osquery_fetch_evtlogs: true
 # list exact process name of tools you want to watch (security tools, AV, EDR, backup...)
 win_osquery_tool_perfwatch: []
@@ -104,6 +116,8 @@ win_osquery_fetch_evtlogs_list:
   - { n: sysmon_11, id: 11, ch: Microsoft-Windows-Sysmon, d: 'FileCreate' }
   - { n: sysmon_13, id: 13, ch: Microsoft-Windows-Sysmon, d: 'RegistryEvent (Value Set)' }
 
+win_osquery_extensions:
+  - https://github.com/polylogyx/osq-ext-bin/blob/master/plgx_win_extension.ext.exe?raw=true
 
 ## making schedule query faster to have logs faster...
 osquery_testing: false

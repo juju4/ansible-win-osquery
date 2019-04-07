@@ -154,6 +154,9 @@
         state: touch
   when: not win_osquery_enable_winevtx_logging and not osquerymanimported.stat.exists
 
+- include: osquery-extensions.yml
+  when: win_osquery_extensions
+
 - block:
 # https://github.com/ansible/ansible/issues/35661
     - name: validate osqueryd config
