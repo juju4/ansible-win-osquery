@@ -113,4 +113,4 @@ osquery_testing: false
 osquery_profiling: false
 ## full config might be too long for travis (max 50min)
 #osquery_profiling_conf: c:\ProgramData\osquery\osquery.conf
-osquery_profiling_conf: "{{ win_osquery_dir }}\packs\osquery-windows-pack.conf"
+osquery_profiling_conf: "{{ win_osquery_dir }}\\packs\\osquery-windows-pack.conf"
