@@ -17,7 +17,8 @@ winrm = ::WinRM::WinRMWebService.new(endpoint, :ssl, :user => user, :pass => pas
 winrm.set_timeout 300 # 5 minutes max timeout for any operation
 Specinfra.configuration.winrm = winrm
 
-describe file('c:/ProgramData/osquery') do
+#describe file('c:/ProgramData/osquery') do
+describe file('c:/Program Files/osquery') do
   it { should be_directory }
   it { should be_readable }
   it { should_not be_writable.by('Everyone') }

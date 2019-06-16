@@ -129,14 +129,14 @@ after_test:
 on_finish:
 - ps: Get-Service -Displayname "*osquery*"
 - ps: Get-Process "*osquery*"
-- ps: Get-Acl -Path C:\ProgramData\osquery | Format-Table -Wrap
-- ps: Get-Acl -Path C:\ProgramData\osquery\log | Format-Table -Wrap
-- ps: Get-Acl -Path C:\ProgramData\osquery\osquery.db | Format-Table -Wrap
-- ps: Get-ChildItem -Path C:\ProgramData\osquery
-- ps: Get-ChildItem -Path C:\ProgramData\osquery\packs
-- ps: Get-ChildItem -Path C:\ProgramData\osquery\log
-- cmd: C:\ProgramData\osquery\osqueryi.exe --line "SELECT version, build, platform FROM os_version;"
-- cmd: C:\ProgramData\osquery\osqueryi.exe --line "SELECT version from osquery_info;"
+- ps: Get-Acl -Path "C:\Program Files\osquery" | Format-Table -Wrap
+- ps: Get-Acl -Path "C:\Program Files\osquery\log" | Format-Table -Wrap
+- ps: Get-Acl -Path "C:\Program Files\osquery\osquery.db" | Format-Table -Wrap
+- ps: Get-ChildItem -Path "C:\Program Files\osquery"
+- ps: Get-ChildItem -Path "C:\Program Files\osquery\packs"
+- ps: Get-ChildItem -Path "C:\Program Files\osquery\log"
+- cmd: "C:\Program Files\osquery\osqueryi.exe" --line "SELECT version, build, platform FROM os_version;"
+- cmd: "C:\Program Files\osquery\osqueryi.exe" --line "SELECT version from osquery_info;"
 #- ps: get-wmiobject Win32_product | ft IdentifyingNumber,Name
 #- ps: Get-ChildItem -Path "HKLM:Software\Microsoft\Windows\CurrentVersion\Uninstall"
 - ps: Get-ChildItem -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WINEVT\Channels" -Include *osquery*

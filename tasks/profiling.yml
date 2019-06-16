@@ -20,15 +20,15 @@
 - name: get source repository for profiling tools
 #  git:
 #    repo: https://github.com/facebook/osquery.git
-#    dest: c:\ProgramData\osquery\gitrepo
-  win_command: git.exe clone https://github.com/facebook/osquery.git c:\ProgramData\osquery\gitrepo
+#    dest: "{{ win_osquery_dir }}\\gitrepo"
+  win_command: git.exe clone https://github.com/facebook/osquery.git "{{ win_osquery_dir }}\\gitrepo"
 
 - name: profiling
   win_command: >
     python.exe .\\tools\\analysis\\profile.py --config {{ osquery_profiling_conf }} \
-        --shell c:\\ProgramData\\osquery\\osqueryi.exe --count 1 --rounds 4
+        --shell "{{ win_osquery_dir }}\\osqueryi.exe" --count 1 --rounds 4
   args:
-    chdir: c:\ProgramData\osquery\gitrepo
+    chdir: "{{ win_osquery_dir }}\\gitrepo"
   changed_when: false
   register: perf
 - debug: var=perf.stdout_lines

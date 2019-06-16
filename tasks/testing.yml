@@ -24,7 +24,7 @@
 
 - block:
     - name: Check osquery log - file
-      win_shell: Get-Content -Path "c:\ProgramData\osquery\log\osqueryd.results.log"
+      win_shell: Get-Content -Path "{{ win_osquery_dir }}\log\osqueryd.results.log"
       register: results
       ignore_errors: true
       changed_when: false
@@ -35,10 +35,10 @@
     - name: upload Get-OsqueryXMLEvtLogs.ps1
       win_template:
         src: Get-OsqueryXMLEvtLogs.ps1
-        dest: c:\ProgramData\osquery\Get-OsqueryXMLEvtLogs.ps1
+        dest: "{{ win_osquery_dir }}\\Get-OsqueryXMLEvtLogs.ps1"
     - name: Check osquery logs - Event log
       #win_shell: Get-WinEvent -LogName 'osquery'
-      win_shell: c:\ProgramData\osquery\Get-OsqueryXMLEvtLogs.ps1
+      win_shell: "{{ win_osquery_dir }}\\Get-OsqueryXMLEvtLogs.ps1"
       register: winevt
       ignore_errors: true
       changed_when: false

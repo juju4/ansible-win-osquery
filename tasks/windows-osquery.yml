@@ -26,7 +26,7 @@
 - name: update osquery windows packs
   win_template:
     src: "{{ item }}.conf.j2"
-    dest: "c:\\ProgramData\\osquery\\packs\\{{ item }}.conf"
+    dest: "{{ win_osquery_dir }}\\packs\\{{ item }}.conf"
     backup: yes
   with_items: "{{ win_osquery_upload_packs }}"
   register: conf1
@@ -37,8 +37,7 @@
 - name: Configure osqueryd
   win_template:
     src: "{{ win_osquery_template }}"
-#    dest: "%ProgramData%\\osquery\\osquery.conf"
-    dest: "c:\\ProgramData\\osquery\\osquery.conf"
+    dest: "{{ win_osquery_dir }}\\osquery.conf"
   register: conf2
   notify:
     - Restart osqueryd
@@ -47,7 +46,7 @@
 - name: Configure osqueryd flags
   win_template:
     src: "{{ win_osquery_flags_template }}"
-    dest: "c:\\ProgramData\\osquery\\osquery.flags"
+    dest: "{{ win_osquery_dir }}\\osquery.flags"
   register: conf3
   notify:
     - Restart osqueryd
@@ -56,12 +55,12 @@
 - name: update osqueryd.exe path
   win_template:
     src: manage-osqueryd.ps1.j2
-    dest: "c:\\ProgramData\\osquery\\manage-osqueryd.ps1"
+    dest: "{{ win_osquery_dir }}\\manage-osqueryd.ps1"
     backup: yes
 
 - name: Remove permissions inheritance on osquery directories
   win_acl_inheritance:
-    path: 'C:\ProgramData\osquery'
+    path: "{{ win_osquery_dir }}"
     reorganize: yes
     state: absent
 
@@ -75,26 +74,26 @@
     inherit: 'ContainerInherit, ObjectInherit'
     propagation: 'None'
   with_items:
-    - { p: 'C:\ProgramData\osquery', u: 'Users', r: write, t: allow, s: absent }
-    - { p: 'C:\ProgramData\osquery\certs', u: 'Users', r: write, t: allow, s: absent }
-    - { p: 'C:\ProgramData\osquery\log', u: 'Users', r: 'read,write', t: allow, s: absent }
-    - { p: 'C:\ProgramData\osquery\packs', u: 'Users', r: write, t: allow, s: absent }
+    - { p: "{{ win_osquery_dir }}" u: 'Users', r: write, t: allow, s: absent }
+    - { p: "{{ win_osquery_dir }}\\certs", u: 'Users', r: write, t: allow, s: absent }
+    - { p: "{{ win_osquery_dir }}\\log", u: 'Users', r: 'read,write', t: allow, s: absent }
+    - { p: "{{ win_osquery_dir }}\\packs", u: 'Users', r: write, t: allow, s: absent }
 
 # https://github.com/facebook/osquery/pull/3887
 # https://osquery.readthedocs.io/en/stable/installation/install-windows/#enabling-windows-event-log-support
 - name: Check if osquery windows event log installed
   win_stat:
-    path: c:\ProgramData\osquery\osquery_man_installed
+    path: "{{ win_osquery_dir }}\\osquery_man_installed"
   register: osquerymaninstalled
 - block:
     - name: fixme! missing file in msi
       win_copy:
         src: osquery.man
-        dest: C:\ProgramData\osquery\osquery.man
+        dest: "{{ win_osquery_dir }}\\osquery.man"
       when: win_osquery_url != ''
 
     - name: Enable Windows Event Log support
-      win_command: wevtutil im C:\ProgramData\osquery\osquery.man
+      win_command: "wevtutil im \"{{ win_osquery_dir }}\\osquery.man\""
       notify:
         - Restart osqueryd
         - Restart osqueryd - script
@@ -135,22 +134,22 @@
 
     - name: Add task marker
       win_file:
-        path: c:\ProgramData\osquery\osquery_man_installed
+        path: "{{ win_osquery_dir }}\\osquery_man_installed"
         state: touch
   when: win_osquery_enable_winevtx_logging and not osquerymaninstalled.stat.exists
 - name: Check if osquery windows event log status disabled
   win_stat:
-    path: c:\ProgramData\osquery\osquery_man_uninstalled
+    path: "{{ win_osquery_dir }}\\osquery_man_uninstalled"
   register: osquerymanimported
 - block:
     - name: Disable Windows Event Log support
-      win_command: wevtutil um C:\ProgramData\osquery\osquery.man
+      win_command: "wevtutil um \"{{ win_osquery_dir }}\\osquery.man\""
       notify:
         - Restart osqueryd
         - Restart osqueryd - script
     - name: Add task marker
       win_file:
-        path: c:\ProgramData\osquery\osquery_man_uninstalled
+        path: "{{ win_osquery_dir }}\\osquery_man_uninstalled"
         state: touch
   when: not win_osquery_enable_winevtx_logging and not osquerymanimported.stat.exists
 
@@ -158,24 +157,24 @@
 # https://github.com/ansible/ansible/issues/35661
     - name: validate osqueryd config
       win_command: >
-        c:\\ProgramData\\osquery\\osqueryi.exe --config_path c:\\ProgramData\\osquery\\osquery.conf \
+        {{ win_osquery_dir }}\\osqueryi.exe --config_path \"{{ win_osquery_dir }}\\osquery.conf\" \
             --config_check --verbose
     - name: Install and start osqueryd service
 #      win_shell: "%ProgramData%\\osquery\\manage-osqueryd.ps1 -install -start"
       win_shell: "{{ item }}"
       with_items:
 #        - "PowerShell.exe -ExecutionPolicy Bypass -File c:\\ProgramData\\osquery\\manage-osqueryd.ps1 -install"
-        - "PowerShell.exe -ExecutionPolicy Bypass -File c:\\ProgramData\\osquery\\manage-osqueryd.ps1 -install
-            -args '--flagfile \\ProgramData\\osquery\\osquery.flags'"
-        - "PowerShell.exe -ExecutionPolicy Bypass -File c:\\ProgramData\\osquery\\manage-osqueryd.ps1 -start"
+        - "PowerShell.exe -ExecutionPolicy Bypass -File \"{{ win_osquery_dir }}\\manage-osqueryd.ps1\" -install
+            -args '--flagfile \"{{ win_osquery_dir | regex_replace('^c:', '') }}\\osquery.flags\"'"
+        - "PowerShell.exe -ExecutionPolicy Bypass -File \"{{ win_osquery_dir }}\\manage-osqueryd.ps1\" -start"
       ignore_errors: true
   when: win_osqueryd_service_enable and (conf1.changed or conf2.changed or conf3.changed)
 - block:
     - name: Uninstall and stop osqueryd service
       win_shell: "{{ item }}"
       with_items:
-        - "PowerShell.exe -ExecutionPolicy Bypass -File c:\\ProgramData\\osquery\\manage-osqueryd.ps1 -uninstall"
-        - "PowerShell.exe -ExecutionPolicy Bypass -File c:\\ProgramData\\osquery\\manage-osqueryd.ps1 -stop"
+        - "PowerShell.exe -ExecutionPolicy Bypass -File \"{{ win_osquery_dir }}\\manage-osqueryd.ps1\" -uninstall"
+        - "PowerShell.exe -ExecutionPolicy Bypass -File \"{{ win_osquery_dir }}\\manage-osqueryd.ps1\" -stop"
       ignore_errors: true
   when: not win_osqueryd_service_enable
 
@@ -189,4 +188,4 @@
     inherit: 'None'
     propagation: 'InheritOnly'
   with_items:
-    - { p: 'C:\ProgramData\osquery\osquery.db', u: 'Users', r: write, t: allow, s: absent }
+    - { p: "{{ win_osquery_dir }}\\osquery.db", u: 'Users', r: write, t: allow, s: absent }
