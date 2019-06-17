@@ -74,7 +74,7 @@
     inherit: 'ContainerInherit, ObjectInherit'
     propagation: 'None'
   with_items:
-    - { p: "{{ win_osquery_dir }}" u: 'Users', r: write, t: allow, s: absent }
+    - { p: "{{ win_osquery_dir }}", u: 'Users', r: write, t: allow, s: absent }
     - { p: "{{ win_osquery_dir }}\\certs", u: 'Users', r: write, t: allow, s: absent }
     - { p: "{{ win_osquery_dir }}\\log", u: 'Users', r: 'read,write', t: allow, s: absent }
     - { p: "{{ win_osquery_dir }}\\packs", u: 'Users', r: write, t: allow, s: absent }
