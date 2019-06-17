@@ -127,6 +127,7 @@ after_test:
     %CYG_BASH% -lc 'ansible-playbook -i /cygdrive/c/projects/ansible-win-osquery/test/appveyor/inventory /cygdrive/c/projects/ansible-win-osquery/test/integration/%SUITE%/default.yml $ANSIBLE_EXTRA_VARS'
 
 on_finish:
+- ps: Get-Content "C:\Program Files\osquery\osquery.conf" -ReadCount 1000
 - ps: Get-Service -Displayname "*osquery*"
 - ps: Get-Process "*osquery*"
 - ps: Get-Acl -Path "C:\Program Files\osquery" | Format-Table -Wrap
