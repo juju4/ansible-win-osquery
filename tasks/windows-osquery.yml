@@ -22,6 +22,8 @@
     product_id: '{A00B7823-A9A3-4577-A804-A07C43765AFD}'
     state: present
   when: win_osquery_url != ''
+  register: pkg_result
+  until: pkg_result is success
 
 - name: update osquery windows packs
   win_template:
