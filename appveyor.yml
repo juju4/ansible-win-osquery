@@ -142,13 +142,16 @@ on_finish:
     Get-Acl -Path "C:\ProgramData\osquery\osquery.db" | Format-Table -Wrap
     True
 - ps: |
-    Get-ChildItem -Path "C:\Program Files\osquery"
+    Get-ChildItem -Path "C:\Program Files\osquery" -Recurse
     True
 - ps: |
     Get-ChildItem -Path "C:\Program Files\osquery\packs"
     True
 - ps: |
     Get-ChildItem -Path "C:\Program Files\osquery\log"
+    True
+- ps: |
+    Get-ChildItem -Path "C:\ProgramData\osquery" -Recurse
     True
 - cmd: '"C:\Program Files\osquery\osqueryi.exe" --line "SELECT version, build, platform FROM os_version;" || exit 0'
 - cmd: '"C:\Program Files\osquery\osqueryi.exe" --line "SELECT version from osquery_info;" || exit 0'
