@@ -3,7 +3,9 @@
 - hosts: all
   become_method: runas
   vars:
-    - win_osquery_url: https://github.com/osquery/osquery/releases/download/3.4.0/osquery.3.4.0.msi
+#    - win_osquery_url: https://github.com/osquery/osquery/releases/download/3.4.0/osquery.3.4.0.msi
+    - win_osquery_url: https://pkg.osquery.io/windows/osquery-3.3.2.msi
+    - win_osquery_dir: 'c:\ProgramData\osquery'
     - osquery_testing: true
     - osquery_profiling: false
   roles:
