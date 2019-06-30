@@ -197,7 +197,8 @@ on_finish:
 - ps: |
     Get-Content c:\osquery-events.csv -ReadCount 1000 | foreach { $_ -match "system_info" }
     True
-- cmd: c:\opscode\inspec\bin\inspec.bat --chef-license accept exec https://github.com/juju4/inspec-osquery/archive/master.tar.gz || exit 0
+- cmd: c:\opscode\inspec\bin\inspec.bat --chef-license accept || exit 0
+- cmd: c:\opscode\inspec\bin\inspec.bat exec https://github.com/juju4/inspec-osquery/archive/master.tar.gz || exit 0
 
 notifications:
 - provider: Email
