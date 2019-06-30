@@ -150,8 +150,12 @@ on_finish:
 - ps: |
     Get-ChildItem -Path "C:\Program Files\osquery\log"
     True
-- cmd: '"C:\Program Files\osquery\osqueryi.exe" --line "SELECT version, build, platform FROM os_version;"'
-- cmd: '"C:\Program Files\osquery\osqueryi.exe" --line "SELECT version from osquery_info;"'
+- ps: |
+    "C:\Program Files\osquery\osqueryi.exe" --line "SELECT version, build, platform FROM os_version;"
+    "C:\Program Files\osquery\osqueryi.exe" --line "SELECT version from osquery_info;"
+    "C:\ProgramData\osquery\osqueryi.exe" --line "SELECT version, build, platform FROM os_version;"
+    "C:\ProgramData\osquery\osqueryi.exe" --line "SELECT version from osquery_info;"
+    True
 #- ps: get-wmiobject Win32_product | ft IdentifyingNumber,Name
 #- ps: Get-ChildItem -Path "HKLM:Software\Microsoft\Windows\CurrentVersion\Uninstall"
 - ps: Get-ChildItem -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WINEVT\Channels" -Include *osquery*
