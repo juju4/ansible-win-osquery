@@ -127,15 +127,29 @@ after_test:
     %CYG_BASH% -lc 'ansible-playbook -i /cygdrive/c/projects/ansible-win-osquery/test/appveyor/inventory /cygdrive/c/projects/ansible-win-osquery/test/integration/%SUITE%/default.yml $ANSIBLE_EXTRA_VARS'
 
 on_finish:
-- ps: Get-Content "C:\Program Files\osquery\osquery.conf" -ReadCount 1000
+- ps: |
+    Get-Content "C:\Program Files\osquery\osquery.conf" -ReadCount 1000
+    True
 - ps: Get-Service -Displayname "*osquery*"
 - ps: Get-Process "*osquery*"
-- ps: Get-Acl -Path "C:\Program Files\osquery" | Format-Table -Wrap
-- ps: Get-Acl -Path "C:\Program Files\osquery\log" | Format-Table -Wrap
-- ps: Get-Acl -Path "C:\ProgramData\osquery\osquery.db" | Format-Table -Wrap
-- ps: Get-ChildItem -Path "C:\Program Files\osquery"
-- ps: Get-ChildItem -Path "C:\Program Files\osquery\packs"
-- ps: Get-ChildItem -Path "C:\Program Files\osquery\log"
+- ps: |
+    Get-Acl -Path "C:\Program Files\osquery" | Format-Table -Wrap
+    True
+- ps: |
+    Get-Acl -Path "C:\Program Files\osquery\log" | Format-Table -Wrap
+    True
+- ps: |
+    Get-Acl -Path "C:\ProgramData\osquery\osquery.db" | Format-Table -Wrap
+    True
+- ps: |
+    Get-ChildItem -Path "C:\Program Files\osquery"
+    True
+- ps: |
+    Get-ChildItem -Path "C:\Program Files\osquery\packs"
+    True
+- ps: |
+    Get-ChildItem -Path "C:\Program Files\osquery\log"
+    True
 - cmd: '"C:\Program Files\osquery\osqueryi.exe" --line "SELECT version, build, platform FROM os_version;"'
 - cmd: '"C:\Program Files\osquery\osqueryi.exe" --line "SELECT version from osquery_info;"'
 #- ps: get-wmiobject Win32_product | ft IdentifyingNumber,Name
