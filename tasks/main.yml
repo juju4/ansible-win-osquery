@@ -3,7 +3,7 @@
 - include_tasks: windows-osquery.yml
 
 - include_tasks: testing.yml
-  when: osquery_testing
+  when: osquery_testing|bool
 
 - include_tasks: profiling.yml
-  when: osquery_profiling
+  when: osquery_profiling|bool
