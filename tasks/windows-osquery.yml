@@ -138,7 +138,7 @@
       win_file:
         path: "{{ win_osquery_dir }}\\osquery_man_installed"
         state: touch
-  when: win_osquery_enable_winevtx_logging and not osquerymaninstalled.stat.exists
+  when: win_osquery_enable_winevtx_logging|bool and not osquerymaninstalled.stat.exists
 - name: Check if osquery windows event log status disabled
   win_stat:
     path: "{{ win_osquery_dir }}\\osquery_man_uninstalled"
@@ -153,7 +153,7 @@
       win_file:
         path: "{{ win_osquery_dir }}\\osquery_man_uninstalled"
         state: touch
-  when: not win_osquery_enable_winevtx_logging and not osquerymanimported.stat.exists
+  when: not win_osquery_enable_winevtx_logging|bool and not osquerymanimported.stat.exists
 
 - block:
 # https://github.com/ansible/ansible/issues/35661
@@ -170,7 +170,7 @@
             -args '--flagfile \"{{ win_osquery_dir | regex_replace('^c:', '') }}\\osquery.flags\"'"
         - "PowerShell.exe -ExecutionPolicy Bypass -File \"{{ win_osquery_dir }}\\manage-osqueryd.ps1\" -start"
       ignore_errors: true
-  when: win_osqueryd_service_enable and (conf1.changed or conf2.changed or conf3.changed)
+  when: win_osqueryd_service_enable|bool and (conf1.changed or conf2.changed or conf3.changed)
 - block:
     - name: Uninstall and stop osqueryd service
       win_shell: "{{ item }}"
@@ -178,7 +178,7 @@
         - "PowerShell.exe -ExecutionPolicy Bypass -File \"{{ win_osquery_dir }}\\manage-osqueryd.ps1\" -uninstall"
         - "PowerShell.exe -ExecutionPolicy Bypass -File \"{{ win_osquery_dir }}\\manage-osqueryd.ps1\" -stop"
       ignore_errors: true
-  when: not win_osqueryd_service_enable
+  when: not win_osqueryd_service_enable|bool
 
 - name: Restrict permissions for Users on osquery directories - post first start
   win_acl:
