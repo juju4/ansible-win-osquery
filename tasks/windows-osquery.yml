@@ -190,4 +190,4 @@
     inherit: 'None'
     propagation: 'InheritOnly'
   with_items:
-    - { p: "c:\\Program Files\\osquery\\osquery.db", u: 'Users', r: write, t: allow, s: absent }
+    - { p: "{{ win_osquerydb_dir }}", u: 'Users', r: write, t: allow, s: absent }
