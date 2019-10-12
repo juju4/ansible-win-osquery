@@ -139,6 +139,9 @@ on_finish:
     Get-Acl -Path "C:\Program Files\osquery\log" | Format-Table -Wrap
     True
 - ps: |
+    Get-Acl -Path "C:\Program Files\osquery\osquery.db" | Format-Table -Wrap
+    True
+- ps: |
     Get-Acl -Path "C:\ProgramData\osquery\osquery.db" | Format-Table -Wrap
     True
 - ps: |
