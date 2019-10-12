@@ -4,6 +4,7 @@ win_osquery: true
 #win_osquery: false
 #win_osquery_dir: 'c:\ProgramData\osquery'
 win_osquery_dir: 'C:\Program Files\osquery'
+win_osquerydb_dir: 'C:\Program Files\osquery\osquery.db'
 win_osqueryd_service_enable: true
 win_osquery_template: 'osquery.conf.j2'
 win_osquery_flags_template: 'osquery.flags.j2'
