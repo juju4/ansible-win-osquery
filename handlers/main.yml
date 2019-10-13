@@ -9,6 +9,6 @@
 - name: Restart osqueryd - script
   win_shell: "{{ item }}"
   with_items:
-    - "{{ win_osquery_dir }}\\manage-osqueryd.ps1 -stop"
-    - "{{ win_osquery_dir }}\\manage-osqueryd.ps1 -start"
+    - "\"{{ win_osquery_dir }}\\manage-osqueryd.ps1\" -stop"
+    - "\"{{ win_osquery_dir }}\\manage-osqueryd.ps1\" -start"
   when: win_osquery_url is defined and win_osquery_url
