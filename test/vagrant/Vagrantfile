@@ -51,6 +51,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
        #ansible.limit = 'all'
        ansible.become = false
        ansible.compatibility_mode = "2.0"
+       # Check target ansible port with `vagrant port`. if vagrant provisioning fails, use manual commands above directly from ansible
        ansible.extra_vars = { ansible_winrm_server_cert_validation: 'ignore', ansible_port: 55986 }
        ansible.groups = {
           "myrole" => ["vwinosquery" ],
