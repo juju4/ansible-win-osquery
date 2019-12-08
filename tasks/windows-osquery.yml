@@ -161,6 +161,7 @@
       win_command: >
         "{{ win_osquery_dir }}\\osqueryi.exe" --config_path "{{ win_osquery_dir }}\\osquery.conf" \
             --config_check --verbose
+      changed_when: false
     - name: Install and start osqueryd service
 #      win_shell: "%ProgramData%\\osquery\\manage-osqueryd.ps1 -install -start"
       win_shell: "{{ item }}"
