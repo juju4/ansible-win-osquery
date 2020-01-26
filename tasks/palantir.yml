@@ -11,7 +11,7 @@
   register: dir
 
 - name: Git clone palantir/osquery-configuration
-  win_shell: git clone https://github.com/palantir/osquery-configuration.git
+  win_shell: git clone https://github.com/palantir/osquery-configuration.git palantir-configuration
   args:
     chdir: 'c:\Program Files\osquery'
   when: not dir.stat.exists
