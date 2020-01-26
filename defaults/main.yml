@@ -38,7 +38,7 @@ win_osquery_upload_packs:
   - osquery-msoffice-pack
   - osquery-chrome-pack
   - osquery-windows-tunneling-pack
-  - performance-metrics
+  - performance-metrics-extras
 win_osquery_packs:
   - "osquery-monitoring"
 #  - "incident-response"
