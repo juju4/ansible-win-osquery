@@ -26,6 +26,8 @@ win_osquery_watch_services: false
 win_osquery_watch_startups: false
 win_osquery_watch_schtasks: false
 
+win_osquery_palantir: true
+
 # interval for templates pack, either 5min, 1h. adapt depending on your context
 win_osquery_interval: 300
 win_osquery_interval2: 3600
@@ -51,9 +53,16 @@ win_osquery_packs:
   - osquery-msoffice-pack
   - osquery-chrome-pack
   - osquery-windows-tunneling-pack
+#  - performance-metrics-extras
+# from palantir - only if above variable true
+win_osquery_packs_palantir:
   - performance-metrics
+  - security-tooling-checks
+  - windows-application-security
+  - windows-compliance
+  - windows-registry-monitoring
 win_osquery_fetch_evtlogs: true
-# list exact process name of tools you want to watch (security tools, AV, EDR, backup...)
+# list exact process name of tools you want to watch for performance-metrics-extras (security tools, AV, EDR, backup...)
 win_osquery_tool_perfwatch: []
 ## currently only chocolatey release
 win_osquery_url: ''

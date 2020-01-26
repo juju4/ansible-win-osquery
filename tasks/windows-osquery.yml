@@ -36,6 +36,9 @@
     - Restart osqueryd
     - Restart osqueryd - script
 
+- include: palantir.yml
+  when: win_osquery_palantir|bool
+
 - name: Configure osqueryd
   win_template:
     src: "{{ win_osquery_template }}"
