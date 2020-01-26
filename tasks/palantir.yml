@@ -16,9 +16,13 @@
     chdir: 'c:\Program Files\osquery'
   when: not dir.stat.exists
 
-- name: Set packs
+- name: Instal palantir packs
   win_copy:
     src: "c:\\Program Files\\osquery\\palantir-configuration\\Classic\\Endpoints\\packs\\{{ item }}.conf"
     dest: "c:\\Program Files\\osquery\\packs\\{{ item }}.conf"
     remote_src: true
   with_items: "{{ win_osquery_packs_palantir }}"
+
+- name: Set packs with palantir's
+  set_fact:
+    win_osquery_packs: "{{ win_osquery_packs + win_osquery_packs_palantir }}"
