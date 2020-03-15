@@ -82,6 +82,23 @@
     ]
   },
 
+{% if win_osquery_fim %}
+// FIXME! Not working
+
+  "fim": {
+{% for item in win_osquery_fim_filepaths %}
+    "{{ item.name }}": [
+{% for entry in item.list %}
+      "{{ entry }}"{% if not loop.last %},{% endif %}
+
+{% endfor %}
+    ]{% if not loop.last %},{% endif %}
+
+{% endfor %}
+  },
+
+{% endif %}
+
   // Add default osquery packs or install your own.
   //
   // There are several 'default' packs installed with 'make install' or via

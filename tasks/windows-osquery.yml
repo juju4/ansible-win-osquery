@@ -25,6 +25,11 @@
   register: pkg_result
   until: pkg_result is success
 
+- name: Include osquery fim pack
+  set_fact:
+    win_osquery_upload_packs: "{{ win_osquery_upload_packs + [ 'osquery-fim-pack' ] }}"
+  when: win_osquery_fim
+
 - name: update osquery windows packs
   win_template:
     src: "{{ item }}.conf.j2"
