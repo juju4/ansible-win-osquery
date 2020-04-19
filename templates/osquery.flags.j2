@@ -30,7 +30,7 @@
 --logger_tls_endpoint=/api/v1/osquery/log
 --logger_tls_period=10
 --tls_hostname={{ win_osquery_fleetserver | default('tls.endpoint.server.com') }}
---tls_server_certs={{ win_osquery_cert | default('c:\ProgramData\osquery\certfile.crt') }}
+--tls_server_certs={{ win_osquery_cert_path | default('c:\ProgramData\osquery\certfile.crt') }}
 --verbose=true
 {% endif %}
 {% if win_osquery_extra_flags %}

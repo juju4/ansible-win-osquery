@@ -44,6 +44,38 @@
 - include: palantir.yml
   when: win_osquery_palantir|bool
 
+- block:
+    - name: Check if have osquery secret file
+      win_stat:
+        path: "{{ win_osquery_secret_path }}"
+      register: secretf
+    - name: Create osquery secret file
+      win_lineinfile:
+        path: "{{ win_osquery_secret_path }}"
+        line: "{{ win_osquery_secret }}"
+        state: present
+      when: (not secretf.stat.exists or secretf.stat.size == 0) and win_osquery_secret
+    - name: Restrict permissions for Users on osquery secret
+      win_acl:
+        path: "{{ item.p }}"
+        user: "{{ item.u }}"
+        rights: "{{ item.r }}"
+        type: "{{ item.t }}"
+        state: "{{ item.s }}"
+        inherit: 'ContainerInherit, ObjectInherit'
+        propagation: 'None'
+      with_items:
+        - { p: "{{ win_osquery_secret_path }}", u: 'Users', r: 'read,write', t: allow, s: absent }
+        - { p: "{{ win_osquery_secret_path }}", u: 'Administrators', r: 'read,write', t: allow, s: present }
+  when: win_osquery_secret and win_osquery_secret_path|string
+
+- block:
+    - name: Copy Fleet server certificate
+      copy:
+        src: "{{ win_osquery_cert_orchestrator_path }}"
+        dest: "{{ win_osquery_cert_path }}"
+  when: win_osquery_cert_push
+
 - name: Configure osqueryd
   win_template:
     src: "{{ win_osquery_template }}"
@@ -188,6 +220,10 @@
         - "PowerShell.exe -ExecutionPolicy Bypass -File \"{{ win_osquery_dir }}\\manage-osqueryd.ps1\" -stop"
       ignore_errors: true
   when: not win_osqueryd_service_enable|bool
+
+- name: Wait for osquery.db path to exist after first start
+  pause:
+    seconds: 5
 
 - name: Restrict permissions for Users on osquery directories - post first start
   win_acl:
