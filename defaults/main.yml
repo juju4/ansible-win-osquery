@@ -31,9 +31,9 @@ win_osquery_palantir: true
 #win_osquery_secret: ''
 #win_osquery_secret_path: ''
 # push certificate from orchestrator
-#win_osquery_cert_push: false
-#win_osquery_cert_orchestrator_path: 'fleet.crt'
-#win_osquery_cert_path: 'C:\Program Files\osquery\certs\fleet.crt'
+win_osquery_cert_push: false
+win_osquery_cert_orchestrator_path: 'fleet.crt'
+win_osquery_cert_path: 'C:\Program Files\osquery\certs\fleet.crt'
 
 # interval for templates pack, either 5min, 1h. adapt depending on your context
 win_osquery_interval: 300
