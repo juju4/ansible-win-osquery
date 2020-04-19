@@ -67,7 +67,7 @@
       with_items:
         - { p: "{{ win_osquery_secret_path }}", u: 'Users', r: 'read,write', t: allow, s: absent }
         - { p: "{{ win_osquery_secret_path }}", u: 'Administrators', r: 'read,write', t: allow, s: present }
-  when: win_osquery_secret and win_osquery_secret_path|string
+  when: win_osquery_secret is defined and win_osquery_secret and win_osquery_secret_path is defined and win_osquery_secret_path|string
 
 - block:
     - name: Copy Fleet server certificate
