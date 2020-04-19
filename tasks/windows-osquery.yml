@@ -49,6 +49,10 @@
       win_stat:
         path: "{{ win_osquery_secret_path }}"
       register: secretf
+    - name: Ensure secret directory exists
+      win_file:
+        dest: "{{ win_osquery_secret_path | win_dirname }}"
+        state: directory
     - name: Create osquery secret file
       win_lineinfile:
         path: "{{ win_osquery_secret_path }}"
