@@ -71,7 +71,7 @@
 
 - block:
     - name: Copy Fleet server certificate
-      copy:
+      win_copy:
         src: "{{ win_osquery_cert_orchestrator_path }}"
         dest: "{{ win_osquery_cert_path }}"
   when: win_osquery_cert_push
