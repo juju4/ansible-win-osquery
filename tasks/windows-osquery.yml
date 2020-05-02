@@ -56,8 +56,10 @@
     - name: Create osquery secret file
       win_lineinfile:
         path: "{{ win_osquery_secret_path }}"
+        regex: '^.*'
         line: "{{ win_osquery_secret }}"
         state: present
+        create: yes
       when: (not secretf.stat.exists or secretf.stat.size == 0) and win_osquery_secret
     - name: Restrict permissions for Users on osquery secret
       win_acl:
