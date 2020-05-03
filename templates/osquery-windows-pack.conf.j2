@@ -216,6 +216,7 @@
       "platform": "windows",
       "description" : "Matching Windows Event logs - {{ evt.d }}"
     }{% if not loop.last %},{% endif %}
+
 {% endfor %}
 {% else %}
     }

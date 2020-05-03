@@ -6,6 +6,7 @@
     "config_plugin": "filesystem",
 
     // Select the osquery logging plugin.
+    // if need to do local debugging, advise to use filesystem
 {% if win_osquery_enable_winevtx_logging %}
     "logger_plugin": "windows_event_log",
 {% else %}
@@ -85,7 +86,7 @@
 {% if win_osquery_fim %}
 // FIXME! Not working
 
-  "fim": {
+  "file_paths": {
 {% for item in win_osquery_fim_filepaths %}
     "{{ item.name }}": [
 {% for entry in item.list %}
