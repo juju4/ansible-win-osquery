@@ -117,7 +117,7 @@ win_osquery_fetch_evtlogs_list:
   - { n: sec_4663, id: 4663, ch: Security, d: 'An attempt was made to access an object' }
   - { n: sec_4703, id: 4703, ch: Security, d: 'A user right was adjusted. = possible Mimikatz?' }
 # https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-R2-and-2008/cc756386(v%3dws.10)
-  - { n: sys_7040, id: '', ch: System, d: 'The start type of the %1 service was changed from %2 to %3.' }
+  - { n: sys_7040, id: 7040, ch: System, d: 'The start type of the %1 service was changed from %2 to %3.' }
 # Sysmon, https://docs.microsoft.com/en-us/sysinternals/downloads/sysmon
   - { n: sysmon_1, id: 1, ch: Microsoft-Windows-Sysmon, d: 'Process creation' }
   - { n: sysmon_3, id: 3, ch: Microsoft-Windows-Sysmon, d: 'Network connection' }
