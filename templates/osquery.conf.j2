@@ -7,11 +7,7 @@
 
     // Select the osquery logging plugin.
     // if need to do local debugging, advise to use filesystem
-{% if win_osquery_enable_winevtx_logging %}
-    "logger_plugin": "windows_event_log",
-{% else %}
-    "logger_plugin": "filesystem",
-{% endif %}
+    "logger_plugin": "{{ win_osquery_logger_plugin | default('windows_event_log') }}",
 
     // The log directory stores info, warning, and errors.
     // If the daemon uses the 'filesystem' logging retriever then the log_dir

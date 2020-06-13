@@ -3,6 +3,7 @@
 - hosts: all
   become_method: runas
   vars:
+    - win_osquery_logger_plugin: 'windows_event_log,filesystem'
     - osquery_testing: true
     - osquery_profiling: false
   roles:
