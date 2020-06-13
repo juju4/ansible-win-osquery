@@ -14,6 +14,7 @@ environment:
   user_key: c:\projects\ansible-win-osquery\key.pem
   user_pfx: c:\projects\ansible-win-osquery\user.pfx
   CYGWIN: winsymlinks:nativestrict
+  CHEF_LICENSE: accept-no-persist
 
   matrix:
   - SUITE: default
@@ -207,7 +208,6 @@ on_finish:
 - ps: |
     Get-Content c:\osquery-events.csv -ReadCount 1000 | foreach { $_ -match "system_info" }
     True
-- cmd: c:\opscode\inspec\bin\inspec.bat --chef-license accept || exit 0
 - cmd: c:\opscode\inspec\bin\inspec.bat exec https://github.com/juju4/inspec-osquery/archive/master.tar.gz || exit 0
 
 notifications:
