@@ -39,7 +39,7 @@
         dest: "{{ win_osquery_dir }}\\Get-OsqueryXMLEvtLogs.ps1"
     - name: Check osquery logs - Event log
       #win_shell: Get-WinEvent -LogName 'osquery'
-      win_shell: "{{ win_osquery_dir }}\\Get-OsqueryXMLEvtLogs.ps1"
+      win_shell: "\"{{ win_osquery_dir }}\\Get-OsqueryXMLEvtLogs.ps1\""
       register: winevt
       ignore_errors: true
       changed_when: false
