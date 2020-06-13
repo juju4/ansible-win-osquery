@@ -164,7 +164,7 @@ on_finish:
 - cmd: '"C:\Program Files\osquery\osqueryi.exe" --line "SELECT version from osquery_info;" || exit 0'
 - cmd: '"C:\ProgramData\osquery\osqueryi.exe" --line "SELECT version, build, platform FROM os_version;" || exit 0'
 - cmd: '"C:\ProgramData\osquery\osqueryi.exe" --line "SELECT version from osquery_info;" || exit 0'
-- cmd: '"C:\Program Files\osquery\osqueryi.exe" --config_path "C:\Program Files\osquery\osquery.conf" --config_check --verbose || exit 0'
+- cmd: 'echo .quit | "C:\Program Files\osquery\osqueryi.exe" --config_path "C:\Program Files\osquery\osquery.conf" --config_check --verbose || exit 0'
 #- ps: get-wmiobject Win32_product | ft IdentifyingNumber,Name
 #- ps: Get-ChildItem -Path "HKLM:Software\Microsoft\Windows\CurrentVersion\Uninstall"
 - ps: Get-ChildItem -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WINEVT\Channels" -Include *osquery*
