@@ -28,6 +28,9 @@ win_osquery_watch_schtasks: false
 
 win_osquery_palantir: true
 
+# if tls endpoint
+#win_osquery_fleetserver: 'kolide.example.com'
+
 #win_osquery_secret: ''
 #win_osquery_secret_path: ''
 # push certificate from orchestrator
