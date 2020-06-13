@@ -43,7 +43,7 @@ environment:
     CYG_BASH: C:\cygwin64\bin\sh
   - SUITE: default
     ANSIBLE_VERSION: 2.9.2
-    ANSIBLE_EXTRA_VARS: "-e win_osquery_enable_winevtx_logging=false"
+    ANSIBLE_EXTRA_VARS: "-e win_osquery_logger_plugin=filesystem"
     TARGET: cygwin64
     CYG_ROOT: C:\cygwin64
     CYG_SETUP: C:\cygwin64\setup-x86_64.exe

@@ -184,7 +184,9 @@
       win_file:
         path: "{{ win_osquery_dir }}\\osquery_man_installed"
         state: touch
-  when: win_osquery_enable_winevtx_logging|bool and not osquerymaninstalled.stat.exists
+  when:
+    - not osquerymaninstalled.stat.exists
+    - "'windows_event_log' in win_osquery_logger_plugin"
 - name: Check if osquery windows event log status disabled
   win_stat:
     path: "{{ win_osquery_dir }}\\osquery_man_uninstalled"
@@ -199,7 +201,9 @@
       win_file:
         path: "{{ win_osquery_dir }}\\osquery_man_uninstalled"
         state: touch
-  when: not win_osquery_enable_winevtx_logging|bool and not osquerymanimported.stat.exists
+  when:
+    - not osquerymaninstalled.stat.exists
+    - "'windows_event_log' not in win_osquery_logger_plugin"
 
 - block:
 # https://github.com/ansible/ansible/issues/35661

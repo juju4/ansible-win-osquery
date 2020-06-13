@@ -29,7 +29,8 @@
       ignore_errors: true
       changed_when: false
     - debug: var=results.stdout_lines
-  when: not win_osquery_enable_winevtx_logging|bool
+  when:
+    - "'windows_event_log' not in win_osquery_logger_plugin"
 
 - block:
     - name: upload Get-OsqueryXMLEvtLogs.ps1
@@ -43,4 +44,5 @@
       ignore_errors: true
       changed_when: false
     - debug: var=winevt.stdout_lines
-  when: win_osquery_enable_winevtx_logging|bool
+  when:
+    - "'windows_event_log' in win_osquery_logger_plugin"
