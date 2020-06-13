@@ -130,6 +130,9 @@ on_finish:
 - ps: |
     Get-Content "C:\Program Files\osquery\osquery.conf" -ReadCount 1000
     True
+- ps: |
+    Get-Content "C:\Program Files\osquery\osquery.flags" -ReadCount 1000
+    True
 - ps: Get-Service -Displayname "*osquery*"
 - ps: Get-Process "*osquery*"
 - ps: |
