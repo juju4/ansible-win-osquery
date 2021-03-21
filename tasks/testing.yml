@@ -1,10 +1,11 @@
 ---
 
-- meta: flush_handlers
+- name: Flush handlers
+  meta: flush_handlers
 
 - name: pause a bit to have few queries results
   pause:
-#    minutes: 5
+    # minutes: 5
     seconds: 60
 
 - name: Edit few registry keys
@@ -28,7 +29,8 @@
       register: results
       ignore_errors: true
       changed_when: false
-    - debug: var=results.stdout_lines
+    - name: Debug | results
+      debug: var=results.stdout_lines
   when:
     - "'windows_event_log' not in win_osquery_logger_plugin"
 
@@ -38,11 +40,12 @@
         src: Get-OsqueryXMLEvtLogs.ps1
         dest: "{{ win_osquery_dir }}\\Get-OsqueryXMLEvtLogs.ps1"
     - name: Check osquery logs - Event log
-      #win_shell: Get-WinEvent -LogName 'osquery'
+      # win_shell: Get-WinEvent -LogName 'osquery'
       win_shell: "\"{{ win_osquery_dir }}\\Get-OsqueryXMLEvtLogs.ps1\""
       register: winevt
       ignore_errors: true
       changed_when: false
-    - debug: var=winevt.stdout_lines
+    - name: Debug | winevt
+      debug: var=winevt.stdout_lines
   when:
     - "'windows_event_log' in win_osquery_logger_plugin"

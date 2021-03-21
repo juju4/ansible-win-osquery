@@ -11,9 +11,9 @@
 - name: Install osquery package with chocolatey
   win_chocolatey:
     name: osquery
-## ansible 2.1+. better after configuration
-#    install_args: "/InstallService"
-#  ignore_errors: true
+  ## ansible 2.1+. better after configuration
+  #   install_args: "/InstallService"
+  # ignore_errors: true
   when: not win_osquery_url
 
 - name: Install osquery from url
@@ -21,13 +21,14 @@
     path: "{{ win_osquery_url }}"
     product_id: '{A00B7823-A9A3-4577-A804-A07C43765AFD}'
     state: present
-  when: win_osquery_url != ''
+  when: not win_osquery_url|string
   register: pkg_result
   until: pkg_result is success
 
 - name: Include osquery fim pack
   set_fact:
     win_osquery_upload_packs: "{{ win_osquery_upload_packs + [ 'osquery-fim-pack' ] }}"
+    win_osquery_packs: "{{ win_osquery_packs + [ 'osquery-fim-pack' ] }}"
   when: win_osquery_fim
 
 - name: update osquery windows packs
@@ -138,7 +139,7 @@
       win_copy:
         src: osquery.man
         dest: "{{ win_osquery_dir }}\\osquery.man"
-      when: win_osquery_url != ''
+      when: win_osquery_url|string
 
     - name: Enable Windows Event Log support
       win_command: "wevtutil im \"{{ win_osquery_dir }}\\osquery.man\""
@@ -146,19 +147,19 @@
         - Restart osqueryd
         - Restart osqueryd - script
 
-#    - name: Check WINEVT osquery channel configuration
-#      win_command: "wevtutil gl \"osquery\""
-#      changed_when: false
-#      register: evtosquery
+    # - name: Check WINEVT osquery channel configuration
+    #   win_command: "wevtutil gl \"osquery\""
+    #   changed_when: false
+    #   register: evtosquery
 
-# FIXME! not working
+    # FIXME! not working
     - name: WINEVT osquery Channel Event Log size review
       win_regedit:
         key: "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\WINEVT\\Channels\\osquery"
         value: MaxSize
         datatype: dword
         data: "{{ win_eventlog_maxsize }}"
-#      when: "'maxsize: {{ win_eventlog_maxsize }}' not in evtosquery.stdout"
+        # when: "'maxsize: {{ win_eventlog_maxsize }}' not in evtosquery.stdout"
 
     - name: WINEVT Channels Event Log retention review
       win_regedit:
@@ -166,19 +167,19 @@
         value: Retention
         datatype: dword
         data: "{{ win_eventlog_retention }}"
-#      when: "'retention: false' not in evtosquery.stdout"
+        # when: "'retention: false' not in evtosquery.stdout"
 
-#    - name: Check WINEVT osquery channel configuration
-#      win_command: "wevtutil gl \"osquery\""
-#      changed_when: false
+    # - name: Check WINEVT osquery channel configuration
+    #   win_command: "wevtutil gl \"osquery\""
+    #   changed_when: false
 
-#    - name: WINEVT osquery channel configuration - wevtutil
-#      win_command: "wevtutil sl \"osquery\" /ms:{{ win_eventlog_maxsize }} /rt:false /ab:false"
-#      when: "'maxsize: {{ win_eventlog_maxsize }}' not in evtosquery.stdout"
+    # - name: WINEVT osquery channel configuration - wevtutil
+    #   win_command: "wevtutil sl \"osquery\" /ms:{{ win_eventlog_maxsize }} /rt:false /ab:false"
+    #   when: "'maxsize: {{ win_eventlog_maxsize }}' not in evtosquery.stdout"
 
-#    - name: Check WINEVT osquery channel configuration
-#      win_command: "wevtutil gl \"osquery\""
-#      changed_when: false
+    # - name: Check WINEVT osquery channel configuration
+    #   win_command: "wevtutil gl \"osquery\""
+    #   changed_when: false
 
     - name: Add task marker
       win_file:
@@ -206,17 +207,17 @@
     - "'windows_event_log' not in win_osquery_logger_plugin"
 
 - block:
-# https://github.com/ansible/ansible/issues/35661
+    # https://github.com/ansible/ansible/issues/35661
     - name: validate osqueryd config
       win_command: >
         "{{ win_osquery_dir }}\\osqueryi.exe" --config_path "{{ win_osquery_dir }}\\osquery.conf" \
             --config_check --verbose
       changed_when: false
     - name: Install and start osqueryd service
-#      win_shell: "%ProgramData%\\osquery\\manage-osqueryd.ps1 -install -start"
+      # win_shell: "%ProgramData%\\osquery\\manage-osqueryd.ps1 -install -start"
       win_shell: "{{ item }}"
       with_items:
-#        - "PowerShell.exe -ExecutionPolicy Bypass -File c:\\ProgramData\\osquery\\manage-osqueryd.ps1 -install"
+        # - "PowerShell.exe -ExecutionPolicy Bypass -File c:\\ProgramData\\osquery\\manage-osqueryd.ps1 -install"
         - "PowerShell.exe -ExecutionPolicy Bypass -File \"{{ win_osquery_dir }}\\manage-osqueryd.ps1\" -install
             -args '--flagfile \"{{ win_osquery_dir | regex_replace('^c:', '') }}\\osquery.flags\"'"
         - "PowerShell.exe -ExecutionPolicy Bypass -File \"{{ win_osquery_dir }}\\manage-osqueryd.ps1\" -start"
