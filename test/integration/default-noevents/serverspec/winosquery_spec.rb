@@ -27,4 +27,3 @@ end
 describe package('osquery') do
   it { should be_installed}
 end
-
