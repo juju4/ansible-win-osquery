@@ -13,7 +13,6 @@
     name: osquery
   ## ansible 2.1+. better after configuration
   #   install_args: "/InstallService"
-  # ignore_errors: true
   when: not win_osquery_url|string
 
 - name: Install osquery from url
@@ -221,7 +220,7 @@
         - "PowerShell.exe -ExecutionPolicy Bypass -File \"{{ win_osquery_dir }}\\manage-osqueryd.ps1\" -install
             -args '--flagfile \"{{ win_osquery_dir | regex_replace('^c:', '') }}\\osquery.flags\"'"
         - "PowerShell.exe -ExecutionPolicy Bypass -File \"{{ win_osquery_dir }}\\manage-osqueryd.ps1\" -start"
-      ignore_errors: true
+      failed_when: false
   when: win_osqueryd_service_enable|bool and (conf1.changed or conf2.changed or conf3.changed)
 - block:
     - name: Uninstall and stop osqueryd service
@@ -229,7 +228,7 @@
       with_items:
         - "PowerShell.exe -ExecutionPolicy Bypass -File \"{{ win_osquery_dir }}\\manage-osqueryd.ps1\" -uninstall"
         - "PowerShell.exe -ExecutionPolicy Bypass -File \"{{ win_osquery_dir }}\\manage-osqueryd.ps1\" -stop"
-      ignore_errors: true
+      failed_when: false
   when: not win_osqueryd_service_enable|bool
 
 - name: Wait for osquery.db path to exist after first start
