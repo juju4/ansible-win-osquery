@@ -19,7 +19,7 @@ environment:
 
   matrix:
     - SUITE: default
-      ANSIBLE_VERSION:4.3.0
+      ANSIBLE_VERSION: 4.3.0
       ANSIBLE_EXTRA_VARS:
       TARGET: cygwin64
       CYG_ROOT: C:\cygwin64
