@@ -30,6 +30,11 @@
     win_osquery_packs: "{{ win_osquery_packs + [ 'osquery-fim-pack' ] }}"
   when: win_osquery_fim
 
+- name: Ensure packs directory exists
+  win_file:
+    dest: "{{ win_osquery_dir }}\\packs"
+    state: directory
+
 - name: update osquery windows packs
   win_template:
     src: "{{ item }}.conf.j2"
