@@ -1,6 +1,3 @@
-[![Build Status - Master](https://travis-ci.org/juju4/ansible-win-osquery.svg?branch=master)](https://travis-ci.org/juju4/ansible-win-osquery)
-[![Build Status - Devel](https://travis-ci.org/juju4/ansible-win-osquery.svg?branch=devel)](https://travis-ci.org/juju4/ansible-win-osquery/branches)(Syntax Only)
-
 [![Appveyor - Master](https://ci.appveyor.com/api/projects/status/j4e34u1swf3keo6y?svg=true)](https://ci.appveyor.com/project/juju4/ansible-win-osquery)
 ![Appveyor - Devel](https://ci.appveyor.com/api/projects/status/j4e34u1swf3keo6y/branch/devel?svg=true)
 
