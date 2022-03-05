@@ -1,5 +1,5 @@
-[![Appveyor - Master](https://ci.appveyor.com/api/projects/status/j4e34u1swf3keo6y?svg=true)](https://ci.appveyor.com/project/juju4/ansible-win-osquery)
-![Appveyor - Devel](https://ci.appveyor.com/api/projects/status/j4e34u1swf3keo6y/branch/devel?svg=true)
+[![Appveyor - Master](https://ci.appveyor.com/api/projects/status/j4e34u1swf3keo6y/branch/master?svg=true)](https://ci.appveyor.com/project/juju4/ansible-win-osquery/branch/master)
+[![Appveyor - Devel](https://ci.appveyor.com/api/projects/status/j4e34u1swf3keo6y/branch/devel?svg=true)](https://ci.appveyor.com/project/juju4/ansible-win-osquery/branch/devel)
 
 # Windows osquery ansible role
 
