@@ -10,6 +10,8 @@ Ansible role to setup osquery on windows system.
 ### Ansible
 It was tested on the following versions:
  * 2.4 (required since s/include:/include_tasks:/)
+ * 4.10.0
+ * 5.3.0
 
 ### Operating systems
 
@@ -24,7 +26,7 @@ For example
 ```
 - host: all
   roles:
-    - juju4.win-osquery
+    - juju4.win_osquery
 ```
 
 Run
@@ -42,7 +44,7 @@ See defaults/main.yml for full scope
 This role has a travis basic test (for github, syntax check only) and a Vagrantfile (test/vagrant).
 
 ```
-$ cd /path/to/roles/juju4.win-osquery/test/vagrant
+$ cd /path/to/roles/juju4.win_osquery/test/vagrant
 $ vagrant up
 $ vagrant provision
 $ vagrant destroy
