@@ -32,4 +32,4 @@
   changed_when: false
   register: perf
 - name: Debug | perf
-  debug: var=perf.stdout_lines
+  ansible.builtin.debug: var=perf.stdout_lines

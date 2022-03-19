@@ -1,10 +1,10 @@
 ---
 
 - name: Flush handlers
-  meta: flush_handlers
+  ansible.builtin.meta: flush_handlers
 
 - name: pause a bit to have few queries results
-  pause:
+  ansible.builtin.pause:
     # minutes: 5
     seconds: 60
 
@@ -20,7 +20,7 @@
     - { k: "HKCU:\\Software\\Policies\\Google\\Chrome", v: "DownloadRestrictions", d: 0, t: dword }
 
 - name: pause again
-  pause:
+  ansible.builtin.pause:
     seconds: 60
 
 - block:
@@ -30,7 +30,7 @@
       ignore_errors: true
       changed_when: false
     - name: Debug | results
-      debug: var=results.stdout_lines
+      ansible.builtin.debug: var=results.stdout_lines
   when:
     - "'windows_event_log' not in win_osquery_logger_plugin"
 
@@ -46,6 +46,6 @@
       ignore_errors: true
       changed_when: false
     - name: Debug | winevt
-      debug: var=winevt.stdout_lines
+      ansible.builtin.debug: var=winevt.stdout_lines
   when:
     - "'windows_event_log' in win_osquery_logger_plugin"

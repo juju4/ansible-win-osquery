@@ -25,5 +25,5 @@
   with_items: "{{ win_osquery_packs_palantir }}"
 
 - name: Set packs with palantir's
-  set_fact:
+  ansible.builtin.set_fact:
     win_osquery_packs: "{{ win_osquery_packs + win_osquery_packs_palantir }}"

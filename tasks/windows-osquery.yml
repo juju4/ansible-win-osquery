@@ -25,7 +25,7 @@
   until: pkg_result is success
 
 - name: Include osquery fim pack
-  set_fact:
+  ansible.builtin.set_fact:
     win_osquery_upload_packs: "{{ win_osquery_upload_packs + [ 'osquery-fim-pack' ] }}"
     win_osquery_packs: "{{ win_osquery_packs + [ 'osquery-fim-pack' ] }}"
   when: win_osquery_fim
@@ -237,7 +237,7 @@
   when: not win_osqueryd_service_enable|bool
 
 - name: Wait for osquery.db path to exist after first start
-  pause:
+  ansible.builtin.pause:
     seconds: 5
 
 - name: Restrict permissions for Users on osquery directories - post first start
