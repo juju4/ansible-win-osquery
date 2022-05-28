@@ -49,7 +49,8 @@
 - include: palantir.yml
   when: win_osquery_palantir|bool
 
-- block:
+- name: Osquery secret file
+  block:
     - name: Check if have osquery secret file
       win_stat:
         path: "{{ win_osquery_secret_path }}"
@@ -80,7 +81,8 @@
         - { p: "{{ win_osquery_secret_path }}", u: 'Administrators', r: 'read,write', t: allow, s: present }
   when: win_osquery_secret is defined and win_osquery_secret and win_osquery_secret_path is defined and win_osquery_secret_path|string
 
-- block:
+- name: Push central server certificate
+  block:
     - name: Copy Fleet server certificate
       win_copy:
         src: "{{ win_osquery_cert_orchestrator_path }}"
@@ -138,7 +140,8 @@
   win_stat:
     path: "{{ win_osquery_dir }}\\osquery_man_installed"
   register: osquerymaninstalled
-- block:
+- name: Win Event logger should be enabled
+  block:
     - name: fixme! missing file in msi
       win_copy:
         src: osquery.man
@@ -196,7 +199,8 @@
   win_stat:
     path: "{{ win_osquery_dir }}\\osquery_man_uninstalled"
   register: osquerymanimported
-- block:
+- name: Win Event logger should not be enabled
+  block:
     - name: Disable Windows Event Log support
       win_command: "wevtutil um \"{{ win_osquery_dir }}\\osquery.man\""
       notify:
@@ -210,7 +214,8 @@
     - not osquerymaninstalled.stat.exists
     - "'windows_event_log' not in win_osquery_logger_plugin"
 
-- block:
+- name: Osquery service enabled
+  block:
     # https://github.com/ansible/ansible/issues/35661
     - name: validate osqueryd config
       win_command: >
@@ -227,7 +232,8 @@
         - "PowerShell.exe -ExecutionPolicy Bypass -File \"{{ win_osquery_dir }}\\manage-osqueryd.ps1\" -start"
       failed_when: false
   when: win_osqueryd_service_enable|bool and (conf1.changed or conf2.changed or conf3.changed)
-- block:
+- name: Osquery service disabled
+  block:
     - name: Uninstall and stop osqueryd service
       win_shell: "{{ item }}"
       with_items:

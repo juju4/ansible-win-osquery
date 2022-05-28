@@ -23,7 +23,8 @@
   ansible.builtin.pause:
     seconds: 60
 
-- block:
+- name: Filesystem logger plugin
+  block:
     - name: Check osquery log - file
       win_shell: Get-Content -Path "{{ win_osquery_dir }}\log\osqueryd.results.log"
       register: results
@@ -34,7 +35,8 @@
   when:
     - "'windows_event_log' not in win_osquery_logger_plugin"
 
-- block:
+- name: Win Event logger plugin
+  block:
     - name: upload Get-OsqueryXMLEvtLogs.ps1
       win_template:
         src: Get-OsqueryXMLEvtLogs.ps1
