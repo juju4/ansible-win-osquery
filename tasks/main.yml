@@ -1,9 +1,12 @@
 ---
 
-- include_tasks: windows-osquery.yml
+- name: Include windows-osquery
+  ansible.builtin.include_tasks: windows-osquery.yml
 
-- include_tasks: testing.yml
+- name: Include testing
+  ansible.builtin.include_tasks: testing.yml
   when: osquery_testing|bool
 
-- include_tasks: profiling.yml
+- name: Include profiling
+  ansible.builtin.include_tasks: profiling.yml
   when: osquery_profiling|bool

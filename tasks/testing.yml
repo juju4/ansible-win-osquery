@@ -3,13 +3,13 @@
 - name: Flush handlers
   ansible.builtin.meta: flush_handlers
 
-- name: pause a bit to have few queries results
+- name: Pause a bit to have few queries results
   ansible.builtin.pause:
     # minutes: 5
     seconds: 60
 
 - name: Edit few registry keys
-  win_regedit:
+  ansible.windows.win_regedit:
     key: "{{ item.k }}"
     value: "{{ item.v }}"
     data: "{{ item.d }}"
@@ -19,35 +19,37 @@
     - { k: "HKCU:\\Software\\Microsoft\\Office\\16.0\\Outlook\\Security", v: "ShowOLEPackageObj", d: 1, t: dword }
     - { k: "HKCU:\\Software\\Policies\\Google\\Chrome", v: "DownloadRestrictions", d: 0, t: dword }
 
-- name: pause again
+- name: Pause again
   ansible.builtin.pause:
     seconds: 60
 
 - name: Filesystem logger plugin
+  when:
+    - "'windows_event_log' not in win_osquery_logger_plugin"
   block:
     - name: Check osquery log - file
-      win_shell: Get-Content -Path "{{ win_osquery_dir }}\log\osqueryd.results.log"
+      ansible.windows.win_shell: Get-Content -Path "{{ win_osquery_dir }}\log\osqueryd.results.log"
       register: results
       ignore_errors: true
       changed_when: false
     - name: Debug | results
-      ansible.builtin.debug: var=results.stdout_lines
-  when:
-    - "'windows_event_log' not in win_osquery_logger_plugin"
+      ansible.builtin.debug:
+        var: results.stdout_lines
 
 - name: Win Event logger plugin
+  when:
+    - "'windows_event_log' in win_osquery_logger_plugin"
   block:
-    - name: upload Get-OsqueryXMLEvtLogs.ps1
-      win_template:
+    - name: Upload Get-OsqueryXMLEvtLogs.ps1
+      ansible.windows.win_template:
         src: Get-OsqueryXMLEvtLogs.ps1
         dest: "{{ win_osquery_dir }}\\Get-OsqueryXMLEvtLogs.ps1"
     - name: Check osquery logs - Event log
       # win_shell: Get-WinEvent -LogName 'osquery'
-      win_shell: "\"{{ win_osquery_dir }}\\Get-OsqueryXMLEvtLogs.ps1\""
+      ansible.windows.win_shell: "\"{{ win_osquery_dir }}\\Get-OsqueryXMLEvtLogs.ps1\""
       register: winevt
       ignore_errors: true
       changed_when: false
     - name: Debug | winevt
-      ansible.builtin.debug: var=winevt.stdout_lines
-  when:
-    - "'windows_event_log' in win_osquery_logger_plugin"
+      ansible.builtin.debug:
+        var: winevt.stdout_lines

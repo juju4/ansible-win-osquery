@@ -1,24 +1,24 @@
 ---
 
 - name: Install git
-  win_chocolatey:
+  chocolatey.chocolatey.win_chocolatey:
     name: git
     state: present
 
 - name: Check if existing Palantir osquery-configuration directory
-  win_stat:
+  ansible.windows.win_stat:
     path: 'c:\Program Files\osquery\palantir-configuration'
   register: dir
 
 - name: Git clone palantir/osquery-configuration
-  win_command: >
+  ansible.windows.win_command: >
     "c:\\Program Files\\git\\cmd\\git.exe" clone https://github.com/palantir/osquery-configuration.git palantir-configuration
   args:
     chdir: 'c:\Program Files\osquery'
   when: not dir.stat.exists
 
 - name: Instal palantir packs
-  win_copy:
+  ansible.windows.win_copy:
     src: "c:\\Program Files\\osquery\\palantir-configuration\\Classic\\Endpoints\\packs\\{{ item }}.conf"
     dest: "c:\\Program Files\\osquery\\packs\\{{ item }}.conf"
     remote_src: true
