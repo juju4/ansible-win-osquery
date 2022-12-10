@@ -17,7 +17,7 @@
     chdir: 'c:\Program Files\osquery'
   when: not dir.stat.exists
 
-- name: Instal palantir packs
+- name: Install palantir packs
   ansible.windows.win_copy:
     src: "c:\\Program Files\\osquery\\palantir-configuration\\Classic\\Endpoints\\packs\\{{ item }}.conf"
     dest: "c:\\Program Files\\osquery\\packs\\{{ item }}.conf"
