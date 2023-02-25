@@ -1,6 +1,7 @@
 ---
 
-- hosts: all
+- name: Vagrant play
+  hosts: all
   become_method: runas
   roles:
-    - juju4.win-osquery
+    - juju4.win_osquery
